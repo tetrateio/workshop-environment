@@ -1,0 +1,5 @@
+provider: google #Right now only google is supported
+email: someone@tetrate.io # EDIT ME
+zone: example.com # EDIT ME
+google:
+  project: abz-perm # EDIT ME
