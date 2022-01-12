@@ -1,0 +1,6 @@
+fqdn: bookinfo.example.com # EDIT ME
+
+# Nothing below here shoudl have to be overridden
+certificate:
+  secretName: bookinfo-certs
+  clusterIssuer: letsencrypt-dns-cluster-issuer
