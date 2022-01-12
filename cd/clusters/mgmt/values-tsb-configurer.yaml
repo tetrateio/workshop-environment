@@ -1,0 +1,11 @@
+repo: https://github.com/tetrateio/workshop-environment
+branch: adam-demo-environment # EDIT ME
+path: /cd/tsb
+tsb:
+  version: 1.4.4
+  registry: gcr.io/abz-perm # EDIT ME
+  endpointHost: tetrate-workshop.tsb.azure.tetrate.com # EDIT ME
+  endpointPort: 443 # EDIT ME
+  username: admin
+  password: changeme #This is overriden by main chart and set in ArgoCD, dont' touch here
+  org: tetrate-workshop # EDIT ME
