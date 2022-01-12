@@ -1,0 +1,69 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tsb-prepare
+  namespace: istio-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: 
+  name: tsb-prepare-role
+  namespace: istio-system
+rules:
+- apiGroups: ["*"]
+  resources: ["pods","secrets","serviceaccounts"]
+  verbs: ["create", "get", "watch", "list"]
+--- 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: tsb-prepare-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: tsb-prepare # Name is case sensitive
+  namespace: istio-system
+roleRef:
+  kind: ClusterRole
+  name: tsb-prepare-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tsb-preparer-config
+  namespace: istio-system
+data:
+  tsb-props.yaml: |
+    clusterName: {{ .Values.cluster.name }}
+    tsb:
+      host: {{ .Values.tsb.endpointHost }}
+      port: {{ .Values.tsb.endpointPort }}
+      user: {{ .Values.tsb.username }}
+      pwd: {{ .Values.tsb.password }}
+      org: {{ .Values.tsb.org }}
+      tenant: {{ .Values.tsb.tenant }}    
+  cluster.yaml: 
+{{ toYaml .Values.cluster.yaml | indent 2 }} 
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tsb-prepare
+  namespace: istio-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: tsb-prepare
+          image: gcr.io/abz-perm/tsb-preparer:1.4.4
+          imagePullPolicy: Always
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/tsb
+      volumes:
+        - name: config-volume
+          configMap:
+            name: tsb-preparer-config
+      restartPolicy: Never
+      serviceAccountName: tsb-prepare

@@ -1,0 +1,546 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-controlplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: control
+  name: 'istio-system'
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-controlplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: control
+  name: tsb-operator-control-plane
+  namespace: 'istio-system'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-controlplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: control
+  name: tsb-operator-control-plane
+rules:
+- apiGroups:
+  - install.onboarding.tetrate.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - install.xcp.tetrate.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - install.tetrate.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - authentication.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - config.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - install.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - rbac.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - security.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - '*'
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions.apiextensions.k8s.io
+  - customresourcedefinitions
+  verbs:
+  - '*'
+- apiGroups:
+  - apps
+  - extensions
+  - batch
+  resources:
+  - daemonsets
+  - deployments
+  - deployments/finalizers
+  - ingresses
+  - replicasets
+  - statefulsets
+  - cronjobs
+  verbs:
+  - '*'
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - '*'
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  - certificatesigningrequests/approval
+  verbs:
+  - '*'
+- apiGroups:
+  - certificates.k8s.io
+  resourceNames:
+  - kubernetes.io/legacy-unknown
+  resources:
+  - signers
+  verbs:
+  - approve
+  - sign
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - '*'
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterrolebindings
+  - clusterroles
+  - roles
+  - rolebindings
+  verbs:
+  - '*'
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - networkpolicies
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - events
+  - namespaces
+  - pods
+  - pods/log
+  - persistentvolumeclaims
+  - secrets
+  - services
+  - serviceaccounts
+  verbs:
+  - '*'
+- apiGroups:
+  - apiregistration.k8s.io
+  resources:
+  - apiservices
+  verbs:
+  - '*'
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - create
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-controlplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: control
+  name: tsb-operator-control-plane
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tsb-operator-control-plane
+subjects:
+- kind: ServiceAccount
+  name: tsb-operator-control-plane
+  namespace: 'istio-system'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: tsb-operator
+    platform.tsb.tetrate.io/application: tsb-operator-controlplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: control
+  name: tsb-operator-control-plane
+  namespace: 'istio-system'
+spec:
+  ports:
+  - name: http-metrics
+    port: 8383
+    targetPort: 8383
+  - name: webhook
+    port: 443
+    targetPort: 443
+  selector:
+    name: tsb-operator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-controlplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: control
+  name: tsb-operator-control-plane
+  namespace: 'istio-system'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: tsb-operator
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      labels:
+        name: tsb-operator
+    spec:
+      containers:
+      - args:
+        - control-plane
+        - --deployment-name
+        - tsb-operator-control-plane
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: OPERATOR_NAME
+          value: tsb-operator
+        image: {{ .Values.tsb.registry }}/tsboperator-server:{{ .Values.tsb.version }}
+        imagePullPolicy: IfNotPresent
+        name: tsb-operator
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      serviceAccountName: tsb-operator-control-plane
+      volumes:
+      - emptyDir: {}
+        name: tmp
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-dataplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: data
+  name: 'istio-gateway'
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-dataplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: data
+  name: tsb-operator-data-plane
+  namespace: 'istio-gateway'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-dataplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: data
+  name: tsb-operator-data-plane
+rules:
+- apiGroups:
+  - install.xcp.tetrate.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - install.tetrate.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - authentication.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - config.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - install.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - rbac.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - security.istio.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - '*'
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions.apiextensions.k8s.io
+  - customresourcedefinitions
+  verbs:
+  - '*'
+- apiGroups:
+  - apps
+  - extensions
+  - batch
+  resources:
+  - daemonsets
+  - deployments
+  - deployments/finalizers
+  - ingresses
+  - replicasets
+  - statefulsets
+  - cronjobs
+  verbs:
+  - '*'
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - '*'
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  - certificatesigningrequests/approval
+  verbs:
+  - '*'
+- apiGroups:
+  - certificates.k8s.io
+  resourceNames:
+  - kubernetes.io/legacy-unknown
+  resources:
+  - signers
+  verbs:
+  - approve
+  - sign
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - '*'
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterrolebindings
+  - clusterroles
+  - roles
+  - rolebindings
+  verbs:
+  - '*'
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - networkpolicies
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - events
+  - namespaces
+  - pods
+  - pods/log
+  - persistentvolumeclaims
+  - secrets
+  - services
+  - serviceaccounts
+  verbs:
+  - '*'
+- apiGroups:
+  - apiregistration.k8s.io
+  resources:
+  - apiservices
+  verbs:
+  - '*'
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - create
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-dataplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: data
+  name: tsb-operator-data-plane
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tsb-operator-data-plane
+subjects:
+- kind: ServiceAccount
+  name: tsb-operator-data-plane
+  namespace: 'istio-gateway'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: tsb-operator
+    platform.tsb.tetrate.io/application: tsb-operator-dataplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: data
+  name: tsb-operator-data-plane
+  namespace: 'istio-gateway'
+spec:
+  ports:
+  - name: http-metrics
+    port: 8383
+    targetPort: 8383
+  - name: webhook
+    port: 443
+    targetPort: 443
+  selector:
+    name: tsb-operator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    platform.tsb.tetrate.io/application: tsb-operator-dataplane
+    platform.tsb.tetrate.io/component: tsb-operator
+    platform.tsb.tetrate.io/plane: data
+  name: tsb-operator-data-plane
+  namespace: 'istio-gateway'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: tsb-operator
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      labels:
+        name: tsb-operator
+    spec:
+      containers:
+      - args:
+        - data-plane
+        - --deployment-name
+        - tsb-operator-data-plane
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: OPERATOR_NAME
+          value: tsb-operator
+        image: {{ .Values.tsb.registry }}/tsboperator-server:{{ .Values.tsb.version }}
+        imagePullPolicy: IfNotPresent
+        name: tsb-operator
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      serviceAccountName: tsb-operator-data-plane
+      volumes:
+      - emptyDir: {}
+        name: tmp
+---

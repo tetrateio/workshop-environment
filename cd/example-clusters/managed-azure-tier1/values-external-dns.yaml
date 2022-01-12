@@ -1,0 +1,10 @@
+sources:
+  - service
+  - ingress
+domainFilters: ["zwickey.net"] # EDIT ME
+provider: google
+google:
+  project: abz-perm # EDIT ME
+  serviceAccountSecret: external-dns-gcp # No need to change this, will be created automatically
+logLevel: debug
+interval: "10s"

@@ -1,0 +1,4 @@
+fqdn: bookinfo.workshop.zwickey.net
+certificate:
+  secretName: bookinfo-certs
+  clusterIssuer: letsencrypt-dns-cluster-issuer #This should not have to be overriden

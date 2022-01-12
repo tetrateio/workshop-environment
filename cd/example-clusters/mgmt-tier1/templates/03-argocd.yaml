@@ -1,0 +1,27 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.cluster }}-argocd
+  namespace: argocd
+  labels:
+    cluster: {{ .Values.cluster }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    name: {{ .Values.cluster }}
+  project: default
+  syncPolicy:
+    automated: {}
+    syncOptions: 
+    - CreateNamespace=true
+  source:
+    repoURL: 'https://argoproj.github.io/argo-helm'
+    targetRevision: '3.29.5'
+    chart: argo-cd
+    helm:
+      releaseName: argocd
+      values: |
+{{ .Files.Get "values-argocd.yaml" | indent 8 }}
