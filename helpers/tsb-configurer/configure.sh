@@ -10,7 +10,22 @@ tctl_login(){
 }
 
 apply_config() {
-    echo "Applying TSB config..."
+    export REPO=$(yq eval .repo /etc/tsb/tsb-creds.yaml)
+    export BRANCH=$(yq eval .branch /etc/tsb/tsb-creds.yaml)
+    export REPOPATH=$(yq eval .path /etc/tsb/tsb-creds.yaml)
+    if [ -d "/tmp/tsb/repo" ]; then
+        cd /tmp/tsb/repo
+        git pull
+    else 
+        git clone $REPO /tmp/tsb/repo
+        cd /tmp/tsb/repo
+        git checkout $BRANCH
+    fi
+    
+
+    echo "Applying TSB config:"
+    tree /tmp/tsb/repo/$REPOPATH
+    tctl apply -f /tmp/tsb/repo/$REPOPATH   
 }
 
 export TSB_URL_HOST=$(yq eval .tsb.host /etc/tsb/tsb-creds.yaml)
