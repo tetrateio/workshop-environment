@@ -1,0 +1,50 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: ControlPlane
+metadata:
+  name: controlplane
+  namespace: istio-system
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  components:
+    xcp:
+      centralAuthMode: JWT
+      kubeSpec:
+        overlays:
+        - apiVersion: install.xcp.tetrate.io/v1alpha1
+          kind: EdgeXcp
+          name: edge-xcp
+          patches:
+          - path: spec.components.edgeServer.kubeSpec.overlays
+            value:
+            - apiVersion: apps/v1
+              kind: Deployment
+              name: edge
+              patches:
+              - path: spec.template.spec.containers.[name:edge].env[-1]
+                value:
+                  name: ENABLE_RESTORE_ORIGINAL_NAMES
+                  value: "true" 
+    istio:
+      kubeSpec:
+        overlays:
+          - apiVersion: install.istio.io/v1alpha1
+            kind: IstioOperator
+            name: tsb-istiocontrolplane
+            patches:
+            - path: spec.meshConfig.defaultConfig.proxyMetadata.ISTIO_META_DNS_CAPTURE
+              value: "true"
+            - path: spec.meshConfig.defaultConfig.proxyMetadata.ISTIO_META_DNS_AUTO_ALLOCATE
+              value: "true"
+              
+  hub: {{ .Values.tsb.registry }}
+  telemetryStore:
+    elastic:
+      port: {{ .Values.tsb.endpointPort }}
+      host: {{ .Values.tsb.endpointHost }}
+  managementPlane:
+    port: {{ .Values.tsb.endpointPort }}
+    host: {{ .Values.tsb.endpointHost }}
+    clusterName: {{ .Values.cluster.name }}
+    tenant: {{ .Values.cluster.tenant }}

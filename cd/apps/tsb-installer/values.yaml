@@ -1,0 +1,21 @@
+tsb:
+  version: 1.0
+  registry: gcr.io/changeme
+  endpointHost: tsb.tetrate.io
+  endpointPort: 8443
+  username: admin
+  password: changeme
+  org: tetrate
+  tenant: tetrate
+cluster:
+  name: adam-test
+  yaml: |
+    apiVersion: api.tsb.tetrate.io/v2
+    kind: Cluster
+    metadata:
+      name: argotest
+      organization: tetrate-workshop
+    spec:
+      tokenTtl: "10000h"
+      tier1Cluster: true
+      network: internal

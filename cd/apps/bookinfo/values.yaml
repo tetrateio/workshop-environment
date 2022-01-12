@@ -1,0 +1,2 @@
+detailsFQDN: details.tetrate.mesh #Can override if needed
+tsbGatewayDeploy: true #Can override if needed
