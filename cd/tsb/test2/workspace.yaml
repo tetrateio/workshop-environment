@@ -6,8 +6,8 @@ metadata:
   organization: tetrate-workshop
   name: demo-workspace
 spec:
-  description: demo-workspace
-  displayName: demo-workspace
+  description: Demonstration Workspace
+  displayName: demo workspace
   namespaceSelector:
     names:
       - "*/foo"
