@@ -36,12 +36,11 @@ export TSB_URL_PORT=$(yq eval .tsb.port /etc/tsb/tsb-props.yaml)
 export TSB_USER=$(yq eval .tsb.user /etc/tsb/tsb-props.yaml)
 export TSB_PWD=$(yq eval .tsb.pwd /etc/tsb/tsb-props.yaml)
 export TSB_ORG=$(yq eval .tsb.org /etc/tsb/tsb-props.yaml)
-export TSB_TENANT=$(yq eval .tsb.tenant /etc/tsb/tsb-props.yaml)
 export CLUSTER_NAME=$(yq eval .clusterName /etc/tsb/tsb-props.yaml)
-tctl_login $TSB_URL_HOST:$TSB_URL_PORT $TSB_USER $TSB_PWD $TSB_ORG $TSB_TENANT
+tctl_login $TSB_URL_HOST:$TSB_URL_PORT $TSB_USER $TSB_PWD $TSB_ORG
 tctl version
 
-result=$(tctl get tenant $TSB_TENANT )
+result=$(tctl get organizations $TSB_ORG )
 if [ $? -eq 0 ]; then
     check_cluster_registration $CLUSTER_NAME
     cluster_prepare_secrets $CLUSTER_NAME
