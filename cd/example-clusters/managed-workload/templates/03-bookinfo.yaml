@@ -14,7 +14,7 @@ spec:
     name: {{ .Values.cluster }}
   project: default
   syncPolicy:
-    # automated: {}
+    automated: {}
     syncOptions: 
     - CreateNamespace=true
   source:
