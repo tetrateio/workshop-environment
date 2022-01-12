@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tsb-configure
+  namespace: istio-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: 
+  name: tsb-configure-role
+  namespace: istio-system
+rules:
+- apiGroups: ["*"]
+  resources: ["pods","secrets","serviceaccounts"]
+  verbs: ["create", "get", "watch", "list"]
+--- 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: tsb-configure-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: tsb-configure # Name is case sensitive
+  namespace: istio-system
+roleRef:
+  kind: ClusterRole
+  name: tsb-configure-role
+  apiGroup: rbac.authorization.k8s.io  
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tsb-configurer-config
+  namespace: istio-system
+data:
+  tsb-creds.yaml: |
+    tsb:
+      host: tetrate-workshop.tsb.azure.tetrate.com
+      port: 443
+      user: admin
+      pwd: CHANGE_ME
+      org: tetrate-workshop 
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tsb-configure
+  namespace: istio-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: tsb-configure
+          image: gcr.io/abz-perm/tsb-configurer:1.0
+          imagePullPolicy: Always
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/tsb
+      volumes:
+        - name: config-volume
+          configMap:
+            name: tsb-configurer-config
+      restartPolicy: OnFailure
+      serviceAccountName: tsb-configure
