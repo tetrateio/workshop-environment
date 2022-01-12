@@ -41,8 +41,7 @@ data:
       port: 443
       user: admin
       pwd: CHANGEME
-      org: tetrate-workshop
-      tenant: tetrate-demo     
+      org: tetrate-workshop  
   cluster.yaml: |
     apiVersion: api.tsb.tetrate.io/v2
     kind: Cluster
