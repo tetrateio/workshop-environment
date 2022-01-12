@@ -1,6 +1,6 @@
-repo: https://github.com/tetrateio/workshop-environment1
-branch: adam-working1
-path: /cd/tsb11
+repo: https://github.com/tetrateio/workshop-environment
+branch: adam-working
+path: /cd/tsb
 tsb:
   version: 1.4.4
   registry: gcr.io/abz-perm # EDIT ME
