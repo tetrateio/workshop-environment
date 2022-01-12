@@ -1,9 +1,13 @@
 ---
-apiVersion: api.tsb.tetrate.io/v2
-kind: Tenant
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
 metadata:
+  tenant: acme
   organization: tetrate-workshop
-  name: acme
+  name: acme-workspace
 spec:
-  description: Acme Tenant
-  displayName: Acme Tenant
+  description: acme-workspace
+  displayName: acme-workspace
+  namespaceSelector:
+    names:
+      - "*/acme"
