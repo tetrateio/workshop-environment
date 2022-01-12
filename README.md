@@ -7,11 +7,30 @@ Existing workload clusters
 Props filled out & checked in
 
 ## Steps to Build Environment
-- source ./scripts/install-tools.sh
-- (target mgmt/tier1 cluster) must set: ARGO_PWD=SOME_VALUE... then source ./scripts/bootstrap.sh
-- alias kubectl context for more readable name in argo: kubectx <ALIAS>=<CURRENT_CONTEXT_NAME>.. e.g. `kx tier1=gke_abz-workshop-test_us-east4_tier1`  
-- Create & Add k8s service account for argo access & add cluster to argo:  ./scripts/add-cluster-to-argo.sh
+todo... be more verbose
 
-- Edit (and checkin) YAML files for gitops env build (Props with # EDIT ME comment)
-- Configure Application in ArgoCD
--- gcp json is base64 encoded
+- Install tools
+```bash
+source ./scripts/install-tools.sh
+```
+
+- Bootstrap ArgoCD.  You must first set `ARGO_PWD` env variable.  It will be installed into cluster your current kubeconfig is pointing to.
+```bash
+export ARGO_PWD=mypassword
+source ./scripts/bootstrap.sh
+```
+
+- Add cluster to ArgoCD.  This command will add the cluster in your current kubeconfig as a deployment target in ArgoCD.  Usually, you'll want to alias your cluster to a simple and readable name using `kubectx`.
+```bash
+kubectx <ALIAS>=$(kubectx -c)  # Note this may not be needed in your env
+source ./scripts/add-cluster-to-argo.sh
+```
+
+- Create & checkout a new branch of Tetrate Workshop Environment repo.  
+```bash
+git clone https://github.com/tetrateio/workshop-environment --branch <BRANCH_NAME>
+```
+
+- Edit your env config templates.  You'll want to create your env configs and templates in the `/cd/clusters` directory.  There are examples in `/cd/example-clusters`.
+
+- Configure Application in ArgoCD using the Web UI.
