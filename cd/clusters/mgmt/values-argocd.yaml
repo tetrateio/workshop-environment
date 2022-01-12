@@ -6,14 +6,14 @@ server:
     enabled: true
     ingressClassName: nginx
     hosts:
-      - argocd.demo.cloud.zwickey.net # EDIT ME
+      - argocd.tetrate.cloud.zwickey.net # EDIT ME
     tls:
       - secretName: argocd-tls-certificate
         hosts:
-          - argocd.demo.cloud.zwickey.net # EDIT ME
+          - argocd.tetrate.cloud.zwickey.net # EDIT ME
     https: false
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: argocd.demo.cloud.zwickey.net # EDIT ME
+      external-dns.alpha.kubernetes.io/hostname: argocd.tetrate.cloud.zwickey.net # EDIT ME
       cert-manager.io/cluster-issuer: letsencrypt-dns-cluster-issuer
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
