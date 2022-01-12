@@ -41,6 +41,9 @@ data:
       user: {{ .Values.tsb.username }}
       pwd: {{ .Values.tsb.password }}
       org: {{ .Values.tsb.org }}
+    repo: {{ .Values.repo }}
+    branch: {{ .Values.branch }}
+    path: {{ .Values.path }}
 ---
 apiVersion: batch/v1
 kind: Job
