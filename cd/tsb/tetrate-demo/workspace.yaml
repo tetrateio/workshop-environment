@@ -6,8 +6,8 @@ metadata:
   organization: tetrate-workshop
   name: bookinfo
 spec:
-  description: acme-workspace
-  displayName: acme-workspace
+  description: Bookinfo Workspace
+  displayName: Bookinfo Workspace
   namespaceSelector:
     names:
       - "*/bookinfo"
