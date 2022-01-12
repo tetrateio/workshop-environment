@@ -1,3 +1,4 @@
+commonCA: false
 tsb:
   version: 1.0
   registry: gcr.io/changeme
