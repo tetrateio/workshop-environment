@@ -1,0 +1,8 @@
+tsb:
+  version: 1.0
+  registry: gcr.io/changeme
+  endpointHost: tsb.tetrate.io
+  endpointPort: 8443
+  username: admin
+  password: changeme
+  org: tetrate
