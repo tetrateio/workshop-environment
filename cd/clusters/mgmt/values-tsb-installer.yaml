@@ -1,0 +1,19 @@
+tsb:
+  version: 1.4.4
+  registry: gcr.io/abz-perm # EDIT ME
+  endpointHost: tetrate-workshop.tsb.azure.tetrate.com # EDIT ME
+  endpointPort: 443 # EDIT ME
+  username: admin
+  password: changeme #This is overriden by main chart and set in ArgoCD, dont' touch here
+  org: tetrate-workshop # EDIT ME
+cluster:
+  name: mgmt # EDIT ME
+  yaml: |
+    apiVersion: api.tsb.tetrate.io/v2
+    kind: Cluster
+    metadata:
+      name: mgmt # EDIT ME
+      organization: tetrate-workshop # EDIT ME
+    spec:
+      tokenTtl: "10h"
+      tier1Cluster: true
