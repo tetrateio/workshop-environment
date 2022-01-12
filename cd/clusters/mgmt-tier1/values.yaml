@@ -7,7 +7,5 @@ cluster: azure-tier1  # EDIT ME
 ## Each of values below are injected when configuring in ArgoCD
 ###############################
 gcpJsonCredential: "!!!CHANGE_ME!!!" 
-keycloak:
-  adminPwd: "!!!CHANGE_ME!!!"
 tsb:
   password: "!!!CHANGE_ME!!!"
