@@ -54,8 +54,29 @@ install_argocd(){
     fi
 }
 
+install_kubectx(){
+    #kubectx
+    echo "-- Installing kubectx --"
+    case "$1" in
+        darwin) brew install kubectx
+           ;;
+        linux) sudo apt install -y kubectx
+           ;;
+        *) echo "Unknown Platform"
+           ;;
+    esac
+
+    if [ $? -ne 0 ]; then
+        echo "Unable to install kubectx"
+        return 0
+    else
+        # Nothing, we're good
+    fi
+} 
+
 
 export PLATFORM=$(uname -a | head -n1 | awk '{print $1;}' | tr '[:upper:]' '[:lower:]')
 install_htpasswd $PLATFORM
+install_kubectx $PLATFORM
 install_helm
 install_argocd $PLATFORM
