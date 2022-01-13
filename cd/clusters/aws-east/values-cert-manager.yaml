@@ -1,0 +1,5 @@
+provider: google
+email: adam@tetrate.io # EDIT ME
+zone: zwickey.net # EDIT ME
+google:
+  project: abz-perm # EDIT ME
