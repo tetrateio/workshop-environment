@@ -7,7 +7,7 @@ cluster: gke-east  # EDIT ME
 apps:
   bookinfo:
     detailsFQDN: details.tetrate.mesh #Can override if needed
-  tetrate-trader: trader.tetrate.cloud.zwickey.net
+  trader: trader.tetrate.cloud.zwickey.net
 
 ###############################
 ## Each of values below are injected when configuring in ArgoCD

@@ -26,7 +26,7 @@ spec:
       # Extra parameters to set (same as setting through values.yaml, but these take precedence)
       parameters:
       - name: "domain"
-        value: {{ .Values.apps.tetrate-trader.domain }}
+        value: {{ .Values.apps.trader.domain }}
       # This is workaround for now... 
       values: |
         tsbGatewayDeploy: true
