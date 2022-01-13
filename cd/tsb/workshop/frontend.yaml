@@ -71,7 +71,7 @@ spec:
   workloadSelector:
     namespace: frontend
     labels:
-      app: tsb-gateway
+      app: frontend-tsb-gateway
   http:
     - name: frontend-gateway
       port: 443
