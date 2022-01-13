@@ -1,3 +1,17 @@
+---
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  tenant: tetrate-trader
+  organization: tetrate-workshop
+  name: quotes-workspace
+spec:
+  description: Market Data
+  displayName: Market Data
+  namespaceSelector:
+    names:
+      - "gke-east/quotes"
+---
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
