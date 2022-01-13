@@ -1,0 +1,6 @@
+tsbGatewayDeploy: true #Can override if needed
+domain: tetrate.cloud.zwickey.net
+certificate:
+  clusterIssuer: letsencrypt-dns-cluster-issuer #This should not have to be overriden
+  web: web-cert
+  quotes: quotes-cert

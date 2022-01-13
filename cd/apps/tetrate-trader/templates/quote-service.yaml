@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quotes
+  labels:
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quotes-service
+  namespace: quotes
+  labels:
+    app: quotes
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: quotes
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quotes
+  namespace: quotes
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quotes
+      version: v1
+  template:
+    metadata:
+      name: quotes
+      labels:
+        app: quotes
+        version: v1
+    spec:
+      containers:
+        - image: gcr.io/abz-perm/quotes:v1
+          name: quotes-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.certificate.quotes}}
+  namespace: quotes
+spec:
+  secretName: {{ .Values.certificate.quotes}}
+  issuerRef:
+    name: {{ .Values.certificate.clusterIssuer}}
+    kind: ClusterIssuer
+  dnsNames:
+    - quotes.{{ .Values.domain}}
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: tsb-gateway-quotes
+  namespace: quotes
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "quotes.{{ .Values.domain}}."
