@@ -26,6 +26,7 @@ spec:
     names:
       - "gke-east/bookinfo"
       - "gke-west/bookinfo"
+      - "aws-east/bookinfo"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
