@@ -1,0 +1,101 @@
+---
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  tenant: tetrate-demo
+  organization: tetrate-workshop
+  name: bookinfo
+spec:
+  description: Bookinfo Workspace
+  displayName: Bookinfo Workspace
+  namespaceSelector:
+    names:
+      - "*/bookinfo"
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-demo
+  organization: tetrate-workshop
+  workspace: bookinfo
+  name: bookinfo-gateway
+spec:
+  displayName: bookinfo-gateway
+  description: bookinfo-gateway
+  namespaceSelector:
+    names:
+      - "gke-east/bookinfo"
+      - "gke-west/bookinfo"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-demo
+  organization: tetrate-workshop
+  workspace: bookinfo
+  name: bookinfo-tier1
+spec:
+  displayName: bookinfo-tier1
+  description: bookinfo-tier1
+  namespaceSelector:
+    names:
+      - "mgmt/bookinfo"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: bookinfo-gw
+  group: bookinfo-gateway
+  workspace: bookinfo
+  tenant: tetrate-demo
+  organization: tetrate-workshop
+spec:
+  workloadSelector:
+    namespace: bookinfo
+    labels:
+      app: tsb-gateway
+  http:
+    - name: bookinfo-gw
+      port: 80
+      hostname: bookinfo.tetrate.cloud.zwickey.net
+      tls:
+        mode: DISABLED
+      routing:
+        rules:
+          - route:
+              host: "bookinfo/productpage.bookinfo.svc.cluster.local"
+              port: 9080
+    - name: details-gw
+      port: 9080
+      hostname: "details.tetrate.mesh"
+      tls:
+        mode: SIMPLE
+        secretName: bookinfo-certs
+      routing:
+        rules:
+          - route:
+              host: "bookinfo/details.bookinfo.svc.cluster.local"
+              port: 9080
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: bookinfo-tier1
+  group: bookinfo-tier1
+  workspace: bookinfo-workspace
+  tenant: tetrate
+  organization: tetrate
+spec:
+  workloadSelector:
+    namespace: t1
+    labels:
+      app: tsb-tier1
+  externalServers:
+  - hostname: bookinfo.tetrate.cloud.zwickey.net
+    name: bookinfo
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: bookinfo-certs
