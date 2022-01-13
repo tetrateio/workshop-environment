@@ -100,6 +100,17 @@ spec:
           - route:
               host: "workshop-app/frontend.workshop-app.svc.cluster.local"
               port: 8888
+    - name: frontend-t1-endpoint
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: frontend.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "workshop-app/frontend.workshop-app.svc.cluster.local"
+              port: 8888
     - name: backend-internal
       port: 80
       hostname: backend.tetrate.mesh
@@ -134,6 +145,17 @@ spec:
           - route:
               host: "workshop-app/frontend.workshop-app.svc.cluster.local"
               port: 8888
+    - name: frontend-t1-endpoint
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: frontend.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "workshop-app/frontend.workshop-app.svc.cluster.local"
+              port: 8888
     - name: backend-internal
       port: 80
       hostname: backend.tetrate.mesh
@@ -163,6 +185,17 @@ spec:
         mode: SIMPLE
         secretName: frontend-certs
       hostname: frontend-03.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "workshop-app/frontend.workshop-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-t1-endpoint
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: frontend.tetrate.cloud.zwickey.net
       routing:
         rules:
           - route:
