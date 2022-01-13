@@ -71,8 +71,7 @@ spec:
       port: 9080
       hostname: "details.tetrate.mesh"
       tls:
-        mode: SIMPLE
-        secretName: bookinfo-certs
+        mode: DISABLED
       routing:
         rules:
           - route:
