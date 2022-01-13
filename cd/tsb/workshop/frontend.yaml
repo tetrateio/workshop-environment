@@ -84,3 +84,55 @@ spec:
           - route:
               host: "frontend/frontend.frontend.svc.cluster.local"
               port: 8888
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: frontend-gw
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  workspace: frontend
+  group: frontend-gateway-02
+spec:
+  workloadSelector:
+    namespace: frontend
+    labels:
+      app: frontend-tsb-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: frontend-01.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "frontend/frontend.frontend.svc.cluster.local"
+              port: 8888
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: frontend-gw
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  workspace: frontend
+  group: frontend-gateway-03
+spec:
+  workloadSelector:
+    namespace: frontend
+    labels:
+      app: frontend-tsb-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: frontend-01.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "frontend/frontend.frontend.svc.cluster.local"
+              port: 8888
