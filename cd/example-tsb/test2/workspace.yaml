@@ -4,7 +4,7 @@ kind: Workspace
 metadata:
   tenant: tetrate-demo
   organization: tetrate-workshop
-  name: demo-workspace
+  name: adam-demo
 spec:
   description: Demonstration Workspace
   displayName: demo workspace
