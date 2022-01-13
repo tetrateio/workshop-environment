@@ -13,6 +13,7 @@ spec:
       - "gke-east/workshop-app"
       - "gke-west/workshop-app"
       - "aws-east/workshop-app"
+      - "mgmt/workshop-app"
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
@@ -57,6 +58,21 @@ spec:
   namespaceSelector:
     names:
       - "aws-east/workshop-app"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  workspace: frontend-backend
+  name: tier1-gw
+spec:
+  displayName: tier1-gw
+  description: tier1-gw
+  namespaceSelector:
+    names:
+      - "mgmt/workshop-app"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -160,3 +176,24 @@ spec:
           - route:
               host: "workshop-app/backend.workshop-app.svc.cluster.local"
               port: 80
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: tier1-gw
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  workspace: frontend-backend
+  group: tier1-gw
+spec:
+  workloadSelector:
+    namespace: workshop-app
+    labels:
+      app: frontend-tsb-gateway
+  externalServers:
+  - hostname: frontend.tetrate.cloud.zwickey.net
+    name: frontend
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: frontend-certs
