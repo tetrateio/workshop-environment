@@ -4,29 +4,29 @@ kind: Workspace
 metadata:
   tenant: tetrate-workshop
   organization: tetrate-workshop
-  name: frontend
+  name: frontend-backend
 spec:
-  description: frontend-workspace
-  displayName: frontend-workspace
+  description: frontend-backend
+  displayName: frontend-backend
   namespaceSelector:
     names:
-      - "gke-east/frontend"
-      - "gke-west/frontend"
-      - "aws-east/frontend"
+      - "gke-east/workshop-app"
+      - "gke-west/workshop-app"
+      - "aws-east/workshop-app"
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: tetrate-workshop
   organization: tetrate-workshop
-  workspace: frontend
+  workspace: frontend-backend
   name: frontend-gateway-01
 spec:
   displayName: frontend-gateway-01
   description: frontend-gateway-01
   namespaceSelector:
     names:
-      - "gke-east/frontend"
+      - "gke-east/workshop-app"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -34,14 +34,14 @@ kind: Group
 metadata:
   tenant: tetrate-workshop
   organization: tetrate-workshop
-  workspace: frontend
+  workspace: frontend-backend
   name: frontend-gateway-02
 spec:
   displayName: frontend-gateway-02
   description: frontend-gateway-02
   namespaceSelector:
     names:
-      - "gke-west/frontend"
+      - "gke-west/workshop-app"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -49,14 +49,14 @@ kind: Group
 metadata:
   tenant: tetrate-workshop
   organization: tetrate-workshop
-  workspace: frontend
+  workspace: frontend-backend
   name: frontend-gateway-03
 spec:
   displayName: frontend-gateway-03
   description: frontend-gateway-03
   namespaceSelector:
     names:
-      - "aws-east/frontend"
+      - "aws-east/workshop-app"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -65,11 +65,11 @@ metadata:
   name: frontend-gw
   tenant: tetrate-workshop
   organization: tetrate-workshop
-  workspace: frontend
+  workspace: frontend-backend
   group: frontend-gateway-01
 spec:
   workloadSelector:
-    namespace: frontend
+    namespace: workshop-app
     labels:
       app: frontend-tsb-gateway
   http:
@@ -82,7 +82,7 @@ spec:
       routing:
         rules:
           - route:
-              host: "frontend/frontend.frontend.svc.cluster.local"
+              host: "workshop-app/frontend.workshop-app.svc.cluster.local"
               port: 8888
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -91,11 +91,11 @@ metadata:
   name: frontend-gw
   tenant: tetrate-workshop
   organization: tetrate-workshop
-  workspace: frontend
+  workspace: frontend-backend
   group: frontend-gateway-02
 spec:
   workloadSelector:
-    namespace: frontend
+    namespace: workshop-app
     labels:
       app: frontend-tsb-gateway
   http:
@@ -108,7 +108,7 @@ spec:
       routing:
         rules:
           - route:
-              host: "frontend/frontend.frontend.svc.cluster.local"
+              host: "workshop-app/frontend.workshop-app.svc.cluster.local"
               port: 8888
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -117,11 +117,11 @@ metadata:
   name: frontend-gw
   tenant: tetrate-workshop
   organization: tetrate-workshop
-  workspace: frontend
+  workspace: frontend-backend
   group: frontend-gateway-03
 spec:
   workloadSelector:
-    namespace: frontend
+    namespace: workshop-app
     labels:
       app: frontend-tsb-gateway
   http:
@@ -134,5 +134,5 @@ spec:
       routing:
         rules:
           - route:
-              host: "frontend/frontend.frontend.svc.cluster.local"
+              host: "workshop-app/frontend.workshop-app.svc.cluster.local"
               port: 8888
