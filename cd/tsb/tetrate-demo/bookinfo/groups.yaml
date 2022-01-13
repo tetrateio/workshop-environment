@@ -1,0 +1,32 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-demo
+  organization: tetrate-workshop
+  workspace: bookinfo
+  name: bookinfo-gateway
+spec:
+  displayName: bookinfo-gateway
+  description: bookinfo-gateway
+  namespaceSelector:
+    names:
+      - "gke-east/bookinfo"
+      - "gke-west/bookinfo"
+      - "aws-east/bookinfo"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-demo
+  organization: tetrate-workshop
+  workspace: bookinfo
+  name: bookinfo-tier1
+spec:
+  displayName: bookinfo-tier1
+  description: bookinfo-tier1
+  namespaceSelector:
+    names:
+      - "mgmt/bookinfo"
+  configMode: BRIDGED
