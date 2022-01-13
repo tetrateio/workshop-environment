@@ -10,7 +10,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: default # not used
+    #namespace: default # not used
     name: {{ .Values.cluster }}
   project: default
   syncPolicy:
