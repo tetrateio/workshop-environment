@@ -136,3 +136,11 @@ spec:
           - route:
               host: "workshop-app/frontend.workshop-app.svc.cluster.local"
               port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.tetrate.mesh
+      routing:
+        rules:
+          - route:
+              host: "workshop-app/backend.workshop-app.svc.cluster.local"
+              port: 80
