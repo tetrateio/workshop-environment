@@ -104,7 +104,7 @@ spec:
       tls:
         mode: SIMPLE
         secretName: frontend-certs
-      hostname: frontend-01.tetrate.cloud.zwickey.net
+      hostname: frontend-02.tetrate.cloud.zwickey.net
       routing:
         rules:
           - route:
@@ -130,7 +130,7 @@ spec:
       tls:
         mode: SIMPLE
         secretName: frontend-certs
-      hostname: frontend-01.tetrate.cloud.zwickey.net
+      hostname: frontend-03.tetrate.cloud.zwickey.net
       routing:
         rules:
           - route:
