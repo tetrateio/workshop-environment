@@ -10,4 +10,6 @@ spec:
   displayName: backend-workspace
   namespaceSelector:
     names:
-      - "*/backend"
+      - "gke-east/frontend"
+      - "gke-west/frontend"
+      - "aws-east/frontend"
