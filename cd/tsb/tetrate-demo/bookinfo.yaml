@@ -84,14 +84,14 @@ kind: Tier1Gateway
 metadata:
   name: bookinfo-tier1
   group: bookinfo-tier1
-  workspace: bookinfo-workspace
-  tenant: tetrate
-  organization: tetrate
+  workspace: bookinfo
+  tenant: tetrate-demo
+  organization: tetrate-workshop
 spec:
   workloadSelector:
-    namespace: t1
+    namespace: bookinfo
     labels:
-      app: tsb-tier1
+      app: tsb-gateway
   externalServers:
   - hostname: bookinfo.tetrate.cloud.zwickey.net
     name: bookinfo
