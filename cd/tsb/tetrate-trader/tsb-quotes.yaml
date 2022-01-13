@@ -1,0 +1,40 @@
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-trader
+  organization: tetrate-workshop
+  workspace: quotes-workspace
+  name: quotes-gateway
+spec:
+  displayName: quotes-gateway
+  description: quotes-gateway
+  namespaceSelector:
+    names:
+      - "*/quotes"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: quotes-gw
+  group: quotes-gateway
+  workspace: quotes-workspace
+  tenant: tetrate-trader
+  organization: tetrate-workshop
+spec:
+  workloadSelector:
+    namespace: quotes
+    labels:
+      app: tsb-gateway-quotes
+  http:
+    - name: quotes-gw
+      port: 443
+      hostname: "quotes.tetrate.cloud.zwickey.net"
+      tls:
+        mode: SIMPLE
+        secretName: quotes-cert
+      routing:
+        rules:
+          - route:
+              host: "quotes/quotes-service.quotes.svc.cluster.local"
+              port: 8080

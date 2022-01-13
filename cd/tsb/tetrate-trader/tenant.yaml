@@ -1,0 +1,9 @@
+---
+apiVersion: api.tsb.tetrate.io/v2
+kind: Tenant
+metadata:
+  organization: tetrate-workshop
+  name: tetrate-trader
+spec:
+  description: Tetrate Trader
+  displayName: Tetrate Trader
