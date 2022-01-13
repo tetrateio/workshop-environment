@@ -1,3 +1,17 @@
+---
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  tenant: tetrate-trader
+  organization: tetrate-workshop
+  name: web-workspace
+spec:
+  description: Web Platform
+  displayName: Web Platform
+  namespaceSelector:
+    names:
+      - "gke-east/web"
+---      
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
