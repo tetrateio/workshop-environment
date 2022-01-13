@@ -1,0 +1,60 @@
+---
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  name: frontend
+spec:
+  description: frontend-workspace
+  displayName: frontend-workspace
+  namespaceSelector:
+    names:
+      - "gke-east/frontend"
+      - "gke-west/frontend"
+      - "aws-east/frontend"
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  workspace: frontend
+  name: frontend-gateway-01
+spec:
+  displayName: bookinfo-gateway
+  description: bookinfo-gateway
+  namespaceSelector:
+    names:
+      - "gke-east/bookinfo"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  workspace: frontend
+  name: frontend-gateway-02
+spec:
+  displayName: bookinfo-gateway
+  description: bookinfo-gateway
+  namespaceSelector:
+    names:
+      - "gke-west/bookinfo"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-workshop
+  organization: tetrate-workshop
+  workspace: frontend
+  name: frontend-gateway-03
+spec:
+  displayName: bookinfo-gateway
+  description: bookinfo-gateway
+  namespaceSelector:
+    names:
+      - "aws-east/bookinfo"
+  configMode: BRIDGED
