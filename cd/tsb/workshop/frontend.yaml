@@ -22,8 +22,8 @@ metadata:
   workspace: frontend
   name: frontend-gateway-01
 spec:
-  displayName: bookinfo-gateway
-  description: bookinfo-gateway
+  displayName: frontend-gateway-01
+  description: frontend-gateway-01
   namespaceSelector:
     names:
       - "gke-east/frontend"
@@ -37,8 +37,8 @@ metadata:
   workspace: frontend
   name: frontend-gateway-02
 spec:
-  displayName: bookinfo-gateway
-  description: bookinfo-gateway
+  displayName: frontend-gateway-02
+  description: frontend-gateway-02
   namespaceSelector:
     names:
       - "gke-west/frontend"
@@ -52,8 +52,8 @@ metadata:
   workspace: frontend
   name: frontend-gateway-03
 spec:
-  displayName: bookinfo-gateway
-  description: bookinfo-gateway
+  displayName: frontend-gateway-03
+  description: frontend-gateway-03
   namespaceSelector:
     names:
       - "aws-east/frontend"
