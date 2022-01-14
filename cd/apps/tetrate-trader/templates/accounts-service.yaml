@@ -58,6 +58,8 @@ spec:
               value: "postgres"
             - name: SPRING_DATASOURCE_PASSWORD
               value: "topsecret"
+            - name: TETRATE_OIDC_URL
+              value: "https://keycloak.tetrate.cloud.zwickey.net" #Externalize
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
