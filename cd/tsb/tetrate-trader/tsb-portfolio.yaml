@@ -1,0 +1,28 @@
+---
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  tenant: tetrate-trader
+  organization: tetrate-workshop
+  name: portfolio-workspace
+spec:
+  description: Portfolio Services
+  displayName: Portfolio Services
+  namespaceSelector:
+    names:
+      - "gke-east/portfolio"
+---      
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: tetrate-trader
+  organization: tetrate-workshop
+  workspace: portfolio-workspace
+  name: portfolio-gateway
+spec:
+  displayName: portfolio-gateway
+  description: portfolio-gateway
+  namespaceSelector:
+    names:
+      - "*/portfolio"
+  configMode: BRIDGED
