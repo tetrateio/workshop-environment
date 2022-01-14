@@ -2,5 +2,14 @@ tsbGatewayDeploy: true #Can override if needed
 domain: tetrate.cloud.zwickey.net
 certificate:
   clusterIssuer: letsencrypt-dns-cluster-issuer #This should not have to be overriden
-  web: web-cert
-  quotes: quotes-cert
+oidc: 
+  clientId: tetrate-trader
+  client-secret: tetrate-trader
+  issuerUri: https://keycloak.cloud.zwickey.net/auth/realms/tetrate
+web:  
+  certName: web-cert
+  accountServiceUrl: http://accounts-service.accounts:8080
+  portfolioServiceUrl: http://portfolio-service.portfolio:8080
+  quoteServiceUrl: http://quotes-service.quotes:8080
+quotes:
+  certName: quotes-cert

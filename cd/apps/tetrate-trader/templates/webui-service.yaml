@@ -53,19 +53,21 @@ spec:
               port: 8080
           env:
           - name: TETRATE_QUOTESERVICEURL
-            value: http://quotes-service.quotes:8080
+            value: {{ .Values.web.quoteServiceUrl }}
           - name: TETRATE_ACCOUNTSERVICEURL
-            value: http://accounts-service.accounts:8080
+            value: {{ .Values.web.accountServiceUrl }}
           - name: TETRATE_PORTFOLIOSERVICEURL
-            value: http://portfolio-service.portfolio:8080
+            value: {{ .Values.web.portfolioServiceUrl }}
+          - name: SPRING_SECURTY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI
+            value: {{ .Values.oidc.issuerUri }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ .Values.certificate.web}}
+  name: {{ .Values.web.certName}}
   namespace: web
 spec:
-  secretName: {{ .Values.certificate.web}}
+  secretName: {{ .Values.web.certName}}
   issuerRef:
     name: {{ .Values.certificate.clusterIssuer}}
     kind: ClusterIssuer

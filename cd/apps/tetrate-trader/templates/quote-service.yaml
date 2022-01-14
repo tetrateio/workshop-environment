@@ -55,10 +55,10 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ .Values.certificate.quotes}}
+  name: {{ .Values.quotes.certName}}
   namespace: quotes
 spec:
-  secretName: {{ .Values.certificate.quotes}}
+  secretName: {{ .Values.quotes.certName}}
   issuerRef:
     name: {{ .Values.certificate.clusterIssuer}}
     kind: ClusterIssuer
