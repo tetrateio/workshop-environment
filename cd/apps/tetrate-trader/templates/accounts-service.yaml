@@ -1,0 +1,140 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: accounts
+  labels:
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: accounts-service
+  namespace: accounts
+  labels:
+    app: accounts
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: accounts
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts
+  namespace: accounts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounts
+      version: v1
+  template:
+    metadata:
+      name: accounts
+      labels:
+        app: accounts
+        version: v1
+    spec:
+      containers:
+        - image: gcr.io/abz-perm/accounts:v2
+          name: accounts-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/postgres"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "topsecret"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.accounts.certName}}
+  namespace: accounts
+spec:
+  secretName: {{ .Values.accounts.certName}}
+  issuerRef:
+    name: {{ .Values.certificate.clusterIssuer}}
+    kind: ClusterIssuer
+  dnsNames:
+    - accounts.{{ .Values.domain}}
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: tsb-gateway-accounts
+  namespace: accounts
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "accounts.{{ .Values.domain}}."
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgconfig
+  namespace: accounts
+  labels:
+    app: Postgres
+data:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: topsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: accounts
+  labels:
+    app: postgres
+spec:
+  ports:
+  - port: 5432
+    name: tcp-postgres
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-v1
+  namespace: accounts
+spec:
+  replicas: 1
+  serviceName: "postgres"
+  selector:
+    matchLabels:
+      app: postgres
+      version: v1
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app: postgres
+        version: v1
+    spec:
+      containers:
+      - image: postgres:latest
+        name: postgres
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: pgconfig

@@ -13,3 +13,7 @@ web:
   quoteServiceUrl: http://quotes-service.quotes:8080
 quotes:
   certName: quotes-cert
+portfolio:
+  certName: portfolio-cert
+accounts:
+  certName: accounts-cert

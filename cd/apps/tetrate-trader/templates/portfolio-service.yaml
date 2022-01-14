@@ -1,0 +1,146 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: portfolio
+  labels:
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portfolio-service
+  namespace: portfolio
+  labels:
+    app: portfolio
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: portfolio
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio
+  namespace: portfolio
+  annotations:
+    fluxcd.io/automated: 'true'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portfolio
+      version: v1
+  template:
+    metadata:
+      name: portfolio
+      labels:
+        app: portfolio
+        version: v1
+    spec:
+      containers:
+        - image: gcr.io/abz-perm/portfolio:v1
+          name: portfolio-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+          env:
+            - name: TETRATE_ACCOUNTSERVICEURL
+              value: http://accounts-service.accounts:8080
+            - name: TETRATE_QUOTESERVICEURL
+              value: http://quotes-service.quotes:8080
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/postgres"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "topsecret"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.portfolio.certName}}
+  namespace: portfolio
+spec:
+  secretName: {{ .Values.portfolio.certName}}
+  issuerRef:
+    name: {{ .Values.certificate.clusterIssuer}}
+    kind: ClusterIssuer
+  dnsNames:
+    - portfolio.{{ .Values.domain}}
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: tsb-gateway-portfolio
+  namespace: portfolio
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "portfolio.{{ .Values.domain}}."
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgconfig
+  namespace: portfolio
+  labels:
+    app: Postgres
+data:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: topsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: portfolio
+  labels:
+    app: postgres
+spec:
+  ports:
+  - port: 5432
+    name: tcp-postgres
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-v1
+  namespace: portfolio
+spec:
+  replicas: 1
+  serviceName: "postgres"
+  selector:
+    matchLabels:
+      app: postgres
+      version: v1
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app: postgres
+        version: v1
+    spec:
+      containers:
+      - image: postgres:latest
+        name: postgres
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: pgconfig
