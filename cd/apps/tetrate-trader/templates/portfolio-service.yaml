@@ -64,6 +64,8 @@ spec:
               value: "postgres"
             - name: TETRATE_OIDC_URL
               value: "https://keycloak.tetrate.cloud.zwickey.net" #Externalize
+            - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
+              value: {{ .Values.oidc.issuerUri }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
