@@ -5,7 +5,7 @@ certificate:
 oidc: 
   clientId: tetrate-trader
   client-secret: tetrate-trader
-  issuerUri: https://keycloak.cloud.zwickey.net/auth/realms/tetrate
+  issuerUri: https://keycloak.tetrate.cloud.zwickey.net/auth/realms/tetrate
 web:  
   certName: web-cert
   accountServiceUrl: http://accounts-service.accounts:8080
