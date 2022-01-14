@@ -58,7 +58,7 @@ spec:
             value: {{ .Values.web.accountServiceUrl }}
           - name: TETRATE_PORTFOLIOSERVICEURL
             value: {{ .Values.web.portfolioServiceUrl }}
-          - name: SPRING_SECURTY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER-URI
+          - name: SPRING_SECURTY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
             value: {{ .Values.oidc.issuerUri }}
 ---
 apiVersion: cert-manager.io/v1
