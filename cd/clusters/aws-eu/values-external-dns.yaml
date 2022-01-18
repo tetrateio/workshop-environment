@@ -3,6 +3,7 @@ sources:
   - ingress
 domainFilters: ["zwickey.net"] # EDIT ME
 provider: google
+registry: noop
 google:
   project: abz-perm # EDIT ME
   serviceAccountSecret: external-dns-gcp # No need to change this, will be created automatically
