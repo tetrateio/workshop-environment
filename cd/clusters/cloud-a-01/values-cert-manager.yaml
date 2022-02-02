@@ -1,5 +1,5 @@
 provider: google
 email: someone@tetrate.io
-zone: cx-workshop-dns
+zone: workshop.cx.tetrate.info
 google:
   project: cx-demo-shared
