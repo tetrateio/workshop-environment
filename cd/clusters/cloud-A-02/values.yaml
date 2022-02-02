@@ -5,7 +5,7 @@ targetRevision: adam-working
 # This needs to line up with registered cluster name in argo.
 #    Use scripts/add-cluster-to-argo.sh to register a k8s cluster with ArgoCD as deployment target
 ######################################################################
-cluster: tier1
+cluster: cloud-A-02
 
 # apps:
 #   bookinfo:
