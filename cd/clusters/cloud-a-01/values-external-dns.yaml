@@ -3,6 +3,7 @@ sources:
   - ingress
 domainFilters: ["workshop.cx.tetrate.info"]
 provider: google
+registry: noop
 google:
   project: cx-demo-shared
   serviceAccountSecret: external-dns-gcp
