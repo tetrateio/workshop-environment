@@ -1,0 +1,5 @@
+provider: google
+email: someone@tetrate.io
+zone: workshop.cx.tetrate.info
+google:
+  project: cx-demo-shared
