@@ -4,12 +4,17 @@ Gitops Repo for building environment configurations for the [TSB 101 Workshop.](
 ## Prerequisites
 - Tetrate Hosted TSB env linked to Tetrate PoC Azure AD.  [See this env for an example](https://github.com/tetrateio/tetrate/blob/master/cloud/projects/organization/configuration/index.ts#L139-L161)  
 The cluster names defined in TSB in the hosted environment will differ for every environment.  As such, you will need to rename the clusters in your kubernetes config context to match the consistent naming used in the workshop environment:  
-| Hosted Cluster | Cloud | Region    | Workshop Cluster Name |  
-|----------------|-------|-----------|-----------------------|  
-| Azure Tier 1   | Azure | eastus2   | tier1                 |  
-| Azure East     | Azure | eastus2   | cloud-a-01            |  
-| Azure West     | Azure | westus2   | cloud-a-02            |  
-| AWS East       | AWS   | us-east-2 | cloud-b-01            |  
+Azure Tier 1: tier1  
+Azure East: cloud-a-01  
+Azure West: cloud-a-02   
+AWS East: cloud-b-01  
+To rename use kubectx:    
+```bash  
+kubectx tier1=<AZURE_TIER1_CLUSTER_NAME>  
+kubectx cloud-a-01=<AZURE_EAST_CLUSTER_NAME>  
+kubectx cloud-a-02=<AZURE_WEST_CLUSTER_NAME>  
+kubectx cloud-b-01=<AWS_EAST_CLUSTER_NAME>  
+```
 
 - Import Users/Groups into AD.  [See this worksheet for examples of how to do this](https://docs.google.com/spreadsheets/d/1l1hoYYM4VuMAAnS9s1cAETAP7kXPB41A9Az3C-iSCEQ/edit#gid=222245595)
 - Create Jumpboxes.  Use the [TSB-Workshop-Template](https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#LaunchTemplateDetails:launchTemplateId=lt-00618441ea7d113be) AWS Launch Template for creating the jumpboxes.
