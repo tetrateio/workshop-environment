@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+kubectx $1
 export CONTEXT=$(kubectl config current-context)
 echo "Adding $CONTEXT cluster to ArgoCD"
 
