@@ -62,3 +62,4 @@ source scripts/prepare-user-env.sh <PATH_TO_ATTENDEE_CSV>
 ## Misc Notes & TODOs
 - Tetrate org is assumed to be `tetrate-workshop`
 - TSB MP Address is set in the cloud-init for the launch template.  May need to be updated.  This is also hardcoded in a few places in the workshop steps
+- TSB Cluster name mappings (e.g. cloud-a-01 == SOME_TSB_CLUSTER_NAME) is set in the cloud-init for the launch template.  This will need to be updated as different TSB HOsted environments are used.
