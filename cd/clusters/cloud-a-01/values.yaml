@@ -1,5 +1,5 @@
 repoURL: https://github.com/tetrateio/workshop-environment
-targetRevision: adam-working
+targetRevision: workshop-101
 
 ######################################################################
 # This needs to line up with registered cluster name in argo.
