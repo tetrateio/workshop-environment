@@ -5,7 +5,7 @@ metadata:
   description: $PREFIX Workshop
   displayName: $PREFIX Workshop
   name: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
 spec:
   description: $PREFIX Workshop
   displayName: $PREFIX Workshop
@@ -14,11 +14,11 @@ apiVersion: rbac.tsb.tetrate.io/v2
 kind: TenantAccessBindings
 metadata:
   name: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
   tenant: $PREFIX-workshop
 spec:
   allow:
   - role: rbac/admin
     subjects:
     - user: admin
-    - user: organizations/tetrate-workshop/users/$AD_UID
+    - user: organizations/workshop/users/$AD_UID

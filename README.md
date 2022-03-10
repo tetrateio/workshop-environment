@@ -47,7 +47,43 @@ source ./scripts/add-cluster-to-argo.sh cloud-b-01
 
 - Configure Application(s) in ArgoCD:
 ```bash
-xxxx
+export BASE64_GCP_JSON_CRED=$(cat <PATH-TO-GCP-JSON-CREDENTIAL> | base64)
+# Tier1
+argocd app create tier1-app-of-apps \
+  --repo https://github.com/tetrateio/workshop-environment \
+  --revision workshop-101 \
+  --dest-name in-cluster \
+  --label cluster=tier1 \
+  --sync-policy automated \
+  --path cd/clusters/tier1 \
+  --helm-set gcpJsonCredential=$BASE64_GCP_JSON_CRED
+# Cloud A 01
+argocd app create cloud-a-01-app-of-apps \
+  --repo https://github.com/tetrateio/workshop-environment \
+  --revision workshop-101 \
+  --dest-name in-cluster \
+  --label cluster=cloud-a-01 \
+  --sync-policy automated \
+  --path cd/clusters/cloud-a-01 \
+  --helm-set gcpJsonCredential=$BASE64_GCP_JSON_CRED
+# Cloud A 02
+argocd app create cloud-a-02-app-of-apps \
+  --repo https://github.com/tetrateio/workshop-environment \
+  --revision workshop-101 \
+  --dest-name in-cluster \
+  --label cluster=cloud-a-02 \
+  --sync-policy automated \
+  --path cd/clusters/cloud-a-02 \
+  --helm-set gcpJsonCredential=$BASE64_GCP_JSON_CRED
+# Cloud B 01
+argocd app create cloud-b-01-app-of-apps \
+  --repo https://github.com/tetrateio/workshop-environment \
+  --revision workshop-101 \
+  --dest-name in-cluster \
+  --label cluster=cloud-b-01 \
+  --sync-policy automated \
+  --path cd/clusters/cloud-b-01 \
+  --helm-set gcpJsonCredential=$BASE64_GCP_JSON_CRED
 ```
 
 - Prepare Jumpboxes, Tenants, etc by executing the script: [scripts/prepare-user-env.sh](scripts/prepare-user-env.sh).  To execute this script you'll need a few env vars set:  
@@ -60,6 +96,6 @@ source scripts/prepare-user-env.sh <PATH_TO_ATTENDEE_CSV>
 ```
 
 ## Misc Notes & TODOs
-- Tetrate org is assumed to be `tetrate-workshop`
+- Tetrate org is assumed to be `workshop`.  If different this needs to be updated in `scripts/tenant.yaml` as well a large number of YAML files in the workshop labs.
 - TSB MP Address is set in the cloud-init for the launch template.  May need to be updated.  This is also hardcoded in a few places in the workshop steps
 - TSB Cluster name mappings (e.g. cloud-a-01 == SOME_TSB_CLUSTER_NAME) is set in the cloud-init for the launch template.  This will need to be updated as different TSB HOsted environments are used.
