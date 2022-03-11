@@ -1,0 +1,8 @@
+spec:
+  meshExpansion:
+    onboarding:
+      endpoint:
+        hosts:
+        - onboarding.workshop.cx.tetrate.info
+        secretName: onboarding-cert
+      localRepository: {} 

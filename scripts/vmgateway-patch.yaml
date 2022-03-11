@@ -1,0 +1,4 @@
+
+metadata:
+  annotations:
+   "external-dns.alpha.kubernetes.io/hostname": "onboarding.workshop.cx.tetrate.info."
