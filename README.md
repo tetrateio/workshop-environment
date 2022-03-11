@@ -15,7 +15,7 @@ kubectx cloud-a-02=<AZURE_WEST_CLUSTER_NAME>
 kubectx cloud-b-01=<AWS_EAST_CLUSTER_NAME>  
 ```
 
-- Import Users/Groups into AD.  [See this worksheet for examples of how to do this](https://docs.google.com/spreadsheets/d/1l1hoYYM4VuMAAnS9s1cAETAP7kXPB41A9Az3C-iSCEQ/edit#gid=222245595)  You'll need to use the complete the user-import and group-import tabs and export as a CSV.  The output in Azure AD from importing users needs to be used as an input to group-import.
+- Import Users/Groups into AD.  [See this worksheet for examples of how to do this](https://docs.google.com/spreadsheets/d/1l1hoYYM4VuMAAnS9s1cAETAP7kXPB41A9Az3C-iSCEQ/edit#gid=222245595)  You'll need to complete the user-import and group-import tabs and export as a CSV.  The output in Azure AD from importing users needs to be used as an input to group-import.
 - Create Jumpboxes.  Use the [TSB-Workshop-Template](https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#LaunchTemplateDetails:launchTemplateId=lt-00618441ea7d113be) AWS Launch Template for creating the jumpboxes.
 - Complete the `Attendee List` sheet in the the Google Worksheet from step one.  Export this as a CSV.
 
