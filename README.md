@@ -99,3 +99,13 @@ source scripts/prepare-user-env.sh <PATH_TO_ATTENDEE_CSV>
 - Tetrate org is assumed to be `workshop`.  If different this needs to be updated in `scripts/tenant.yaml` as well a large number of YAML files in the workshop labs.
 - TSB MP Address is set in the cloud-init for the launch template.  May need to be updated.  This is also hardcoded in a few places in the workshop steps
 - TSB Cluster name mappings (e.g. cloud-a-01 == SOME_TSB_CLUSTER_NAME) is set in the cloud-init for the launch template.  This will need to be updated as different TSB HOsted environments are used.
+- Tetrate hosted doesn't have VM onboarding enabled by default.  This needs to be added/updated.  First, select a onboarding endpoint within the `*.workshop.cx.tetrate.info` domain.  Using the domain you've selected, update the file that contain a FQDN within the Workshop-101 labs: [/05-vm-integration/04-onboarding-config.yaml](https://github.com/tetrateio/workshop-101/blob/main/05-vm-integration/04-onboarding-config.yaml).  Next, update these files within this repository with the domain you've selected: [scripts/onboarding-cert.yaml](https://github.com/tetrateio/workshop-environment/blob/workshop-101/scripts/onboarding-cert.yaml), [scripts/controlplane-patch.yaml](https://github.com/tetrateio/workshop-environment/blob/workshop-101/scripts/controlplane-patch.yaml), [vmgateway-patch.yaml](https://github.com/tetrateio/workshop-environment/blob/workshop-101/scripts/vmgateway-patch.yaml).  Apply or patch these to the cloud-a-01 kubernetes cluster:  
+```bash
+kubectl --context cloud-a-01 apply -f scripts/onboarding-cert.yaml
+kubectl --context cloud-a-01 patch controlplanes.install.tetrate.io tsb -n istio-system \
+  --patch-file scripts/controlplane-patch.yaml --type merge
+# Ensure that VMGateway Objects are create:
+kubectl --context cloud-a-01 get all -n istio-system -l app=vmgateway
+kubectl --context cloud-a-01 patch service vmgateway -n istio-system  \
+  --patch-file scripts/vmgateway-patch.yaml --type merge
+```
