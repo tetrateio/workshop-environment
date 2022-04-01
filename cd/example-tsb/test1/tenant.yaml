@@ -1,9 +1,0 @@
----
-apiVersion: api.tsb.tetrate.io/v2
-kind: Tenant
-metadata:
-  organization: tetrate-workshop
-  name: adam-demo
-spec:
-  description: Adam Demo
-  displayName: Adam Demo

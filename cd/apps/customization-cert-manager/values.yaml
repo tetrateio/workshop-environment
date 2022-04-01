@@ -1,6 +1,0 @@
-gcpJsonCredential: "!!!CHANGE_ME!!!" 
-provider: google
-email: test@example.com
-zone: example.com
-google:
-  project: my-project
