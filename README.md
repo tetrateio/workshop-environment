@@ -109,3 +109,5 @@ kubectl --context cloud-a-01 get all -n istio-system -l app=vmgateway
 kubectl --context cloud-a-01 patch service vmgateway -n istio-system  \
   --patch-file scripts/vmgateway-patch.yaml --type merge
 ```
+
+temp
