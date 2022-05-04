@@ -1,5 +1,5 @@
-# Workshop 101 Environment
-Gitops Repo for building environment configurations for the [TSB 101 Workshop.](https://github.com/tetrateio/workshop-101).
+# Kubecon EU Demo Booth Env
+Gitops Repo for building environment configurations for the Kubecon EU Demo Booth.
 
 ## Prerequisites
 - Tetrate Hosted TSB env linked to Tetrate PoC Azure AD.  [See this env for an example](https://github.com/liamawhite/tetrate/blob/7db57b3f83649da34264abf21d58fef635484290/cloud/projects/hosted/configuration/index.ts#L96-L124)  The cluster names defined in TSB in the hosted environment will differ for every environment.  As such, you will need to rename the clusters in your kubernetes config context to match the consistent naming used in the workshop environment:  
