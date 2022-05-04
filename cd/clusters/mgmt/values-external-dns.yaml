@@ -1,7 +1,7 @@
 sources:
   - service
   - ingress
-domainFilters: ["zwickey.net"] # EDIT ME
+domainFilters: ["tetrate.cloud.zwickey.net"] # EDIT ME
 provider: google
 google:
   project: abz-perm # EDIT ME
