@@ -1,1 +1,5 @@
-auth.postgresPassword: secretpassword
+global:
+  postgresql:
+    auth:
+      username: tetrate
+      password: changeme
