@@ -1,0 +1,19 @@
+repoURL: https://github.com/tetrateio/workshop-environment
+targetRevision: kubecon-eu
+
+######################################################################
+# This needs to line up with registered cluster name in argo.
+#    Use scripts/add-cluster-to-argo.sh to register a k8s cluster with ArgoCD as deployment target
+######################################################################
+cluster: kubecon-aws-east
+
+# apps:
+#   bookinfo:
+#     detailsFQDN: details.tetrate.mesh #Can override if needed
+
+###############################
+## Each of values below are injected when configuring in ArgoCD
+###############################
+gcpJsonCredential: "!!!CHANGE_ME!!!" 
+# tsb:
+#   password: "!!!CHANGE_ME!!!" 
