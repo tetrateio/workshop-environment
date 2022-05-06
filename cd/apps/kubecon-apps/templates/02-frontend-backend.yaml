@@ -58,7 +58,7 @@ spec:
         - name: INJECTION
           value: "enabled"
         - name: CLUSTER
-          value: "azure-east"
+          value: {{ .Values.cluster }}
 ---
 apiVersion: v1
 kind: Service
@@ -115,7 +115,7 @@ spec:
         - name: UDP_PORTS
           value: "9001,9002,9003"
         - name: CLUSTER
-          value: "azure-east"
+          value: {{ .Values.cluster }}
         - name: IMG
           value: "https://i.imgur.com/1uYroRF.gif"
         # - name: LATENCY
@@ -131,7 +131,7 @@ spec:
     service:
       type: LoadBalancer
       annotations:
-        "external-dns.alpha.kubernetes.io/hostname": "frontend-{{ . }}.azure-east.kubecon.cx.tetrate.info."
+        "external-dns.alpha.kubernetes.io/hostname": "frontend-{{ . }}.{{ .Values.cluster }}.kubecon.cx.tetrate.info."
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -144,5 +144,5 @@ spec:
     name: letsencrypt-dns-cluster-issuer
     kind: ClusterIssuer
   dnsNames:
-    - frontend-{{ . }}.azure-east.kubecon.cx.tetrate.info
+    - frontend-{{ . }}.{{ .Values.cluster }}.kubecon.cx.tetrate.info
 {{- end }}

@@ -23,3 +23,7 @@ spec:
     targetRevision: {{ .Values.targetRevision }}
     helm:
       releaseName: apps
+      # Extra parameters to set (same as setting through values.yaml, but these take precedence)
+      parameters:
+      - name: "cluster"
+        value: "azure-east"
