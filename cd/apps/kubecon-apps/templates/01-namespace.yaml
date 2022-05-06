@@ -1,0 +1,325 @@
+{{- range $value.hosts }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ . }}-app
+  labels:
+    istio-injection: enabled
+{{- end }}
+
+
+
+
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: frontend
+#   namespace: adam-app
+#   labels:
+#     app: frontend
+#     version: v1
+# spec:
+#   ports:
+#   - port: 8888
+#     name: http
+#   selector:
+#     app: frontend
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: frontend
+#   namespace: adam-app
+#   labels:
+#     app: frontend
+#     version: v1
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: frontend
+#       version: v1
+#   template:
+#     metadata:
+#       labels:
+#         app: frontend
+#         version: v1
+#     spec:
+#       containers:
+#       - name: frontend
+#         image: gcr.io/abz-perm/frontend-demo:latest
+#         imagePullPolicy: Always
+#         ports:
+#         - containerPort: 8888
+#         env:
+#         - name: PORT
+#           value: "8888"
+#         - name: NAMESPACE
+#           valueFrom:
+#             fieldRef:
+#               fieldPath: metadata.namespace
+#         - name: INJECTION
+#           value: "enabled"
+#         - name: CLUSTER
+#           value: "azure-east"
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: backend
+#   namespace: adam-app
+#   labels:
+#     app: backend
+#     version: v1
+# spec:
+#   ports:
+#   - port: 8080
+#     name: http-main
+#   - port: 80
+#     targetPort: 8888
+#     name: http-cats
+#   selector:
+#     app: backend
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: backend
+#   namespace: adam-app
+#   labels:
+#     app: backend
+#     version: v1
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: backend
+#       version: v1
+#   template:
+#     metadata:
+#       labels:
+#         app: backend
+#         version: v1
+#     spec:
+#       containers:
+#       - name: backend
+#         image: gcr.io/abz-perm/backend-demo:latest
+#         imagePullPolicy: Always
+#         ports:
+#         - containerPort: 8080
+#         - containerPort: 8888
+#         env:
+#         - name: PORT
+#           value: "8080"
+#         - name: GOPACKAGENAME
+#           value: "example-apps/cats-and-dogs-with-service-discovery/backend"
+#         - name: CATS_PORTS
+#           value: "8888"
+#         - name: UDP_PORTS
+#           value: "9001,9002,9003"
+#         - name: CLUSTER
+#           value: "azure-east"
+#         - name: IMG
+#           value: "https://i.imgur.com/1uYroRF.gif"
+#         # - name: LATENCY
+#         #   value: "2"
+# ---
+# apiVersion: install.tetrate.io/v1alpha1
+# kind: IngressGateway
+# metadata:
+#   name: adam-app-gateway
+#   namespace: adam-app
+# spec:
+#   kubeSpec:
+#     service:
+#       type: LoadBalancer
+#       annotations:
+#         "external-dns.alpha.kubernetes.io/hostname": "frontend-adam.azure-east.kubecon.cx.tetrate.info."
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: frontend
+#   namespace: adam-app
+# spec:
+#   secretName: frontend-cert
+#   issuerRef:
+#     name: letsencrypt-dns-cluster-issuer
+#     kind: ClusterIssuer
+#   dnsNames:
+#     - frontend-adam.azure-east.kubecon.cx.tetrate.info
+
+
+# # ---
+# # apiVersion: v1
+# # kind: Namespace
+# # metadata:
+# #   name: adam-quotes
+# #   labels:
+# #     istio-injection: enabled
+# # ---
+# # apiVersion: v1
+# # kind: Service
+# # metadata:
+# #   name: quotes-service
+# #   namespace: adam-quotes
+# #   labels:
+# #     app: quotes
+# # spec:
+# #   ports:
+# #   - port: 8080
+# #     name: http
+# #   selector:
+# #     app: quotes
+# #   type: ClusterIP
+# # ---
+# # apiVersion: apps/v1
+# # kind: Deployment
+# # metadata:
+# #   name: quotes
+# #   namespace: adam-quotes
+# # spec:
+# #   replicas: 2
+# #   selector:
+# #     matchLabels:
+# #       app: quotes
+# #       version: v1
+# #   template:
+# #     metadata:
+# #       name: quotes
+# #       labels:
+# #         app: quotes
+# #         version: v1
+# #     spec:
+# #       containers:
+# #         - image: gcr.io/abz-perm/quotes:v1
+# #           name: quotes-service
+# #           imagePullPolicy: Always
+# #           ports:
+# #             - containerPort: 8080
+# #               name: http
+# #               protocol: TCP
+# #           readinessProbe:
+# #             httpGet:
+# #               path: /actuator/health
+# #               port: 8080
+
+
+
+# # ---
+# # apiVersion: v1
+# # kind: Namespace
+# # metadata:
+# #   name: $PREFIX-quotes
+# #   labels:
+# #     istio-injection: enabled
+
+# # ---
+# # apiVersion: install.tetrate.io/v1alpha1
+# # kind: IngressGateway
+# # metadata:
+# #   name: bookinfo-tsb-gateway
+# #   namespace: bookinfo
+# # spec:
+# #   kubeSpec:
+# #     service:
+# #       type: LoadBalancer
+# #       annotations:
+# #         "external-dns.alpha.kubernetes.io/hostname": "bookinfo.workshop.cx.tetrate.info."
+# # ---
+# # apiVersion: cert-manager.io/v1
+# # kind: Certificate
+# # metadata:
+# #   name: bookinfo-certs
+# #   namespace: bookinfo
+# # spec:
+# #   secretName: bookinfo-certs
+# #   issuerRef:
+# #     name: letsencrypt-dns-cluster-issuer
+# #     kind: ClusterIssuer
+# #   dnsNames:
+# #     - bookinfo.workshop.cx.tetrate.info
+# # ---
+# # apiVersion: v1
+# # kind: Namespace
+# # metadata:
+# #   name: trafficgenerator
+# #   labels:
+# #     istio-injection: enabled
+# # ---
+# # apiVersion: apps/v1
+# # kind: Deployment
+# # metadata:
+# #   labels:
+# #     app: bookinfo-trafficgenerator
+# #   name: bookinfo-trafficgenerator
+# #   namespace: trafficgenerator
+# # spec:
+# #   progressDeadlineSeconds: 600
+# #   replicas: 1
+# #   selector:
+# #     matchLabels:
+# #       app: bookinfo-trafficgenerator
+# #   strategy:
+# #     rollingUpdate:
+# #       maxSurge: 25%
+# #       maxUnavailable: 25%
+# #     type: RollingUpdate
+# #   template:
+# #     metadata:
+# #       labels:
+# #         app: bookinfo-trafficgenerator
+# #     spec:
+# #       containers:
+# #       - args:
+# #         - /bin/sh
+# #         - -c
+# #         - "while true; do curl -v http://bookinfo.workshop.cx.tetrate.info/productpage; sleep 10; done"
+# #         image: appropriate/curl
+# #         imagePullPolicy: Always
+# #         name: trafficgenerator
+# #         resources: {}
+# #         terminationMessagePath: /dev/termination-log
+# #         terminationMessagePolicy: File
+# #       dnsPolicy: ClusterFirst
+# #       restartPolicy: Always
+# # ---
+# # apiVersion: apps/v1
+# # kind: Deployment
+# # metadata:
+# #   labels:
+# #     app: quotes-trafficgenerator
+# #   name: quotes-trafficgenerator
+# #   namespace: trafficgenerator
+# # spec:
+# #   progressDeadlineSeconds: 600
+# #   replicas: 1
+# #   selector:
+# #     matchLabels:
+# #       app: quotes-trafficgenerator
+# #   strategy:
+# #     rollingUpdate:
+# #       maxSurge: 25%
+# #       maxUnavailable: 25%
+# #     type: RollingUpdate
+# #   template:
+# #     metadata:
+# #       labels:
+# #         app: quotes-trafficgenerator
+# #     spec:
+# #       containers:
+# #       - args:
+# #         - /bin/sh
+# #         - -c
+# #         - "while true; do curl -v https://quotes.papa.workshop.cx.tetrate.info/quotes/GOOG  ; sleep 10; done"
+# #         image: appropriate/curl
+# #         imagePullPolicy: Always
+# #         name: trafficgenerator
+# #         resources: {}
+# #         terminationMessagePath: /dev/termination-log
+# #         terminationMessagePolicy: File
+# #       dnsPolicy: ClusterFirst
+# #       restartPolicy: Always
