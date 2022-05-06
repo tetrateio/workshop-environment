@@ -151,15 +151,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $PREFIX-frontend
-  name: $PREFIX-frontend
+    app: {{ . }}-frontend
+  name: {{ . }}-frontend
   namespace: trafficgenerator
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   selector:
     matchLabels:
-      app: $PREFIX-frontend
+      app: {{ . }}-frontend
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -168,7 +168,7 @@ spec:
   template:
     metadata:
       labels:
-        app: $PREFIX-frontend
+        app: {{ . }}-frontend
     spec:
       containers:
       - args:
