@@ -18,7 +18,7 @@ spec:
     syncOptions: 
     - CreateNamespace=true
   source:
-    path: cd/apps/kubecon-apps-tier1
+    path: cd/apps/kubecon-apps
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:
