@@ -1,3 +1,5 @@
+{{- $cluster := .Values.cluster -}}
+{{- if eq $cluster "aws-east" }}
 {{- range .Values.environments }}
 ---
 apiVersion: v1
@@ -6,6 +8,7 @@ metadata:
   name: {{ . }}-quotes
   labels:
     istio-injection: enabled
+{{- end }}
 {{- end }}
 
 
