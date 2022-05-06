@@ -7,8 +7,13 @@ metadata:
   labels:
     istio-injection: enabled
 {{- end }}
-
-
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trafficgenerator
+  labels:
+    istio-injection: enabled
 
 
 
