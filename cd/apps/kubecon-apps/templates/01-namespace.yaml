@@ -1,4 +1,4 @@
-{{- range $value.hosts }}
+{{- range .Values.environments }}
 ---
 apiVersion: v1
 kind: Namespace
