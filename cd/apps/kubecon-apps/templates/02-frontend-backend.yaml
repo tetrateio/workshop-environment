@@ -1,0 +1,148 @@
+{{- range .Values.environments }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ . }}-app
+  labels:
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: {{ . }}-app
+  labels:
+    app: frontend
+    version: v1
+spec:
+  ports:
+  - port: 8888
+    name: http
+  selector:
+    app: frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: {{ . }}-app
+  labels:
+    app: frontend
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v1
+    spec:
+      containers:
+      - name: frontend
+        image: gcr.io/abz-perm/frontend-demo:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8888
+        env:
+        - name: PORT
+          value: "8888"
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: INJECTION
+          value: "enabled"
+        - name: CLUSTER
+          value: "azure-east"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: {{ . }}-app
+  labels:
+    app: backend
+    version: v1
+spec:
+  ports:
+  - port: 8080
+    name: http-main
+  - port: 80
+    targetPort: 8888
+    name: http-cats
+  selector:
+    app: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: {{ . }}-app
+  labels:
+    app: backend
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: v1
+    spec:
+      containers:
+      - name: backend
+        image: gcr.io/abz-perm/backend-demo:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        - containerPort: 8888
+        env:
+        - name: PORT
+          value: "8080"
+        - name: GOPACKAGENAME
+          value: "example-apps/cats-and-dogs-with-service-discovery/backend"
+        - name: CATS_PORTS
+          value: "8888"
+        - name: UDP_PORTS
+          value: "9001,9002,9003"
+        - name: CLUSTER
+          value: "azure-east"
+        - name: IMG
+          value: "https://i.imgur.com/1uYroRF.gif"
+        # - name: LATENCY
+        #   value: "2"
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: {{ . }}-app-gateway
+  namespace: {{ . }}-app
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "frontend-{{ . }}.azure-east.kubecon.cx.tetrate.info."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: frontend
+  namespace: {{ . }}-app
+spec:
+  secretName: frontend-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - frontend-{{ . }}.azure-east.kubecon.cx.tetrate.info
+{{- end }}
