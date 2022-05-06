@@ -1,0 +1,65 @@
+# {{- range .Values.environments }}
+# ---
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: {{ . }}-quotes
+#   labels:
+#     istio-injection: enabled
+# {{- end }}
+
+
+
+# # ---
+# # apiVersion: v1
+# # kind: Namespace
+# # metadata:
+# #   name: adam-quotes
+# #   labels:
+# #     istio-injection: enabled
+# # ---
+# # apiVersion: v1
+# # kind: Service
+# # metadata:
+# #   name: quotes-service
+# #   namespace: adam-quotes
+# #   labels:
+# #     app: quotes
+# # spec:
+# #   ports:
+# #   - port: 8080
+# #     name: http
+# #   selector:
+# #     app: quotes
+# #   type: ClusterIP
+# # ---
+# # apiVersion: apps/v1
+# # kind: Deployment
+# # metadata:
+# #   name: quotes
+# #   namespace: adam-quotes
+# # spec:
+# #   replicas: 2
+# #   selector:
+# #     matchLabels:
+# #       app: quotes
+# #       version: v1
+# #   template:
+# #     metadata:
+# #       name: quotes
+# #       labels:
+# #         app: quotes
+# #         version: v1
+# #     spec:
+# #       containers:
+# #         - image: gcr.io/abz-perm/quotes:v1
+# #           name: quotes-service
+# #           imagePullPolicy: Always
+# #           ports:
+# #             - containerPort: 8080
+# #               name: http
+# #               protocol: TCP
+# #           readinessProbe:
+# #             httpGet:
+# #               path: /actuator/health
+# #               port: 8080

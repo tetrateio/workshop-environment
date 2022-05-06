@@ -1,0 +1,9 @@
+# {{- range .Values.environments }}
+# ---
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: {{ . }}-microservices
+#   labels:
+#     istio-injection: enabled
+# {{- end }}

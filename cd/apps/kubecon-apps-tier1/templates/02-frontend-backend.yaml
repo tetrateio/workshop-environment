@@ -1,0 +1,35 @@
+{{- $cluster := .Values.cluster -}}
+{{- range .Values.environments }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ . }}-app-tier1
+  labels:
+    istio-injection: enabled
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: {{ . }}-app-gateway
+  namespace: {{ . }}-app-tier1
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "frontend-{{ . }}.kubecon.cx.tetrate.info."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: frontend
+  namespace: {{ . }}-app-tier1
+spec:
+  secretName: frontend-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - frontend-{{ . }}.kubecon.cx.tetrate.info
+{{- end }}
