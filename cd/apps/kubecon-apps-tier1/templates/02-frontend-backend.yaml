@@ -67,6 +67,6 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
+      # dnsPolicy: ClusterFirst
       restartPolicy: Always
 {{- end }}
