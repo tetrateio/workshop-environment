@@ -111,6 +111,51 @@ spec:
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  group: frontend-gw-02
+  workspace: wealth-mgmt
+  tenant: $PREFIX-apps
+  organization: kubecon
+spec:
+  workloadSelector:
+    namespace: $PREFIX-app
+    labels:
+      app: $PREFIX-app-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend-$PREFIX.azure-west.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/frontend.$PREFIX-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-internal
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend-$PREFIX.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/frontend.$PREFIX-app.svc.cluster.local"
+              port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.$PREFIX.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/backend.$PREFIX-app.svc.cluster.local"
+              port: 80
+---
+apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-apps
@@ -124,3 +169,48 @@ spec:
     names:
       - "aws-east/$PREFIX-app"
   configMode: BRIDGED  
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  group: frontend-gw-03
+  workspace: wealth-mgmt
+  tenant: $PREFIX-apps
+  organization: kubecon
+spec:
+  workloadSelector:
+    namespace: $PREFIX-app
+    labels:
+      app: $PREFIX-app-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend-$PREFIX.aws-east.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/frontend.$PREFIX-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-internal
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend-$PREFIX.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/frontend.$PREFIX-app.svc.cluster.local"
+              port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.$PREFIX.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/backend.$PREFIX-app.svc.cluster.local"
+              port: 80
