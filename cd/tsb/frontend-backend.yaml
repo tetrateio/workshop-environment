@@ -1,0 +1,126 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-apps
+  organization: kubecon
+  workspace: wealth-mgmt
+  name: tier1-gw
+spec:
+  displayName: Tier 1 Gateway
+  description: Tier 1 Gateway
+  namespaceSelector:
+    names:
+      - "*/$PREFIX-app-tier1"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: tier1-gateway
+  group: tier1-gw
+  workspace: wealth-mgmt
+  tenant: $PREFIX-apps
+  organization: kubecon
+spec:
+  workloadSelector:
+    namespace: $PREFIX-app-tier1
+    labels:
+      app: $PREFIX-app-gateway
+  externalServers:
+  - hostname: frontend-$PREFIX.kubecon.cx.tetrate.info
+    name: frontend
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: frontend-cert
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-apps
+  organization: kubecon
+  workspace: wealth-mgmt
+  name: frontend-gw-01
+spec:
+  displayName: Frontend Gateway 01
+  description: Frontend Gateway 01
+  namespaceSelector:
+    names:
+      - "azure-east/$PREFIX-app"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  group: frontend-gw-01
+  workspace: wealth-mgmt
+  tenant: $PREFIX-apps
+  organization: kubecon
+spec:
+  workloadSelector:
+    namespace: $PREFIX-app
+    labels:
+      app: $PREFIX-app-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend-$PREFIX.azure-east.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/frontend.$PREFIX-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-internal
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend-$PREFIX.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/frontend.$PREFIX-app.svc.cluster.local"
+              port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.$PREFIX.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-app/backend.$PREFIX-app.svc.cluster.local"
+              port: 80
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-apps
+  organization: kubecon
+  workspace: wealth-mgmt
+  name: frontend-gw-02
+spec:
+  displayName: Frontend Gateway 02
+  description: Frontend Gateway 02
+  namespaceSelector:
+    names:
+      - "azure-west/$PREFIX-app"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-apps
+  organization: kubecon
+  workspace: wealth-mgmt
+  name: frontend-gw-03
+spec:
+  displayName: Frontend Gateway 03
+  description: Frontend Gateway 03
+  namespaceSelector:
+    names:
+      - "aws-east/$PREFIX-app"
+  configMode: BRIDGED  
