@@ -7,6 +7,31 @@ metadata:
   labels:
     istio-injection: enabled
 ---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: {{ . }}-customer360-gateway
+  namespace: {{ . }}-microservices
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "customer360-{{ . }}.{{ $cluster }}.kubecon.cx.tetrate.info."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: customer360
+  namespace: {{ . }}-microservices
+spec:
+  secretName: customer360-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - customer360-{{ . }}.{{ $cluster }}.kubecon.cx.tetrate.info
+---
 apiVersion: v1
 kind: Service
 metadata:
