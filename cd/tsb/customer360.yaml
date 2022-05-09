@@ -75,12 +75,20 @@ spec:
           - route:
               host: "$PREFIX-microservices/customer-portal.$PREFIX-microservices.svc.cluster.local"
               port: 80
-    - name: customer360-internal
+    - name: customer360-multicluster
       port: 443
       tls:
         mode: SIMPLE
         secretName: customer360-cert
       hostname: customer360-$PREFIX.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-microservices/customer-portal.$PREFIX-microservices.svc.cluster.local"
+              port: 80
+    - name: customer360-internal
+      port: 80
+      hostname: customer360.$PREFIX.mesh
       routing:
         rules:
           - route:
@@ -127,12 +135,20 @@ spec:
           - route:
               host: "$PREFIX-microservices/customer-portal.$PREFIX-microservices.svc.cluster.local"
               port: 80
-    - name: customer360-internal
+    - name: customer360-multicluster
       port: 443
       tls:
         mode: SIMPLE
         secretName: customer360-cert
       hostname: customer360-$PREFIX.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-microservices/customer-portal.$PREFIX-microservices.svc.cluster.local"
+              port: 80
+    - name: customer360-internal
+      port: 80
+      hostname: customer360.$PREFIX.mesh
       routing:
         rules:
           - route:
@@ -179,12 +195,20 @@ spec:
           - route:
               host: "$PREFIX-microservices/customer-portal.$PREFIX-microservices.svc.cluster.local"
               port: 80
-    - name: customer360-internal
+    - name: customer360-multicluster
       port: 443
       tls:
         mode: SIMPLE
         secretName: customer360-cert
       hostname: customer360-$PREFIX.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-microservices/customer-portal.$PREFIX-microservices.svc.cluster.local"
+              port: 80
+    - name: customer360-internal
+      port: 80
+      hostname: customer360.$PREFIX.mesh
       routing:
         rules:
           - route:
