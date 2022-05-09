@@ -249,7 +249,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: issues-service
+  name: issues-service-v1
   namespace: {{ . }}-microservices
   labels:
     app: issues-service
@@ -292,7 +292,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: issues-service
+  name: issues-service-v2
   namespace: {{ . }}-microservices
   labels:
     app: issues-service
