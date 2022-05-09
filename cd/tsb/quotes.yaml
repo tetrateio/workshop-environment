@@ -1,0 +1,49 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-apps
+  organization: kubecon
+  workspace: marketdata
+  name: quotes-gw
+spec:
+  displayName: Quotes Gateway
+  description: Quotes Gateway
+  namespaceSelector:
+    names:
+      - "aws-east/$PREFIX-quotes"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  group: quotes-gw
+  workspace: marketdata
+  tenant: $PREFIX-apps
+  organization: kubecon
+spec:
+  workloadSelector:
+    namespace: $PREFIX-quotes
+    labels:
+      app: $PREFIX-quotes-gateway
+  http:
+    - name: gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: quotes-cert
+      hostname: quotes-$PREFIX.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-quotes/quotes-service.$PREFIX-quotes.svc.cluster.local"
+              port: 8080
+    - name: quotes-internal
+      port: 80
+      hostname: quotes.$PREFIX.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-quotes/quotes-service.$PREFIX-quotes.svc.cluster.local"
+              port: 8080
