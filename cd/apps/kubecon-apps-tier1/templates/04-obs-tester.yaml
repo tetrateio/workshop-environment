@@ -60,7 +60,7 @@ spec:
       - args:
         - /bin/sh
         - -c
-        - "while true; do curl -v customer360-{{ . }}.kubecon.cx.tetrate.info; sleep 10; done"
+        - "while true; do curl -v https://customer360-{{ . }}.kubecon.cx.tetrate.info; sleep 10; done"
         image: appropriate/curl
         imagePullPolicy: Always
         name: trafficgenerator
