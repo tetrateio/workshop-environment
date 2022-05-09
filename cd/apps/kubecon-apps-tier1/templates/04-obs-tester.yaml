@@ -1,9 +1,72 @@
-# {{- range .Values.environments }}
-# ---
-# apiVersion: v1
-# kind: Namespace
-# metadata:
-#   name: {{ . }}-microservices
-#   labels:
-#     istio-injection: enabled
-# {{- end }}
+{{- $cluster := .Values.cluster -}}
+{{- range .Values.environments }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ . }}-microservices-tier1
+  labels:
+    istio-injection: enabled
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: {{ . }}-customer360-gateway
+  namespace: {{ . }}-microservices-tier1
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "customer360-{{ . }}.kubecon.cx.tetrate.info."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: customer360
+  namespace: {{ . }}-microservices-tier1
+spec:
+  secretName: customer360-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - customer360-{{ . }}.kubecon.cx.tetrate.info
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ . }}-customer360
+  name: {{ . }}-customer360
+  namespace: trafficgenerator
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ . }}-frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ . }}-frontend
+    spec:
+      containers:
+      - args:
+        - /bin/sh
+        - -c
+        - "while true; do curl -v customer360-{{ . }}.kubecon.cx.tetrate.info; sleep 10; done"
+        image: appropriate/curl
+        imagePullPolicy: Always
+        name: trafficgenerator
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      # dnsPolicy: ClusterFirst
+      restartPolicy: Always
+{{- end }}
