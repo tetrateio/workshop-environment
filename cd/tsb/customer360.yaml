@@ -1,0 +1,77 @@
+# ---
+# apiVersion: gateway.tsb.tetrate.io/v2
+# kind: Group
+# metadata:
+#   tenant: $PREFIX-apps
+#   organization: kubecon
+#   workspace: customer360
+#   name: tier1-gw
+# spec:
+#   displayName: Tier 1 Gateway
+#   description: Tier 1 Gateway
+#   namespaceSelector:
+#     names:
+#       - "*/$PREFIX-app-tier1"
+#   configMode: BRIDGED
+# ---
+# apiVersion: gateway.tsb.tetrate.io/v2
+# kind: Tier1Gateway
+# metadata:
+#   name: tier1-gateway
+#   group: tier1-gw
+#   workspace: wealth-mgmt
+#   tenant: $PREFIX-apps
+#   organization: kubecon
+# spec:
+#   workloadSelector:
+#     namespace: $PREFIX-app-tier1
+#     labels:
+#       app: $PREFIX-app-gateway
+#   externalServers:
+#   - hostname: frontend-$PREFIX.kubecon.cx.tetrate.info
+#     name: frontend
+#     port: 443
+#     tls:
+#       mode: SIMPLE
+#       secretName: frontend-cert
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-apps
+  organization: kubecon
+  workspace: customer360
+  name: customerportal-gw-01
+spec:
+  displayName: Customer Portal Gateway 01
+  description: Customer Portal 01
+  namespaceSelector:
+    names:
+      - "azure-east/$PREFIX-microservices"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  group: customerportal-gw-01
+  workspace: customer360
+  tenant: $PREFIX-apps
+  organization: kubecon
+spec:
+  workloadSelector:
+    namespace: $PREFIX-microservices
+    labels:
+      app: $PREFIX-customer360-gateway
+  http:
+    - name: customer360-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: customer360-cert
+      hostname: customer360-$PREFIX.azure-east.kubecon.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-microservices/customer-portal.$PREFIX-microservices.svc.cluster.local"
+              port: 80
