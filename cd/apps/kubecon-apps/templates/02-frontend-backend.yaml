@@ -50,10 +50,10 @@ spec:
         resources:
           limits:
             cpu: 50m
-            memory: 64Mi
+            memory: 32Mi
           requests:
             cpu: 10m
-            memory: 32Mi
+            memory: 16Mi
         ports:
         - containerPort: 8888
         env:
@@ -113,10 +113,10 @@ spec:
         resources:
           limits:
             cpu: 50m
-            memory: 64Mi
+            memory: 32Mi
           requests:
             cpu: 10m
-            memory: 32Mi
+            memory: 16Mi
         ports:
         - containerPort: 8080
         - containerPort: 8888
@@ -192,7 +192,13 @@ spec:
         image: appropriate/curl
         imagePullPolicy: Always
         name: trafficgenerator
-        resources: {}
+        resources:
+          limits:
+            cpu: 50m
+            memory: 32Mi
+          requests:
+            cpu: 10m
+            memory: 16Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
