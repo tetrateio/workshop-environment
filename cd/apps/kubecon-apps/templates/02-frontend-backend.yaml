@@ -145,7 +145,7 @@ spec:
     name: letsencrypt-dns-cluster-issuer
     kind: ClusterIssuer
   dnsNames:
-    - *.{{ $cluster }}.kubecon.cx.tetrate.info
+    - frontend-{{ . }}.{{ $cluster }}.kubecon.cx.tetrate.info
 ---
 apiVersion: apps/v1
 kind: Deployment
