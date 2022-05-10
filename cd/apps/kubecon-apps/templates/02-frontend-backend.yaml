@@ -110,6 +110,13 @@ spec:
       - name: backend
         image: gcr.io/abz-perm/backend-demo:latest
         imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 50m
+            memory: 64Mi
+          requests:
+            cpu: 10m
+            memory: 32Mi
         ports:
         - containerPort: 8080
         - containerPort: 8888

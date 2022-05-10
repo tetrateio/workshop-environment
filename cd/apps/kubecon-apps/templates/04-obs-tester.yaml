@@ -64,7 +64,13 @@ spec:
         image: appropriate/curl
         imagePullPolicy: Always
         name: trafficgenerator
-        resources: {}
+        resources:
+          limits:
+            cpu: 50m
+            memory: 64Mi
+          requests:
+            cpu: 10m
+            memory: 32Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
@@ -124,6 +130,13 @@ spec:
         - name: obs-tester
           image: gcr.io/abz-perm/obs-tester-server:1.0
           imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -197,6 +210,13 @@ spec:
         - name: obs-tester
           image: gcr.io/abz-perm/obs-tester-server:1.0
           imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -270,6 +290,13 @@ spec:
         - name: obs-tester
           image: gcr.io/abz-perm/obs-tester-server:1.0
           imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -313,6 +340,13 @@ spec:
         - name: obs-tester
           image: gcr.io/abz-perm/obs-tester-server:1.0
           imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -386,6 +420,13 @@ spec:
         - name: obs-tester
           image: gcr.io/abz-perm/obs-tester-server:1.0
           imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 64Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
