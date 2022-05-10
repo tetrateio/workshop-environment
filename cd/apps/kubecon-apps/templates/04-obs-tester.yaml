@@ -1,4 +1,5 @@
 {{- $cluster := .Values.cluster -}}
+{{- if ne $cluster "aws-east" }}
 {{- range .Values.environments }}
 ---
 apiVersion: v1
@@ -445,4 +446,5 @@ spec:
               containerPort: 8000
             - name: tcp
               containerPort: 3000
+{{- end }}
 {{- end }}
