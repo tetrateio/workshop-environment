@@ -2,9 +2,9 @@ cluster: foo
 environments:
   - adam
   - ignasi
-  - vt
-  - zack
-  - bas
+  # - vt
+  # - zack
+  # - bas
   # - peter
   # - eitan
   # - arko
