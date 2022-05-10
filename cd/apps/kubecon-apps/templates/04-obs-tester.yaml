@@ -67,10 +67,10 @@ spec:
         resources:
           limits:
             cpu: 50m
-            memory: 64Mi
+            memory: 4Mi
           requests:
             cpu: 10m
-            memory: 32Mi
+            memory: 16Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
@@ -133,10 +133,10 @@ spec:
           resources:
             limits:
               cpu: 50m
-              memory: 64Mi
+              memory: 16Mi
             requests:
               cpu: 10m
-              memory: 32Mi
+              memory: 4Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -213,10 +213,10 @@ spec:
           resources:
             limits:
               cpu: 50m
-              memory: 64Mi
+              memory: 16Mi
             requests:
               cpu: 10m
-              memory: 32Mi
+              memory: 4Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -293,10 +293,10 @@ spec:
           resources:
             limits:
               cpu: 50m
-              memory: 64Mi
+              memory: 16Mi
             requests:
               cpu: 10m
-              memory: 32Mi
+              memory: 4Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -343,10 +343,10 @@ spec:
           resources:
             limits:
               cpu: 50m
-              memory: 64Mi
+              memory: 16Mi
             requests:
               cpu: 10m
-              memory: 32Mi
+              memory: 4Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
@@ -423,10 +423,10 @@ spec:
           resources:
             limits:
               cpu: 50m
-              memory: 64Mi
+              memory: 16Mi
             requests:
               cpu: 10m
-              memory: 32Mi
+              memory: 4Mi
           args:
             - '--log-output-level=all:debug'
             - '--http-listen-address=:8000' # address the http server in the container listens on
