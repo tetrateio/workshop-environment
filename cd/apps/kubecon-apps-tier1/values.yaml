@@ -8,10 +8,10 @@ environments:
   # - peter
   # - eitan
   - arko
-  # - paul
-  # - jon
+  - paul
+  - jon
   - marc
   - daneyon
-  # - jainfei
+  - jainfei
   - liam
   - denis
