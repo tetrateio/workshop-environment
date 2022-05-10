@@ -9,6 +9,11 @@ metadata:
     istio-injection: enabled
 ---
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ . }}-security
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: frontend
@@ -147,6 +152,16 @@ spec:
       type: LoadBalancer
       annotations:
         "external-dns.alpha.kubernetes.io/hostname": "frontend-{{ . }}.{{ $cluster }}.kubecon.cx.tetrate.info."
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: EgressGateway
+metadata:
+  name: {{ . }}-cluster-egress
+  namespace: {{ . }}-security
+spec:
+  kubeSpec:
+    service:
+      type: ClusterIP
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
