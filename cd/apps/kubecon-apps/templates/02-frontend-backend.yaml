@@ -50,10 +50,10 @@ spec:
         resources:
           limits:
             cpu: 50m
-            memory: 32Mi
+            memory: 16Mi
           requests:
             cpu: 10m
-            memory: 16Mi
+            memory: 4Mi
         ports:
         - containerPort: 8888
         env:
@@ -113,10 +113,10 @@ spec:
         resources:
           limits:
             cpu: 50m
-            memory: 32Mi
+            memory: 16Mi
           requests:
             cpu: 10m
-            memory: 16Mi
+            memory: 4Mi
         ports:
         - containerPort: 8080
         - containerPort: 8888
@@ -195,10 +195,10 @@ spec:
         resources:
           limits:
             cpu: 50m
-            memory: 32Mi
+            memory: 16Mi
           requests:
             cpu: 10m
-            memory: 16Mi
+            memory: 4Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
