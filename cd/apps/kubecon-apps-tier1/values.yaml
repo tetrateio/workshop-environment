@@ -7,12 +7,11 @@ environments:
   - bas
   # - peter
   # - eitan
-  # - arko
-  # - bas
+  - arko
   # - paul
   # - jon
-  # - marc
-  # - daneyon
+  - marc
+  - daneyon
   # - jainfei
   # - liam
   # - denis
