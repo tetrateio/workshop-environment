@@ -1,19 +1,4 @@
 ---
-apiVersion: gateway.tsb.tetrate.io/v2
-kind: Group
-metadata:
-  tenant: $PREFIX-apps
-  organization: kubecon
-  workspace: marketdata
-  name: quotes-gw
-spec:
-  displayName: Quotes Gateway
-  description: Quotes Gateway
-  namespaceSelector:
-    names:
-      - "aws-east/$PREFIX-quotes"
-  configMode: BRIDGED
----
 apiversion: application.tsb.tetrate.io/v2
 kind: Application
 metadata:
@@ -24,7 +9,6 @@ spec:
   displayName: Market Data
   description: Market Data application
   workspace: organizations/kubecon/tenants/$PREFIX-apps/workspaces/marketdata
-  gatewayGroup: organizations/kubecon/tenants/$PREFIX-apps/workspaces/marketdata/gatewaygroups/quotes-gw
 apiVersion: gateway.tsb.tetrate.io/v2
 ---
 apiversion: application.tsb.tetrate.io/v2
@@ -124,6 +108,24 @@ spec:
               type: string
             exchange:
               type: string
+
+
+
+# ---
+# apiVersion: gateway.tsb.tetrate.io/v2
+# kind: Group
+# metadata:
+#   tenant: $PREFIX-apps
+#   organization: kubecon
+#   workspace: marketdata
+#   name: quotes-gw
+# spec:
+#   displayName: Quotes Gateway
+#   description: Quotes Gateway
+#   namespaceSelector:
+#     names:
+#       - "aws-east/$PREFIX-quotes"
+#   configMode: BRIDGED
 # ---
 # kind: IngressGateway
 # metadata:
