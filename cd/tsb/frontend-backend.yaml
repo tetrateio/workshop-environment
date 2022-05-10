@@ -1,4 +1,52 @@
 ---
+apiVersion: api.tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  displayName: default-setting
+  name: default-setting
+  organization: kubecon
+  tenant: $PREFIX-apps
+  workspace: wealth-mgmt
+spec:
+  defaultSecuritySetting:
+    displayName: default-setting
+  defaultTrafficSetting:
+    displayName: default-setting
+    egress:
+      host: $PREFIX-security/$PREFIX-cluster-egress.$PREFIX-security.svc.cluster.local
+  displayName: default-setting
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-apps
+  organization: kubecon
+  workspace: wealth-mgmt
+  name: egress
+spec:
+  displayName: Egress Gateway
+  description: Egress Gateway
+  namespaceSelector:
+    names:
+      - "*/$PREFIX-security"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: EgressGateway
+metadata:
+  displayName: default-egressgateway
+  group: egress
+  name: default-egressgateway
+  organization: kubecon
+  tenant: $PREFIX-apps
+  workspace: wealth-mgmt
+spec:
+  displayName: default-egressgateway
+  workloadSelector:
+    labels:
+      app: $PREFIX-cluster-egress
+    namespace: $PREFIX-security
+---
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:

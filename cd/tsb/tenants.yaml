@@ -36,6 +36,7 @@ spec:
     names:
       - "*/$PREFIX-app"
       - "*/$PREFIX-app-tier1"
+      - "*/$PREFIX-security"
 ---
 apiversion: api.tsb.tetrate.io/v2
 kind: Workspace
