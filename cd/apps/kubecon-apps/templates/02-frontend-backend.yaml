@@ -13,7 +13,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetport: 8888
+    targetPort: 8888
     name: http
   selector:
     app: frontend
