@@ -1,5 +1,0 @@
-provider: google
-email: someone@tetrate.io
-zone: kubecon.cx.tetrate.info
-google:
-  project: abz-perm
