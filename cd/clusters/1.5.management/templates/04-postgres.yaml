@@ -19,8 +19,8 @@ spec:
     - CreateNamespace=true
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
-    targetRevision: '11.6.5'
-    chart: postgres
+    targetRevision: '11.6.6'
+    chart: postgresql
     helm:
       releaseName: postgres
       values: |
