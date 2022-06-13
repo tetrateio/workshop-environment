@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.cluster }}-es-operator
+  namespace: argocd
+  labels:
+    cluster: {{ .Values.cluster }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: elastic-system
+    name: {{ .Values.cluster }}
+  project: tsb-1.5
+  syncPolicy:
+    automated: {}
+    syncOptions: 
+    - CreateNamespace=true
+  source:
+    repoURL: 'https://helm.elastic.co'
+    targetRevision: '2.2.0'
+    chart: eck-operator
+    helm:
+      releaseName: eck-operator
+      parameters:
+      - name: "installCRDs"
+        value: "true"
+      values: |
+{{ .Files.Get "values-es.yaml" | indent 8 }}
