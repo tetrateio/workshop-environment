@@ -11,6 +11,10 @@ spec:
         jwt: true
     frontEnvoy:
       port: 443
+      kubeSpec:
+        service:
+          annotations:
+            "external-dns.alpha.kubernetes.io/hostname": "tsb.tetrate.cloud.zwickey.net."
     apiServer:
       teamSyncSchedule: "*/10 * * * *"
   hub: gcr.io/abz-perm
