@@ -1,0 +1,40 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.cluster }}-tsb-mp
+  namespace: argocd
+  labels:
+    cluster: {{ .Values.cluster }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: tsb
+    name: {{ .Values.cluster }}
+  project: tsb-1.5
+  syncPolicy:
+    automated: {}
+    syncOptions: 
+    - CreateNamespace=true
+  source:
+    repoURL: 'https://dl.cloudsmith.io/basic/tetrate/tsb-helm/helm/charts/'
+    targetRevision: '1.5.0-EA1'
+    chart: managementplane
+    helm:
+      releaseName: managementplane
+      parameters:
+      - name: "secrets.tsb.adminPassword"
+        value: {{ .Values.tsb.password}}
+      - name: "secrets.postgres.password"
+        value: {{ .Values.tsb.postgresPassword}}
+      - name: "secrets.elasticsearch.password"
+        value: {{ .Values.tsb.elasticPassword}}
+      - name: "secrets.oidc.clientSecret"
+        value: {{ .Values.tsb.oidcSecret}}
+      - name: "secrets.oidc.deviceClientSecret"
+        value: {{ .Values.tsb.oidcSecret}}
+      - name: "secrets.azure.clientSecret"
+        value: {{ .Values.tsb.oidcSecret}}
+      values: |
+{{ .Files.Get "values-tsb-mp.yaml" | indent 8 }}
