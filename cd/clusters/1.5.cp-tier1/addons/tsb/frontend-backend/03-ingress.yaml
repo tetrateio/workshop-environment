@@ -1,0 +1,169 @@
+
+
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: tier1-gateway
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+    tsb.tetrate.io/group: tier1-gw
+spec:
+  workloadSelector:
+    namespace: demo-app-tier1
+    labels:
+      app: demo-app-gateway
+  externalServers:
+  - hostname: frontend.tetrate.cloud.zwickey.net
+    name: frontend
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: frontend-cert
+
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+    tsb.tetrate.io/group: frontend-gw-01
+spec:
+  workloadSelector:
+    namespace: demo-app
+    labels:
+      app: demo-app-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend.gke-east.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-app/frontend.demo-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-internal
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-app/frontend.demo-app.svc.cluster.local"
+              port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.demo.mesh
+      routing:
+        rules:
+          - route:
+              host: "demo-app/backend.demo-app.svc.cluster.local"
+              port: 80
+
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+    tsb.tetrate.io/group: frontend-gw-02
+spec:
+  workloadSelector:
+    namespace: demo-app
+    labels:
+      app: demo-app-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend.gke-west.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-app/frontend.demo-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-internal
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-app/frontend.demo-app.svc.cluster.local"
+              port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.demo.mesh
+      routing:
+        rules:
+          - route:
+              host: "demo-app/backend.demo-app.svc.cluster.local"
+              port: 80
+
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+    tsb.tetrate.io/group: frontend-gw-03
+spec:
+  workloadSelector:
+    namespace: demo-app
+    labels:
+      app: demo-app-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend.aws-east.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-app/frontend.demo-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-internal
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-cert
+      hostname: frontend.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-app/frontend.demo-app.svc.cluster.local"
+              port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.demo.mesh
+      routing:
+        rules:
+          - route:
+              host: "demo-app/backend.demo-app.svc.cluster.local"
+              port: 80
