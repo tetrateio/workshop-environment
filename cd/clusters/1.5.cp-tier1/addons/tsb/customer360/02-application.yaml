@@ -1,5 +1,5 @@
 ---
-apiversion: application.tsb.tetrate.io/v2
+apiVersion: application.tsb.tetrate.io/v2
 kind: Application
 metadata:
   name: marketdata
@@ -11,9 +11,8 @@ spec:
   displayName: Market Data
   description: Market Data application
   workspace: organizations/tetrate/tenants/demo-apps/workspaces/marketdata
-apiVersion: gateway.tsb.tetrate.io/v2
 ---
-apiversion: application.tsb.tetrate.io/v2
+apiVersion: application.tsb.tetrate.io/v2
 kind: API
 metadata:
   name: quotes
