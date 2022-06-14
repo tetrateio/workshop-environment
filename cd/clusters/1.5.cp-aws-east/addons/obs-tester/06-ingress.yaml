@@ -1,0 +1,25 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: demo-customer360-gateway
+  namespace: demo-microservices
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "customer360.aws-east.tetrate.cloud.zwickey.net."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: customer360
+  namespace: demo-microservices
+spec:
+  secretName: customer360-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - customer360.aws-east.tetrate.cloud.zwickey.net

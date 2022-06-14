@@ -1,0 +1,80 @@
+##################
+## Customer Portal
+##################
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-portal
+  namespace: demo-microservices
+  labels:
+    app: customer-portal
+    service: customer-portal
+spec:
+  ports:
+    - port: 80
+      targetPort: 8000
+      name: http
+    - port: 3000
+      targetPort: 3000
+      name: tcp
+  selector:
+    app: customer-portal
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: customer-portal
+  namespace: demo-microservices
+  labels:
+    app: customer-portal
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-portal
+  namespace: demo-microservices
+  labels:
+    app: customer-portal
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: customer-portal
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: customer-portal
+        version: v1
+    spec:
+      serviceAccountName: customer-portal
+      containers:
+        - name: obs-tester
+          image: gcr.io/abz-perm/obs-tester-server:1.0
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 16Mi
+            requests:
+              cpu: 10m
+              memory: 4Mi
+          args:
+            - '--log-output-level=all:debug'
+            - '--http-listen-address=:8000' # address the http server in the container listens on
+            - '--tcp-listen-address=:3000' # address the tcp server in the container listens on
+            - '--ep-duration=0' # the default latency used for handling requests to / (echo handler)
+            - '--ep-errors=0' # the default percentage of errors injected when handling echo requests
+            - '--ep-headers=0' # the default percentage of double headers injected when handling echo requests
+            - '--zipkin-reporter-endpoint=http://zipkin.istio-system.svc.cluster.local:9411/api/v2/spans'
+            - '--zipkin-sample-rate=1.0' # When we originate client request, this is the sample rate we use.
+            - '--zipkin-singlehost-spans' # Envoy does not work well with Zipkin's default shared spans
+          env:
+            - name: SVCNAME
+              value: customer-portal
+          ports:
+            - name: http
+              containerPort: 8000
+            - name: tcp
+              containerPort: 3000
