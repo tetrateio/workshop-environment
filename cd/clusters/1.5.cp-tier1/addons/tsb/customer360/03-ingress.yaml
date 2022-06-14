@@ -1,0 +1,118 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: tier1-gateway-customer360
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: customer360
+    tsb.tetrate.io/gatewayGroup: tier1-gw-customer-360
+spec:
+  workloadSelector:
+    namespace: demo-microservices-tier1
+    labels:
+      app: demo-customer360-gateway
+  externalServers:
+  - hostname: customer360.tetrate.cloud.zwickey.net
+    name: customer360
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: customer360-cert
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway-01
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: customer360
+    tsb.tetrate.io/gatewayGroup: customerportal-gw-01
+spec:
+  workloadSelector:
+    namespace: demo-microservices
+    labels:
+      app: demo-customer360-gateway
+  http:
+    - name: customer360-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: customer360-cert
+      hostname: customer360.gke-east.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-microservices/customer-portal.demo-microservices.svc.cluster.local"
+              port: 80
+    - name: customer360-multicluster
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: customer360-cert
+      hostname: customer360.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-microservices/customer-portal.demo-microservices.svc.cluster.local"
+              port: 80
+    - name: customer360-internal
+      port: 80
+      hostname: customer360.demo.mesh
+      routing:
+        rules:
+          - route:
+              host: "demo-microservices/customer-portal.demo-microservices.svc.cluster.local"
+              port: 80
+
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway-02
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: customer360
+    tsb.tetrate.io/gatewayGroup: customerportal-gw-02
+spec:
+  workloadSelector:
+    namespace: demo-microservices
+    labels:
+      app: demo-customer360-gateway
+  http:
+    - name: customer360-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: customer360-cert
+      hostname: customer360.gke-west.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-microservices/customer-portal.demo-microservices.svc.cluster.local"
+              port: 80
+    - name: customer360-multicluster
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: customer360-cert
+      hostname: customer360.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "demo-microservices/customer-portal.demo-microservices.svc.cluster.local"
+              port: 80
+    - name: customer360-internal
+      port: 80
+      hostname: customer360.demo.mesh
+      routing:
+        rules:
+          - route:
+              host: "demo-microservices/customer-portal.demo-microservices.svc.cluster.local"
+              port: 80
