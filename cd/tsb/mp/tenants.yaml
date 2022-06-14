@@ -1,0 +1,55 @@
+---
+apiVersion: tsb.tetrate.io/v2
+kind: Tenant
+metadata:
+  name: demo-apps
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+spec:
+  description: Demo Applications
+  displayName: Demo Applications
+---
+apiVersion: tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  name: marketdata
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+spec:
+  description: Market Data Services
+  displayName: Market Data Services
+  namespaceSelector:
+    names:
+      - "aws-east/demo-quotes"
+---
+apiversion: tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  name: wealth-mgmt
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+spec:
+  description: Wealth Mgmt
+  displayName: Wealth Mgmt
+  namespaceSelector:
+    names:
+      - "*/demo-app"
+      - "*/demo-app-tier1"
+      - "*/demo-security"
+---
+apiversion: tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  name: customer360
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+spec:
+  description: Customer 360
+  displayName: Customer 360
+  namespaceSelector:
+    names:
+      - "*/demo-microservices"
+      - "*/demo-microservices-tier1"
