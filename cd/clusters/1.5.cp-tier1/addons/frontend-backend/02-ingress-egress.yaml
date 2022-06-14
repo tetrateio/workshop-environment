@@ -1,0 +1,25 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: demo-app-gateway
+  namespace: demo-app-tier1
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "frontend.tetrate.cloud.zwickey.net."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: frontend
+  namespace: demo-app-tier1
+spec:
+  secretName: frontend-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - frontend.tetrate.cloud.zwickey.net
