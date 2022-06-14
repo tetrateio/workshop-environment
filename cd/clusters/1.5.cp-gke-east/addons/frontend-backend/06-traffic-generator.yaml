@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo-frontend
+  name: demo-frontend
+  namespace: trafficgenerator
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: demo-frontend
+    spec:
+      containers:
+      - args:
+        - /bin/sh
+        - -c
+        - "while true; do curl -v -k https://frontend.gke-east.tetrate.cloud.zwickey.net/proxy/\\?url\\=backend.demo.mesh\\&auth\\=\\&cachebuster\\=123456; sleep 10; done"
+        image: appropriate/curl
+        imagePullPolicy: Always
+        name: trafficgenerator
+        resources:
+          limits:
+            cpu: 50m
+            memory: 16Mi
+          requests:
+            cpu: 10m
+            memory: 4Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
