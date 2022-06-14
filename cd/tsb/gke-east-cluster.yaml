@@ -1,0 +1,11 @@
+apiVersion: api.tsb.tetrate.io/v2
+kind: Cluster
+metadata:
+  description: Cluster created via tctl
+  name: gke-east
+  organization: tetrate
+spec:
+  description: Cluster created via tctl
+  fqn: organizations/tetrate/clusters/gke-east
+  locality:
+    region: us-east4
