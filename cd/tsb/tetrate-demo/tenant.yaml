@@ -1,9 +1,0 @@
----
-apiVersion: api.tsb.tetrate.io/v2
-kind: Tenant
-metadata:
-  organization: tetrate-workshop
-  name: tetrate-demo
-spec:
-  description: Tetrate Demo Tenant
-  displayName: Tetrate Demo Tenant
