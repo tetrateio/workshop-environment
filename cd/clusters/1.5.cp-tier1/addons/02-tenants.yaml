@@ -25,7 +25,7 @@ spec:
     names:
       - "aws-east/demo-quotes"
 ---
-apiversion: tsb.tetrate.io/v2
+apiVersion: tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   name: wealth-mgmt
@@ -42,7 +42,7 @@ spec:
       - "*/demo-app-tier1"
       - "*/demo-security"
 ---
-apiversion: tsb.tetrate.io/v2
+apiVersion: tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   name: customer360
