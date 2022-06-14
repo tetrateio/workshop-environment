@@ -10,9 +10,6 @@ cluster: 1-5-gke-west  # EDIT ME
 ## Each of values below are injected when configuring in ArgoCD
 ###############################
 gcpJsonCredential: "!!!CHANGE_ME!!!" 
-# tsb:
-#   password: "!!!CHANGE_ME!!!" 
-#   postgresPassword: "!!!CHANGE_ME!!!" 
-#   elasticPassword: "!!!CHANGE_ME!!!" 
-#   oidcSecret: "!!!CHANGE_ME!!!" 
+tsb:
+  elasticPassword: "!!!CHANGE_ME!!!" 
 
