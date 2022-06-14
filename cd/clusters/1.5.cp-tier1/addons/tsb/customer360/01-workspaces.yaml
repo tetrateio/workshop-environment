@@ -12,5 +12,7 @@ spec:
   displayName: Customer 360
   namespaceSelector:
     names:
-      - "*/demo-microservices"
-      - "*/demo-microservices-tier1"
+      - "aws-east/demo-microservices"
+      - "gke-east/demo-microservices"
+      - "gke-west/demo-microservices"
+      - "tier1/demo-microservices-tier1"
