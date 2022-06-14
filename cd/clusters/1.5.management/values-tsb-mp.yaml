@@ -22,7 +22,7 @@ spec:
       sslMode: disable
   telemetryStore:
     elastic:
-      host: 34.86.92.17
+      host: 34.85.219.28
       port: 9200
       protocol: https
       selfSigned: true
