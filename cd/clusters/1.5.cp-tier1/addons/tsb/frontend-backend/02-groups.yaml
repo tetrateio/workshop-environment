@@ -3,6 +3,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   name: egress
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
@@ -19,6 +20,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   name: tier1-gw
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
@@ -35,6 +37,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   name: frontend-gw-01
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
@@ -51,6 +54,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   name: frontend-gw-02
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
@@ -67,6 +71,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   name: frontend-gw-03
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps

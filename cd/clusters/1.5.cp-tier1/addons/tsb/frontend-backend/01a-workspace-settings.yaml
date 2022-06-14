@@ -3,6 +3,7 @@ apiVersion: tsb.tetrate.io/v2
 kind: WorkspaceSetting
 metadata:
   name: default-setting
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
