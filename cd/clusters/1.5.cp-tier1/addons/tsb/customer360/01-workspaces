@@ -1,0 +1,16 @@
+---
+apiVersion: tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  name: customer360
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+spec:
+  description: Customer 360
+  displayName: Customer 360
+  namespaceSelector:
+    names:
+      - "*/demo-microservices"
+      - "*/demo-microservices-tier1"

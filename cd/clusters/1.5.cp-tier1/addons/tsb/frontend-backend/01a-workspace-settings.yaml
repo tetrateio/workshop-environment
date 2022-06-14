@@ -1,0 +1,17 @@
+---
+apiVersion: tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  displayName: default-setting
+  name: default-setting
+  organization: tetrate
+  tenant: demo-apps
+  workspace: wealth-mgmt
+spec:
+  defaultSecuritySetting:
+    displayName: default-setting
+  defaultTrafficSetting:
+    displayName: default-setting
+    egress:
+      host: demo-security/demo-cluster-egress.demo-security.svc.cluster.local
+  displayName: default-setting

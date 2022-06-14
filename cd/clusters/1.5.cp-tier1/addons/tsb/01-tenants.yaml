@@ -1,0 +1,12 @@
+---
+apiVersion: tsb.tetrate.io/v2
+kind: Tenant
+metadata:
+  name: demo-apps
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+spec:
+  description: Demo Applications
+  displayName: Demo Applications
+
