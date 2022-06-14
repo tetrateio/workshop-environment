@@ -8,7 +8,7 @@ metadata:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: customer360
-    tsb.tetrate.io/gatewayGroup: tier1-gw-customer-360
+    tsb.tetrate.io/gatewayGroup: tier1-gw-customer360
 spec:
   workloadSelector:
     namespace: demo-microservices-tier1
