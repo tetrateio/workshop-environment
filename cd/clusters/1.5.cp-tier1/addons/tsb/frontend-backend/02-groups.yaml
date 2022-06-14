@@ -13,7 +13,9 @@ spec:
   description: Egress Gateway
   namespaceSelector:
     names:
-      - "*/demo-security"
+      - "gke-east/demo-security"
+      - "gke-west/demo-security"
+      - "aws-east/demo-security"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -30,7 +32,7 @@ spec:
   description: Tier 1 Gateway
   namespaceSelector:
     names:
-      - "*/demo-app-tier1"
+      - "tier1/demo-app-tier1"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
