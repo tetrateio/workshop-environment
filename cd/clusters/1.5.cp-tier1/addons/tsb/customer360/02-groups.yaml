@@ -13,7 +13,7 @@ spec:
   description: Tier 1 Gateway
   namespaceSelector:
     names:
-      - "*/demo-microservices-tier1"
+      - "tier1/demo-microservices-tier1"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
