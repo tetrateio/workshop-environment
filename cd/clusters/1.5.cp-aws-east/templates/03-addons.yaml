@@ -18,6 +18,6 @@ spec:
     syncOptions: 
     - CreateNamespace=true
   source:
-    path: cd/clusters/1.5.cp-gke-east/addons
+    path: cd/clusters/1.5.cp-aws-east/addons
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}

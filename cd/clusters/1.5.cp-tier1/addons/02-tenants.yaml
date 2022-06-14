@@ -3,7 +3,7 @@ apiVersion: tsb.tetrate.io/v2
 kind: Tenant
 metadata:
   name: demo-apps
-  namespace: istio-system
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
 spec:
@@ -14,7 +14,7 @@ apiVersion: tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   name: marketdata
-  namespace: istio-system
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
@@ -29,7 +29,7 @@ apiversion: tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   name: wealth-mgmt
-  namespace: istio-system
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
@@ -46,7 +46,7 @@ apiversion: tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   name: customer360
-  namespace: istio-system
+  namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
