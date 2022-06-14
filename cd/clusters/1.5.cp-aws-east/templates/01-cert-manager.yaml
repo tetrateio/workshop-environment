@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.cluster }}-cert-manager
+  namespace: argocd
+  labels:
+    cluster: {{ .Values.cluster }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cert-manager
+    name: {{ .Values.cluster }}
+  project: tsb-1.5
+  syncPolicy:
+    automated: {}
+    syncOptions: 
+    - CreateNamespace=true
+  source:
+    repoURL: 'https://charts.jetstack.io'
+    targetRevision: '1.7.2'
+    chart: cert-manager
+    helm:
+      releaseName: cert-manager
+      parameters:
+      - name: "installCRDs"
+        value: "true"
+      - name: "featureGates"
+        value: "ExperimentalCertificateSigningRequestControllers=true"

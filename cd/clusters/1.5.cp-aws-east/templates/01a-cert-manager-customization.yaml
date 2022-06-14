@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.cluster }}-cert-manager-customization
+  namespace: argocd
+  labels:
+    cluster: {{ .Values.cluster }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cert-manager
+    name: {{ .Values.cluster }}
+  project: tsb-1.5
+  syncPolicy:
+    automated: {}
+    syncOptions: 
+    - CreateNamespace=true
+  source:
+    path: cd/apps/customization-cert-manager
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: customization-cert-manager
+      # Extra parameters to set (same as setting through values.yaml, but these take precedence)
+      parameters:
+      - name: "gcpJsonCredential"
+        value: {{ .Values.gcpJsonCredential}}
+      values: |
+{{ .Files.Get "values-cert-manager.yaml" | indent 8 }}  
