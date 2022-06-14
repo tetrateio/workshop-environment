@@ -21,7 +21,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: quotes-sidecar
-  namespace: $demo-quotes
+  namespace: demo-quotes
 spec:
   workloadSelector:
     labels:
