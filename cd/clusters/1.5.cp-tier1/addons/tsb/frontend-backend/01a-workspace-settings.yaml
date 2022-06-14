@@ -2,11 +2,11 @@
 apiVersion: tsb.tetrate.io/v2
 kind: WorkspaceSetting
 metadata:
-  displayName: default-setting
   name: default-setting
-  organization: tetrate
-  tenant: demo-apps
-  workspace: wealth-mgmt
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
 spec:
   defaultSecuritySetting:
     displayName: default-setting
