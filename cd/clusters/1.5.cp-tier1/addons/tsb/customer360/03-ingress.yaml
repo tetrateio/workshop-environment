@@ -25,7 +25,7 @@ spec:
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: IngressGateway
 metadata:
-  name: app-gateway-01
+  name: app-gateway-customer360-01
   namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
@@ -73,7 +73,7 @@ spec:
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: IngressGateway
 metadata:
-  name: app-gateway-02
+  name: app-gateway-customer360-02
   namespace: default
   annotations:
     tsb.tetrate.io/organization: tetrate
