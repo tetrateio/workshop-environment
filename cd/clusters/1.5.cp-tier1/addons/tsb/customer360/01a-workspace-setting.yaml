@@ -1,0 +1,14 @@
+---
+apiVersion: tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  name: authn-demo
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: marketdata
+spec:
+  defaultSecuritySetting:
+    displayName: authn-demo
+  displayName: default-setting

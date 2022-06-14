@@ -1,0 +1,25 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: demo-quotes-gateway
+  namespace: demo-quotes
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "quotes.tetrate.cloud.zwickey.net."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: quotes
+  namespace: demo-quotes
+spec:
+  secretName: quotes-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - quotes.tetrate.cloud.zwickey.net
