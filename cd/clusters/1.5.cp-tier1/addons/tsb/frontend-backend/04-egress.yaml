@@ -1,0 +1,16 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: EgressGateway
+metadata:
+  name: default-egressgateway
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+    tsb.tetrate.io/group: egress
+spec:
+  displayName: default-egressgateway
+  workloadSelector:
+    labels:
+      app: demo-cluster-egress
+    namespace: demo-security

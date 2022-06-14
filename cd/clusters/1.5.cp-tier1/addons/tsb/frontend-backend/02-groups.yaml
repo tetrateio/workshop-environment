@@ -1,0 +1,80 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: egress
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+spec:
+  displayName: Egress Gateway
+  description: Egress Gateway
+  namespaceSelector:
+    names:
+      - "*/demo-security"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: tier1-gw
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+spec:
+  displayName: Tier 1 Gateway
+  description: Tier 1 Gateway
+  namespaceSelector:
+    names:
+      - "*/demo-app-tier1"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: frontend-gw-01
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+spec:
+  displayName: Frontend Gateway 01
+  description: Frontend Gateway 01
+  namespaceSelector:
+    names:
+      - "gke-east/demo-app"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: frontend-gw-02
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+spec:
+  displayName: Frontend Gateway 02
+  description: Frontend Gateway 02
+  namespaceSelector:
+    names:
+      - "gke-west/demo-app"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: frontend-gw-03
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+spec:
+  displayName: Frontend Gateway 03
+  description: Frontend Gateway 03
+  namespaceSelector:
+    names:
+      - "aws-east/demo-app"
+  configMode: BRIDGED  
