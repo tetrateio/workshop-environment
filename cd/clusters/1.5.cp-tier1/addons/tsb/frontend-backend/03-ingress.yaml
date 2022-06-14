@@ -10,7 +10,7 @@ metadata:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: wealth-mgmt
-    tsb.tetrate.io/group: tier1-gw
+    tsb.tetrate.io/gatewayGroup: tier1-gw
 spec:
   workloadSelector:
     namespace: demo-app-tier1
@@ -34,7 +34,7 @@ metadata:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: wealth-mgmt
-    tsb.tetrate.io/group: frontend-gw-01
+    tsb.tetrate.io/gatewayGroup: frontend-gw-01
 spec:
   workloadSelector:
     namespace: demo-app
@@ -82,7 +82,7 @@ metadata:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: wealth-mgmt
-    tsb.tetrate.io/group: frontend-gw-02
+    tsb.tetrate.io/gatewayGroup: frontend-gw-02
 spec:
   workloadSelector:
     namespace: demo-app
@@ -130,7 +130,7 @@ metadata:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: wealth-mgmt
-    tsb.tetrate.io/group: frontend-gw-03
+    tsb.tetrate.io/gatewayGroup: frontend-gw-03
 spec:
   workloadSelector:
     namespace: demo-app

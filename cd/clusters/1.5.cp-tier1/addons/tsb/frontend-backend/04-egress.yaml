@@ -8,7 +8,7 @@ metadata:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: wealth-mgmt
-    tsb.tetrate.io/group: egress
+    tsb.tetrate.io/gatewayGroup: egress
 spec:
   displayName: default-egressgateway
   workloadSelector:
