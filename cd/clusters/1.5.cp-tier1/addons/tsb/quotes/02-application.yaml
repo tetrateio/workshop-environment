@@ -40,6 +40,15 @@ spec:
       x-tsb-tls:
         mode: SIMPLE
         secretName: quotes-cert
+      x-tsb-ratelimiting:
+        failClosed: false
+        rules: 
+        - limit:
+            requestsPerUnit: 3
+            unit: MINUTE
+          dimensions:
+            - header:
+                name: x-user
     - url: http://quotes.demo.mesh
       description: Internal Server url
     paths:
