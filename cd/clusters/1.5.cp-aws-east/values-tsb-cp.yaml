@@ -21,7 +21,7 @@ spec:
     onboarding:
       endpoint:
         hosts:
-        - onboarding.tetrate.cloud.zwickey.net
+        - onboarding-1-5.tetrate.cloud.zwickey.net
         secretName: onboarding-cert
       localRepository: {} 
   telemetryStore:

@@ -10,4 +10,4 @@ spec:
     name: letsencrypt-dns-cluster-issuer
     kind: ClusterIssuer
   dnsNames:
-    - onboarding.tetrate.cloud.zwickey.net
+    - onboarding-1-5.tetrate.cloud.zwickey.net
