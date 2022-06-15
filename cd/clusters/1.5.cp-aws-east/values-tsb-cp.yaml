@@ -17,7 +17,13 @@ spec:
     host: tsb.tetrate.cloud.zwickey.net
     port: 443
     selfSigned: false
-  meshExpansion: {}
+  meshExpansion:
+    onboarding:
+      endpoint:
+        hosts:
+        - onboarding.tetrate.cloud.zwickey.net
+        secretName: onboarding-cert
+      localRepository: {} 
   telemetryStore:
     elastic:
       host: 34.85.219.28
