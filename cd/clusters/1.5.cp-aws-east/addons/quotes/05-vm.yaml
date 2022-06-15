@@ -1,4 +1,10 @@
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: quotes-vm
+  namespace: demo-quotes
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: WorkloadGroup
 metadata:
