@@ -11,6 +11,10 @@ spec:
         managed: EXTERNAL
     xcp:
       centralAuthMode: JWT
+    rateLimitServer:
+      backend:
+        redis:
+          uri: ratelimit-redis.default.svc.cluster.local:6379
   hub: gcr.io/abz-perm
   managementPlane:
     clusterName: gke-east
