@@ -32,6 +32,7 @@ spec:
         app: quotes
         version: v2
     spec:
+      serviceAccountName: quotes-vm
       containers:
         - image: gcr.io/abz-perm/quotes:v1
           name: quotes-service
