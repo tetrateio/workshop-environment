@@ -15,3 +15,4 @@ spec:
     labels:
       app: demo-cluster-egress
     namespace: demo-security
+  authorization: []
