@@ -4,7 +4,7 @@ image:
 spec:
   components:
     gitops:
-      enabled: false
+      enabled: true
       reconcileInterval: 60s
     internalCertProvider:
       certManager:
