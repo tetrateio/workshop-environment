@@ -20,7 +20,7 @@ spec:
     - Validate=false
   source:
     repoURL: 'https://charts.dl.tetrate.io/public/helm/charts/'
-    targetRevision: '1.5.0-EA3'
+    targetRevision: '1.5.0-internal-rc5'
     chart: managementplane
     helm:
       releaseName: managementplane
