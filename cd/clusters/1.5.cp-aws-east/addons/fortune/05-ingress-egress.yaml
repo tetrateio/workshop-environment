@@ -9,7 +9,7 @@ spec:
     service:
       type: LoadBalancer
       annotations:
-        "external-dns.alpha.kubernetes.io/hostname": "fortune.tetrate.cloud.zwickey.net."
+        "external-dns.alpha.kubernetes.io/hostname": "fortune.tetrate.cloud.zwickey.net.,redis.tetrate.cloud.zwickey.net."
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
