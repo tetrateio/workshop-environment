@@ -1,5 +1,5 @@
 ---
-apiversion: application.tsb.tetrate.io/v2
+apiVersion: application.tsb.tetrate.io/v2
 kind: Application
 metadata:
   organization: tetrate
@@ -10,7 +10,7 @@ spec:
   description: Ticketing application
   workspace: organizations/tetrate/tenants/internal-apps/workspaces/ticketing
 ---
-apiversion: application.tsb.tetrate.io/v2
+apiVersion: application.tsb.tetrate.io/v2
 kind: API
 metadata:
   organization: tetrate
