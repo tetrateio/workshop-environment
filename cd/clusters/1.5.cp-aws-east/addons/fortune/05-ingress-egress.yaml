@@ -1,0 +1,25 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: fortune-gateway
+  namespace: fortune
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "fortune.tetrate.cloud.zwickey.net."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: fortune-cert
+  namespace: fortune
+spec:
+  secretName: fortune-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - fortune.tetrate.cloud.zwickey.net

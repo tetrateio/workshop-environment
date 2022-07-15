@@ -9,4 +9,15 @@ metadata:
 spec:
   description: Demo Applications
   displayName: Demo Applications
+---
+apiVersion: tsb.tetrate.io/v2
+kind: Tenant
+metadata:
+  name: internal-apps
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+spec:
+  description: Internal IT 
+  displayName: Internal IT
 
