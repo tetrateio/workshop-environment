@@ -56,7 +56,7 @@ spec:
         version: v1
     spec:
       containers:
-      - image: gcr.io/abz-dev/fortune:v1 
+      - image: gcr.io/abz-perm/fortune:v1 
         name: fortune-api
         ports:
         - containerPort: 8080
@@ -86,7 +86,7 @@ spec:
         version: v2
     spec:
       containers:
-      - image: gcr.io/abz-dev/fortune:v2 
+      - image: gcr.io/abz-perm/fortune:v2 
         name: fortune-api
         ports:
         - containerPort: 8080
