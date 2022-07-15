@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis
+  namespace: fortune
 spec:
   replicas: 1
   serviceName: "redis"
@@ -25,6 +26,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis
+  namespace: fortune
   labels:
     app: redis
 spec:
