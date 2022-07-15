@@ -17,6 +17,8 @@ spec:
             "external-dns.alpha.kubernetes.io/hostname": "tsb.tetrate.cloud.zwickey.net."
     apiServer:
       teamSyncSchedule: "*/10 * * * *"
+    oap:
+      streamingLogEnabled: true
   hub: gcr.io/abz-perm
   organization: tetrate
   dataStore:
