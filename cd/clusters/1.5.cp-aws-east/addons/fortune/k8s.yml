@@ -1,0 +1,97 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fortune
+  labels:
+    istio-injection: enabled
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortune-api
+  namespace: fortune
+  labels:
+    app: fortune-api
+spec:
+  ports:
+  - port: 8080
+    name: http
+  #type: LoadBalancer
+  selector:
+    app: fortune-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortune-ui
+  namespace: fortune
+  labels:
+    app: fortune-ui
+spec:
+  ports:
+  - port: 8080
+    name: http
+  #type: LoadBalancer
+  selector:
+    app: fortune-ui
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortune-api-v1
+  namespace: fortune
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fortune-api
+      version: v1
+  template:
+    metadata:
+      name: fortune-api-v1
+      namespace: fortune
+      labels:
+        app: fortune-api
+        version: v1
+    spec:
+      containers:
+      - image: gcr.io/abz-dev/fortune:v1 
+        name: fortune-api
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: SPRING_REDIS_HOST
+          value: "redis"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortune-api-v2
+  namespace: fortune
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fortune-api
+      version: v2
+  template:
+    metadata:
+      name: fortune-api-v2
+      namespace: fortune
+      labels:
+        app: fortune-api
+        version: v2
+    spec:
+      containers:
+      - image: gcr.io/abz-dev/fortune:v2 
+        name: fortune-api
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: SPRING_REDIS_HOST
+          value: "redis"
