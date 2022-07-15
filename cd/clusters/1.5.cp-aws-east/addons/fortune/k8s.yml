@@ -21,21 +21,6 @@ spec:
   selector:
     app: fortune-api
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: fortune-ui
-  namespace: fortune
-  labels:
-    app: fortune-ui
-spec:
-  ports:
-  - port: 8080
-    name: http
-  #type: LoadBalancer
-  selector:
-    app: fortune-ui
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
