@@ -115,7 +115,7 @@ spec:
             - '--http-listen-address=:8000' # address the http server in the container listens on
             - '--tcp-listen-address=:3000' # address the tcp server in the container listens on
             - '--ep-duration=300ms' # the default latency used for handling requests to / (echo handler)
-            - '--ep-errors=25' # the default percentage of errors injected when handling echo requests
+            - '--ep-errors=5' # the default percentage of errors injected when handling echo requests
             - '--ep-headers=0' # the default percentage of double headers injected when handling echo requests
             - '--zipkin-reporter-endpoint=http://zipkin.istio-system.svc.cluster.local:9411/api/v2/spans'
             - '--zipkin-sample-rate=1.0' # When we originate client request, this is the sample rate we use.
