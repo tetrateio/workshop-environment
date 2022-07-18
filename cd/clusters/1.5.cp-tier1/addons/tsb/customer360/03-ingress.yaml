@@ -68,6 +68,14 @@ spec:
           - route:
               host: "demo-microservices/customer-portal.demo-microservices.svc.cluster.local"
               port: 80
+    - name: issues-internal
+      port: 80
+      hostname: issues.demo.mesh
+      routing:
+        rules:
+          - route:
+              host: "demo-microservices/issues-service.demo-microservices.svc.cluster.local"
+              port: 80
 
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
