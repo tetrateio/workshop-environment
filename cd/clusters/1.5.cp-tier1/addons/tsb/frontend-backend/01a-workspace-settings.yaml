@@ -13,6 +13,6 @@ spec:
     displayName: default-setting
   defaultTrafficSetting:
     displayName: default-setting
-    egress:
-      host: demo-security/demo-cluster-egress.demo-security.svc.cluster.local
+    # egress:
+    #   host: demo-security/demo-cluster-egress.demo-security.svc.cluster.local
   displayName: default-setting
