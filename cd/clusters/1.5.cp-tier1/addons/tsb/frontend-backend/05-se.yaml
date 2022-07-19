@@ -15,9 +15,12 @@ spec:
   hosts:
   - google.com
   - www.httpbin.org
-  location: MESH_EXTERNAL
   ports:
   - number: 80
     name: http
     protocol: HTTP
+  - number: 443
+    name: https
+    protocol: HTTPS
   resolution: DNS
+  location: MESH_EXTERNAL
