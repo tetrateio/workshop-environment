@@ -8,6 +8,16 @@ spec:
   kubeSpec:
     service:
       type: LoadBalancer
+      ports:
+      - name: http2
+        protocol: TCP
+        port: 80
+      - name: https
+        protocol: TCP
+        port: 443
+      - name: tcp-redis
+        protocol: TCP
+        port: 6379
       annotations:
         "external-dns.alpha.kubernetes.io/hostname": "fortune.tetrate.cloud.zwickey.net.,redis.tetrate.cloud.zwickey.net."
 ---
