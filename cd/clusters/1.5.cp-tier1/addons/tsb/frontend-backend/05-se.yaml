@@ -4,6 +4,8 @@ kind: ServiceEntry
 metadata:
   name: demo-se
   namespace: default
+  label:
+    istio.io/rev: tsb
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
