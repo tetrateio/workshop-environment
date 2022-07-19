@@ -9,6 +9,7 @@ metadata:
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: wealth-mgmt
 spec:
+  propagationStrategy: STRICTER
   defaultSecuritySetting:
     displayName: default-setting
   defaultTrafficSetting:
