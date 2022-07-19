@@ -20,7 +20,6 @@ spec:
         port: 6379
       - name: mtls
         port: 15443
-        targetPort: 15443
       annotations:
         "external-dns.alpha.kubernetes.io/hostname": "fortune.tetrate.cloud.zwickey.net.,redis.tetrate.cloud.zwickey.net."
 ---
