@@ -5,7 +5,7 @@ operator:
   deployment:
     env:
     - name: CONTROL_PLANE_REVISION
-      value: tsb-1-5-0
+      value: tsb-1-5-0-stable
 spec:
   components:
     gitops:
@@ -15,7 +15,7 @@ spec:
       certManager:
         managed: EXTERNAL
     xcp:
-      revision: tsb-1-5-0
+      revision: tsb-1-5-0-stable
       centralAuthMode: JWT
     rateLimitServer:
       backend:
