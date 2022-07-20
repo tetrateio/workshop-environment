@@ -42,7 +42,7 @@ spec:
           protocol: TCP
         env:
         - name: SPRING_REDIS_HOST
-          value: "redis"
+          value: "redis.demo.mesh"
 ---
 apiVersion: apps/v1
 kind: Deployment
