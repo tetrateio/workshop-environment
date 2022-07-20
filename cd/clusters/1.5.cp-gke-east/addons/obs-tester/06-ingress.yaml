@@ -5,6 +5,7 @@ metadata:
   name: demo-customer360-gateway
   namespace: demo-microservices
 spec:
+  revision: tsb-1-5-0
   kubeSpec:
     service:
       type: LoadBalancer

@@ -5,6 +5,7 @@ metadata:
   name: fortune-gateway
   namespace: fortune
 spec:
+  revision: tsb-1-5-0
   kubeSpec:
     service:
       type: LoadBalancer
