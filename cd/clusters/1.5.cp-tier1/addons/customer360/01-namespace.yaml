@@ -5,4 +5,4 @@ metadata:
   name: demo-microservices-tier1
   labels:
     #istio-injection: enabled
-    istio.io/rev: tsb-1-5-0
+    istio.io/rev: tsb-1-5-0-stable

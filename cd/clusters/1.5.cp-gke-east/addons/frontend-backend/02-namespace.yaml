@@ -5,7 +5,7 @@ metadata:
   name: demo-app
   labels:
     #istio-injection: enabled
-    istio.io/rev: tsb-1-5-0
+    istio.io/rev: tsb-1-5-0-stable
 ---
 apiVersion: v1
 kind: Namespace
