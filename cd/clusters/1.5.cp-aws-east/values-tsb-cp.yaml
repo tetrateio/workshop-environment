@@ -32,15 +32,15 @@ spec:
             value:
               name: SW_STREAMING_LOG_ENABLED
               value: "true"  
-    # istio:
-    #   kubeSpec:
-    #     overlays:
-    #       - apiVersion: install.istio.io/v1alpha1
-    #         kind: IstioOperator
-    #         name: tsb-istiocontrolplane
-    #         patches:
-    #         - path: spec.meshConfig.outboundTrafficPolicy.mode
-    #           value: "REGISTRY_ONLY"
+    istio:
+      kubeSpec:
+        overlays:
+          - apiVersion: install.istio.io/v1alpha1
+            kind: IstioOperator
+            name: tsb-istiocontrolplane
+            patches:
+            - path: spec.meshConfig.outboundTrafficPolicy.mode
+              value: "REGISTRY_ONLY"
   hub: gcr.io/abz-perm
   managementPlane:
     clusterName: aws-east
