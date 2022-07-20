@@ -13,7 +13,7 @@ metadata:
     tsb.tetrate.io/istioInternalGroup: allow-list-demo
 spec:
   hosts:
-  - google.com
+  - www.google.com
   - www.httpbin.org
   ports:
   - number: 80
