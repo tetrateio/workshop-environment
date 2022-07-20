@@ -42,7 +42,9 @@ spec:
           protocol: TCP
         env:
         - name: SPRING_REDIS_HOST
-          value: "redis.tetrate.cloud.zwickey.net"
+          value: "redis.demo.mesh"
+        - name: SPRING_REDIS_PORT
+          value: "6378"
 ---
 apiVersion: apps/v1
 kind: Deployment
