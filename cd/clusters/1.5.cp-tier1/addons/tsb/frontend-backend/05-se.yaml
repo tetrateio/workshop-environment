@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: demo-se
-  namespace: default
+  namespace: demo-app
   labels:
     istio.io/rev: tsb
   annotations:
