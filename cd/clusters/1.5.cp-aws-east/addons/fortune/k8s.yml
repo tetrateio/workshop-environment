@@ -74,4 +74,6 @@ spec:
           protocol: TCP
         env:
         - name: SPRING_REDIS_HOST
-          value: "redis"
+          value: "redis.demo.mesh"
+        - name: SPRING_REDIS_PORT
+          value: "6378"
