@@ -75,5 +75,5 @@ spec:
         env:
         - name: SPRING_REDIS_HOST
           value: "redis.demo.mesh"
-        - name: SPRING_REDIS_PORT
-          value: "6378"
+        # - name: SPRING_REDIS_PORT
+        #   value: "6378"

@@ -28,18 +28,10 @@ spec:
               port: 8080
   tcp:
     - name: redis-internal
-      port: 6378
+      port: 6379
       hostname: redis.demo.mesh
       tls:
         mode: DISABLED
       route:
         host: "fortune/redis.fortune.svc.cluster.local"
         port: 6379
-    # - name: redis-external
-    #   port: 6379
-    #   hostname: redis.tetrate.cloud.zwickey.net
-    #   tls:
-    #     mode: DISABLED
-    #   route:
-    #     host: "fortune/redis.fortune.svc.cluster.local"
-    #     port: 6379
