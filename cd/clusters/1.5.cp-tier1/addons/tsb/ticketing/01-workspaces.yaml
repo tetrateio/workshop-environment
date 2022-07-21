@@ -1,0 +1,15 @@
+---
+apiVersion: tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  name: ticketing
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: internal-apps
+spec:
+  description: Ticketing
+  displayName: Ticketing
+  namespaceSelector:
+    names:
+      - "aws-east/fortune"

@@ -1,0 +1,28 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: internal-apps
+    tsb.tetrate.io/workspace: ticketing
+    tsb.tetrate.io/gatewayGroup: frontend-gw
+spec:
+  workloadSelector:
+    namespace: fortune
+    labels:
+      app: fortune-gateway
+  http:
+    - name: fortune-frontend
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: fortune-cert
+      hostname: fortune.tetrate.cloud.zwickey.net
+      routing:
+        rules:
+          - route:
+              host: "fortune/fortune-api.fortune.svc.cluster.local"
+              port: 8080

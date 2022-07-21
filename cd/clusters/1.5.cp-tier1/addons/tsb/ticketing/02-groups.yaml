@@ -1,0 +1,17 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: frontend-gw
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: internal-apps
+    tsb.tetrate.io/workspace: ticketing
+spec:
+  displayName: Ticketing Gateway
+  description: Ticketing Gateway
+  namespaceSelector:
+    names:
+      - "aws-east/fortune"
+  configMode: BRIDGED
