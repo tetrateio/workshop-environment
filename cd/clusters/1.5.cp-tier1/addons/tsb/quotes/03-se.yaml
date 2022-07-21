@@ -3,7 +3,7 @@ apiVersion: istiointernal.tsb.tetrate.io/v2
 kind: Group
 metadata:
   name: allow-list-demo
-  namespace: demo-app
+  namespace: demo-quotes
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
@@ -17,7 +17,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: demo-se
-  namespace: demo-app
+  namespace: demo-quotes
   labels:
     istio.io/rev: tsb
   annotations:
