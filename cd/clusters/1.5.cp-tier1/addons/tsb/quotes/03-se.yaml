@@ -2,7 +2,7 @@
 apiVersion: istiointernal.tsb.tetrate.io/v2
 kind: Group
 metadata:
-  name: allow-list
+  name: allow-list-demo
   namespace: demo-app
   annotations:
     tsb.tetrate.io/organization: tetrate
@@ -24,7 +24,7 @@ metadata:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: demo-apps
     tsb.tetrate.io/workspace: marketdata
-    tsb.tetrate.io/istioInternalGroup: allow-list
+    tsb.tetrate.io/istioInternalGroup: allow-list-demo
 spec:
   hosts:
   - sandbox.iexapis.com
