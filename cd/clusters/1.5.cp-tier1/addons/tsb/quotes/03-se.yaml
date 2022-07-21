@@ -11,7 +11,7 @@ metadata:
 spec:
   namespaceSelector:
     names:
-      - "aws-east/demo-app"
+      - "aws-east/demo-quotes"
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
