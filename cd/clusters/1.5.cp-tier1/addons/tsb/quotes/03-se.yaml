@@ -2,7 +2,7 @@
 apiVersion: istiointernal.tsb.tetrate.io/v2
 kind: Group
 metadata:
-  name: allow-list-demo
+  name: allow-list
   namespace: demo-app
   annotations:
     tsb.tetrate.io/organization: tetrate
