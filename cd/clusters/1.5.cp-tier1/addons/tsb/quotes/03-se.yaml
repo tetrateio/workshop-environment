@@ -1,0 +1,25 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: demo-se
+  namespace: demo-app
+  labels:
+    istio.io/rev: tsb
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: marketdata
+    tsb.tetrate.io/istioInternalGroup: allow-list
+spec:
+  hosts:
+  - sandbox.iexapis.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS
+  location: MESH_EXTERNAL

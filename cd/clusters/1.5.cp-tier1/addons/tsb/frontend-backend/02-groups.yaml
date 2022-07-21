@@ -85,3 +85,18 @@ spec:
     names:
       - "aws-east/demo-app"
   configMode: BRIDGED  
+---
+apiVersion: istiointernal.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: allow-list-demo
+  namespace: demo-app
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: wealth-mgmt
+spec:
+  namespaceSelector:
+    names:
+      - "aws-east/demo-app"
+  
