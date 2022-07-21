@@ -16,8 +16,13 @@ spec:
         app: redis
     spec:
       containers:
-      - image: redis:latest
+      - image: redis:7.0.4-alpine
         name: redis
+        command:
+        - redis-server
+        args:
+        - --requirepass
+        - TOPSECRET
         ports:
         - containerPort: 6379
           protocol: TCP
