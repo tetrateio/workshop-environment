@@ -1,4 +1,18 @@
 ---
+apiVersion: istiointernal.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  name: allow-list-demo
+  namespace: demo-app
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/workspace: marketdata
+spec:
+  namespaceSelector:
+    names:
+      - "aws-east/demo-app"
+---
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
