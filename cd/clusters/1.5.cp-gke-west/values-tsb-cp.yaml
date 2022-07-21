@@ -41,7 +41,7 @@ spec:
   meshExpansion: {}
   telemetryStore:
     elastic:
-      host: 34.85.219.28
+      host: 34.85.211.82
       port: 9200
       protocol: https
       selfSigned: true
