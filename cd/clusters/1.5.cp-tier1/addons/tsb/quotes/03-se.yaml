@@ -16,7 +16,7 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
-  name: demo-se
+  name: service-entry-quotes
   namespace: demo-quotes
   labels:
     istio.io/rev: tsb
