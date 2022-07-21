@@ -37,7 +37,7 @@ spec:
         overlays:
           - apiVersion: install.istio.io/v1alpha1
             kind: IstioOperator
-            name: xcp-iop-tsb-1-5-0
+            name: xcp-iop-tsb-1-5-0-stable
             patches:
             - path: spec.meshConfig.outboundTrafficPolicy.mode
               value: "REGISTRY_ONLY"
