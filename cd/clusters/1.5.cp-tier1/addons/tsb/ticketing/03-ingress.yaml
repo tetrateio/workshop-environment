@@ -35,11 +35,11 @@ spec:
       route:
         host: "fortune/redis.fortune.svc.cluster.local"
         port: 6379
-    - name: redis-external
-      port: 6379
-      hostname: redis.tetrate.cloud.zwickey.net
-      tls:
-        mode: DISABLED
-      route:
-        host: "fortune/redis.fortune.svc.cluster.local"
-        port: 6379
+    # - name: redis-external
+    #   port: 6379
+    #   hostname: redis.tetrate.cloud.zwickey.net
+    #   tls:
+    #     mode: DISABLED
+    #   route:
+    #     host: "fortune/redis.fortune.svc.cluster.local"
+    #     port: 6379
