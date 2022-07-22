@@ -15,6 +15,7 @@ spec:
   hosts:
   - www.google.com
   - www.tetrate.io
+  - www.httpbin.org
   ports:
   - number: 80
     name: http
