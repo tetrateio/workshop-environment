@@ -5,17 +5,6 @@ metadata:
   name: demo-app-gateway
   namespace: demo-app
 spec:
-  revision: tsb-1-5-0-stable
-  kubeSpec:
-    service:
-      type: LoadBalancer
----
-apiVersion: install.tetrate.io/v1alpha1
-kind: IngressGateway
-metadata:
-  name: demo-app-gateway
-  namespace: demo-app
-spec:
   revision: tsb-1-5-0-canary
   kubeSpec:
     service:
