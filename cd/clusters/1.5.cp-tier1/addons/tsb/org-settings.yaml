@@ -10,4 +10,4 @@ spec:
   displayName: tetrate-settings
   defaultSecuritySetting:
     authenticationSettings:
-      trafficMode: OPTIONAL
+      trafficMode: REQUIRED
