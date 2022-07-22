@@ -1,0 +1,13 @@
+---
+apiVersion: tsb.tetrate.io/v2
+kind: OrganizationSetting
+metadata:
+  name: tetrate-settings
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+spec:
+  displayName: tetrate-settings
+  defaultSecuritySetting:
+    authenticationSettings:
+      trafficMode: OPTIONAL
