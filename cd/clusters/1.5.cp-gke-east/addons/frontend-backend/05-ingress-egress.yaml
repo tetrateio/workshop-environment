@@ -23,6 +23,17 @@ spec:
     service:
       type: ClusterIP
 ---
+apiVersion: install.tetrate.io/v1alpha1
+kind: EgressGateway
+metadata:
+  name: demo-cluster-egress-canary
+  namespace: demo-security
+spec:
+  revision: tsb-1-5-0-canary
+  kubeSpec:
+    service:
+      type: ClusterIP
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
