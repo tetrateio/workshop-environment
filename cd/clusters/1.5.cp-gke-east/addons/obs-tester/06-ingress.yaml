@@ -5,23 +5,12 @@ metadata:
   name: demo-customer360-gateway-canary
   namespace: demo-microservices
 spec:
-  revision: tsb-1-5-0-canary
+  revision: tsb-1-5-0-stable
   kubeSpec:
     service:
       type: LoadBalancer
       annotations:
         "external-dns.alpha.kubernetes.io/hostname": "customer360.gke-east.tetrate.cloud.zwickey.net."
----
-apiVersion: install.tetrate.io/v1alpha1
-kind: IngressGateway
-metadata:
-  name: demo-customer360-gateway
-  namespace: demo-microservices
-spec:
-  revision: tsb-1-5-0-stable
-  kubeSpec:
-    service:
-      type: LoadBalancer
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

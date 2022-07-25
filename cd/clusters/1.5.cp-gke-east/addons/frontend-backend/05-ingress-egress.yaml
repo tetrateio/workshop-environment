@@ -2,10 +2,10 @@
 apiVersion: install.tetrate.io/v1alpha1
 kind: IngressGateway
 metadata:
-  name: demo-app-gateway-canary
+  name: demo-app-gateway
   namespace: demo-app
 spec:
-  revision: tsb-1-5-0-canary
+  revision: tsb-1-5-0-stable
   kubeSpec:
     service:
       type: LoadBalancer
@@ -19,17 +19,6 @@ metadata:
   namespace: demo-security
 spec:
   revision: tsb-1-5-0-stable
-  kubeSpec:
-    service:
-      type: ClusterIP
----
-apiVersion: install.tetrate.io/v1alpha1
-kind: EgressGateway
-metadata:
-  name: demo-cluster-egress-canary
-  namespace: demo-security
-spec:
-  revision: tsb-1-5-0-canary
   kubeSpec:
     service:
       type: ClusterIP
