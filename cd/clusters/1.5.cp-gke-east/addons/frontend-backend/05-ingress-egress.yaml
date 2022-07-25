@@ -2,7 +2,7 @@
 apiVersion: install.tetrate.io/v1alpha1
 kind: IngressGateway
 metadata:
-  name: demo-app-gateway
+  name: demo-app-gateway-canary
   namespace: demo-app
 spec:
   revision: tsb-1-5-0-canary
