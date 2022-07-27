@@ -26,7 +26,7 @@ spec:
       - args:
         - /bin/sh
         - -c
-        - "while true; do curl -k -v -H 'X-B3-Sampled: 1' https://customer360.tetrate.cloud.zwickey.net/proxy/accounts-service/proxy/issues.demo.mesh/proxy/issues-backend; sleep 10; done"
+        - "while true; do curl -k -v -H 'X-B3-Sampled: 1' https://customer360.tetrate.cloud.zwickey.net/proxy/http/accounts-service/proxy/http/issues.demo.mesh/proxy/http/issues-backend; sleep 10; done"
         image: appropriate/curl
         imagePullPolicy: Always
         name: trafficgenerator
