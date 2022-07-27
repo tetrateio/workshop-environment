@@ -51,7 +51,7 @@ spec:
       serviceAccountName: issues-backend
       containers:
         - name: obs-tester
-          image: gcr.io/abz-perm/obs-tester-server:1.0
+          image: gcr.io/abz-perm/obs-tester-server:v1.0
           imagePullPolicy: Always
           resources:
             limits:
