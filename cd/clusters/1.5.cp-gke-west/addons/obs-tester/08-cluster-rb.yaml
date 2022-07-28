@@ -1,0 +1,33 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: demo-microservices
+  name: pod-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: demo-pod-reader
+  namespace: demo-microservices
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pod-reader
+subjects:
+- kind: ServiceAccount
+  name: accounts-service
+  namespace: demo-microservices
+- kind: ServiceAccount
+  name: customer-portal
+  namespace: demo-microservices
+- kind: ServiceAccount
+  name: issues-backend
+  namespace: demo-microservices
+- kind: ServiceAccount
+  name: issues-service
+  namespace: demo-microservices
