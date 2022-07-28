@@ -73,6 +73,21 @@ spec:
           env:
             - name: SVCNAME
               value: customer-portal
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: SIDECAR_STATUS
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.annotations['sidecar.istio.io/status']
           ports:
             - name: http
               containerPort: 8000
