@@ -13,7 +13,7 @@ metadata:
     tsb.tetrate.io/istioInternalGroup: allow-list-demo
 spec:
   hosts:
-  - "quotes-legacy.zwickey.cloudmap.internal"
+  - "*.zwickey.cloudmap.internal"
   ports:
   - number: 80
     name: http
@@ -25,7 +25,8 @@ spec:
     name: http
     protocol: HTTP  
   location: MESH_EXTERNAL
-  resolution: STATIC
-  endpoints:
-  - address: 192.168.43.63
-  - address: 192.168.58.63
+  resolution: DNS
+  # resolution: STATIC
+  # endpoints:
+  # - address: 192.168.43.63
+  # - address: 192.168.58.63
