@@ -24,5 +24,8 @@ spec:
   - number: 8080
     name: http
     protocol: HTTP  
-  resolution: DNS
   location: MESH_EXTERNAL
+  resolution: STATIC
+  endpoints:
+  - address: 192.168.43.63
+  - address: 192.168.58.63
