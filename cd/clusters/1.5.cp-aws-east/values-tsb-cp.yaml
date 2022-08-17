@@ -40,8 +40,8 @@ spec:
             name: xcp-iop-tsb-1-5-0-stable
             patches:
             - path: spec.meshConfig.outboundTrafficPolicy.mode
-              # value: "REGISTRY_ONLY"
-              value: "ALLOW_ANY"
+              value: "REGISTRY_ONLY"
+              # value: "ALLOW_ANY"
   hub: gcr.io/abz-perm
   managementPlane:
     clusterName: aws-east
