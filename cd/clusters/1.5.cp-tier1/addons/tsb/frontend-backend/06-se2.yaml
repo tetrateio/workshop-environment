@@ -13,7 +13,7 @@ metadata:
     tsb.tetrate.io/istioInternalGroup: allow-list-demo
 spec:
   hosts:
-  - zwickey.cloudmap.internal
+  - "*.zwickey.cloudmap.internal"
   ports:
   - number: 80
     name: http
