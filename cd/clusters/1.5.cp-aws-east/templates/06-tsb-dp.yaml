@@ -10,7 +10,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: istio-system
+    namespace: istio-gateways
     name: {{ .Values.cluster }}
   project: tsb-1.5
   syncPolicy:
