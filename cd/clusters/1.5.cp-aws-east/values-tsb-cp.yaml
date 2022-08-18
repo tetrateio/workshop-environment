@@ -57,10 +57,10 @@ spec:
       localRepository: {} 
   telemetryStore:
     elastic:
-      host: 35.236.205.203
+      host: elastic.tetrate.cloud.zwickey.net
       port: 9200
       protocol: https
-      selfSigned: true
+      selfSigned: false
       version: 7
 secrets:
   keep: false
@@ -68,49 +68,6 @@ secrets:
     JWK: '{"alg":"RS256","d":"SVRUOPfkeNinuIbTdABTrncbc519QtVqxJYPjA-ksSE4ygdoCCt87y_U2BG1ownxuq5g6IypfZkNCGCqGvzuWaYWBhgmhCgBoFh701i21EQkmHDe-FgBQjhMN8fBuRYBHOcCySlPUwTFjso6pysWwvg3GrTu0rU2oRuUKZG7r5C_7PtP1LkrVIen836DlVjE_rd8mmjNwF_bsyMESPCe3UJ_eyKvTh9fynbZlL_IIwfBEgO2vRuzjTEwXQVts99EZldeniuw-wDPw5MqA3A-0EqhKOqDCsn7HrJ7-Bd13kVeW3oJzREnPQb8O44kT5bTbhKJa1rvYlbyso2BPBQHWQ","dp":"oN1fn9asKyRVJMuTtlmNaP0NNOz8Mm0xuwGNxPPyrmco7TsVkbTW6d6veeAAQmI7jVCqMmE_sXXncoVclS7GdMQVuvjNub7xKSXjwMVDUxnN27v50Iwmic7EAwSkpgEbjzBjsAXfFASKpS5FEyzjO8B3M9eNr8-lTdDAlUPzwKk","dq":"kRPsKOf9heX9arxE3xtfYICJov3ds14KS3oizPbEaydSGqwvPa5DO03rIOXGS_JTMC4KZ8F17UYJV6_yKOJgypfhiUiaiLfI3YNHNjiVi6Gjd-Y7dJXGqpYDE_KkN1VggGHi6ENzwug7PoMCtZW8A8ZW56AdDtK6vsxNr1DKDjc","e":"AQAB","kid":"Az9Ysb-og1Gk-wf97beS0dD5VrX3aLfhjW4gKMCbbMI","kty":"RSA","n":"xzIJWfX_oDdaT9JJq4jQeKesah6cfm0Y_9w4pIDzzjvS38708Fq21YAo1HVgFF5cXUruJBgLe9tbP4kDilXgyejzE-hzPP9Rjz_GD_bwqr2bEyLyPWfFXcD0Truo_8N_mIXzDnQBEIhrrOSIbefT1nqkan3ydOQFwSoC-7ZJ0tns9pWPyOxr3rzxaDbhGZPfZKI60kukfrEabpXAB6ziFQiUvXRpm_GGuOnbZUwN_87TXIJGG_DbRXOdMG8KC4iQrlRJGrrk22ZG87VCeVlsT-yZv1onOyadZ085GSyooUTEJPEb1veJVZeZbMj1EO5LI90lj6q22j5s-7IJRnRSgQ","p":"3T3IrAhm_FP7JkaoszRjoyMgAgghAQ95F6JawxZpRDHk54Cgoq-Gy1w3kusaQEQRBFeLSZNnsxlXLwXGmD89ldt7XTDDOJAfKOOCoA52czWT2n1lu3tSOlmZE5-DE5CF1f0MycqSvOitVy-yTZYX0DphXnAjdCJo-3SR5onLNFs","q":"5n2T_C2XXh88flaFNlJkhcYpalKhOYu5ViWcCsIkUQXSn1HmG6zfDNWybmJIwaDVTN4prXkU4AIgUZQXNxsJgdzjRIUz2J6ImaJoLoSrIrEyrkjwtR705l4atcHH0u4ep9wgHD03GsDuJnQSDOxnzAiuGbLjvOZ_Su4yv-PCW1M","qi":"RkIYABwJwhGSvSaaDzn42h-RXmlWueqBB6to0oHj4S77XsRxxqPEAcKgr63vlruBk-aVnCMGLwu7SXq7M9ubdDTCk3bnH0KSMy0IgOw90JYBVmcXQvjZ5aDpyzRa9d5IFrfAEvugaAGeZDcv7KGTaREQfwjUE1lOBao7dIDxrZQ"}'
     clusterFQN: organizations/tetrate/clusters/aws-east
   elasticsearch:
-    cacert: |
-      -----BEGIN CERTIFICATE-----
-      MIIDujCCAqKgAwIBAgIQXuSO/8NcA6KX+VOtxSDfzTANBgkqhkiG9w0BAQsFADAh
-      MQwwCgYDVQQLEwN0c2IxETAPBgNVBAMTCHRzYi1odHRwMB4XDTIyMDgxODE2NDEy
-      OVoXDTIzMDgxODE2NTEyOVowPDEMMAoGA1UECxMDdHNiMSwwKgYDVQQDEyN0c2It
-      a2ItaHR0cC5lbGFzdGljLXN5c3RlbS5rYi5sb2NhbDCCASIwDQYJKoZIhvcNAQEB
-      BQADggEPADCCAQoCggEBAP3MipaenOKW9ea1ZHm5civtd86FxbD7zo6mn3xp5VRX
-      D6c4vM3nVNr4BNUeXpRgKpnmmxsGfZie+Z2HMnY2praIi48ti9P9gqTZTVCHTksq
-      yFNJd01N21qtd7m2NqOjH86bgFLjwuJwWb4JSFCamzdnPOMRw6KwunNGdcTfsPvF
-      L7JdbeqEwPi8wJnODjmdmxbuTb81pFU5GpWVqY1zbOTCxULbC9+vdvJp0sx8AwCe
-      pbnhPXh6+eTTtgTmGpJ+BfjMLnRyqKVAMojDrymqs//VmZ9Z2LrvRbVK1wopijIS
-      LT7DzQtP2lrTs8QFjJ8wImRn6ihMJSjDfBP0laIvC2kCAwEAAaOB0jCBzzAOBgNV
-      HQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8GA1Ud
-      IwQYMBaAFBWyaGuoMetWe4Hbbl+ItC4Wiqq5MH0GA1UdEQR2MHSCI3RzYi1rYi1o
-      dHRwLmVsYXN0aWMtc3lzdGVtLmtiLmxvY2Fsggt0c2Ita2ItaHR0cIIedHNiLWti
-      LWh0dHAuZWxhc3RpYy1zeXN0ZW0uc3Zjghp0c2Ita2ItaHR0cC5lbGFzdGljLXN5
-      c3RlbYcEIlWiHTANBgkqhkiG9w0BAQsFAAOCAQEACelxPFRctra45ZU86048FjrM
-      YpTxCWEN5d22EtB/XbbCWOJjg9zgdUEbpwyc0UkM6mFdlSJ9Q7oEIozGBtKqURTl
-      0LTAwM8/GuKquvfxev/D0yn4k2A8mBDkyj1OhpaI+SN0iuqvO67CPkPYIh9CWwLo
-      MCLsQ01Ty6dD6SYJL68gYTNUa/x4z5Yl7H3mkLo7sa/wTB5qGcYjloIScEGdweQx
-      CVr8wNThXyIhqWVrNSWil0cjv8CG4aqMcU1Pl1shgG8hF7ROgmbjtq8KEnmwCMPr
-      msu2Z/2dzLl3U1rWUo3I7sO0bKblczTt7vCpQs1fbY6GkDDH0d403g+UiY6o6g==
-      -----END CERTIFICATE-----
-      -----BEGIN CERTIFICATE-----
-      MIIDLTCCAhWgAwIBAgIQTO0lFJ5iGhUBs7jDyGrpWDANBgkqhkiG9w0BAQsFADAh
-      MQwwCgYDVQQLEwN0c2IxETAPBgNVBAMTCHRzYi1odHRwMB4XDTIyMDgxODE2NDA1
-      MVoXDTIzMDgxODE2NTA1MVowITEMMAoGA1UECxMDdHNiMREwDwYDVQQDEwh0c2It
-      aHR0cDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAO/otU/xiuQyDvRh
-      vV+D+jSfc3zUoF0BlHK7Eus9lmR0Hlztn0VQgzC2/9aUFUCMizoL6j4cEV65WLMw
-      GtL8++00TpQHjfj78MMxAZx5LLGJR8aru/lRKMD3TaYy7V3GP+lBUW2U5lml0eBr
-      F2dQ9IS2SdpRFm8oFxGM1ZwQyk/vDg2we94TJOz9QAOpdjCiAxOy4Qi76aKNQW4r
-      3v+2910/4KmynWYID/yAzOzPoRCJKuY9FnCxyLOIEsoMcbEfSSpfwMF+1/h3Aw5k
-      L4ZGc2TEQ6TrWWHcTxsXw+JA+n3rb0kxeJPFhV1umUNw/7C3qxJhQ/u6EMFHdFzy
-      4vb/7NUCAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKEMB0GA1UdJQQWMBQGCCsGAQUF
-      BwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBQVsmhrqDHr
-      VnuB225fiLQuFoqquTANBgkqhkiG9w0BAQsFAAOCAQEAHhHs9gCnk/hz+dbf2/tW
-      qEr+pDh7gTABNKxnM8yKbxn+mnIYWM02rMdgI7OOo9yiwPrqlJpPngMT6SY4q/f/
-      2gmr5lwe01Ps+H9FpCG0rRiLFGllL0RUQBWlztaJgQ+EpKXwCSa1V4OM1y7VPQZl
-      J5qMA+zTEUiUaW6CflHPAKCsXdGV4nY6Tsmxs37/W11p6Le7uMl+nVE0wOYf3bFm
-      AWS0RIdJpo06YprfjZ8ccvbyQmyF9wguFm/LUmh3nGEDjsOnG1e/Jnwc1tVNfl9C
-      CbGjLSJuc7hX/NelS2amuzhYqRS/sjKVqkbsQcIrZs2xZUXYuuYLVejA1qKIheLy
-      tA==
-      -----END CERTIFICATE-----
     username: elastic
   tsb:
     cacert: |
