@@ -27,7 +27,8 @@ spec:
         annotations:
           "external-dns.alpha.kubernetes.io/hostname": "elastic.tetrate.cloud.zwickey.net."
     tls:
-     certificate: es-cert
+     certificate: 
+       secretName: es-cert
   # auth:
   #   fileRealm:
   #   - SecretRef: xxx
