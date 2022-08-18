@@ -1,4 +1,17 @@
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: es-cert
+  namespace: elastic-system
+spec:
+  secretName: es-cert
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - elastic.tetrate.cloud.zwickey.net
+---
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
@@ -10,6 +23,14 @@ spec:
     service:
       spec:
         type: LoadBalancer
+      metadata:
+        annotations:
+          "external-dns.alpha.kubernetes.io/hostname": "elastic.tetrate.cloud.zwickey.net."
+    tls:
+     certificate: es-cert
+  # auth:
+  #   fileRealm:
+  #   - SecretRef: xxx
   nodeSets:
   - name: default
     count: 3
