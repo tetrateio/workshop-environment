@@ -5,7 +5,7 @@ metadata:
   name: demo-quotes-gateway
   namespace: demo-quotes
 spec:
-  revision: tsb-1-5-0-stable
+  revision: tsb-1-5-1-stable
   kubeSpec:
     service:
       type: LoadBalancer
