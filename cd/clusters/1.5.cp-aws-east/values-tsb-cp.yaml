@@ -1,11 +1,11 @@
 image:
   registry: gcr.io/abz-perm
   tag: 1.5.1
-operator:
-  deployment:
-    env:
-    - name: CONTROL_PLANE_REVISION
-      value: tsb-1-5-0-stable
+# operator:
+#   deployment:
+#     env:
+#     - name: CONTROL_PLANE_REVISION
+#       value: tsb-1-5-1-stable
 spec:
   components:
     gitops:
@@ -15,7 +15,7 @@ spec:
       certManager:
         managed: EXTERNAL
     xcp:
-      revision: tsb-1-5-0-stable
+      # revision: tsb-1-5-1-stable
       centralAuthMode: JWT
     rateLimitServer:
       backend:
@@ -32,16 +32,16 @@ spec:
             value:
               name: SW_STREAMING_LOG_ENABLED
               value: "true"  
-    istio:
-      kubeSpec:
-        overlays:
-          - apiVersion: install.istio.io/v1alpha1
-            kind: IstioOperator
-            name: xcp-iop-tsb-1-5-0-stable
-            patches:
-            - path: spec.meshConfig.outboundTrafficPolicy.mode
-              value: "REGISTRY_ONLY"
-              # value: "ALLOW_ANY"
+    # istio:
+    #   kubeSpec:
+    #     overlays:
+    #       - apiVersion: install.istio.io/v1alpha1
+    #         kind: IstioOperator
+    #         name: xcp-iop-tsb-1-5-1-stable
+    #         patches:
+    #         - path: spec.meshConfig.outboundTrafficPolicy.mode
+    #           value: "REGISTRY_ONLY"
+    #           # value: "ALLOW_ANY"
   hub: gcr.io/abz-perm
   managementPlane:
     clusterName: aws-east
