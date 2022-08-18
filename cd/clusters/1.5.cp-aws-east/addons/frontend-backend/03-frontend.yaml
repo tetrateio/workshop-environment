@@ -1,3 +1,6 @@
+##################
+## Customer Portal
+##################
 ---
 apiVersion: v1
 kind: Service
@@ -6,12 +9,23 @@ metadata:
   namespace: demo-app
   labels:
     app: frontend
-    version: v1
 spec:
   ports:
-  - port: 8888
-    name: http
+    - port: 80
+      targetPort: 8000
+      name: http
+    - port: 3000
+      targetPort: 3000
+      name: tcp
   selector:
+    app: frontend
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend
+  namespace: demo-app
+  labels:
     app: frontend
 ---
 apiVersion: apps/v1
@@ -23,7 +37,6 @@ metadata:
     app: frontend
     version: v1
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -34,27 +47,48 @@ spec:
         app: frontend
         version: v1
     spec:
+      serviceAccountName: frontend
       containers:
-      - name: frontend
-        image: gcr.io/abz-perm/frontend-demo:latest
-        imagePullPolicy: Always
-        resources:
-          limits:
-            cpu: 50m
-            memory: 16Mi
-          requests:
-            cpu: 10m
-            memory: 4Mi
-        ports:
-        - containerPort: 8888
-        env:
-        - name: PORT
-          value: "8888"
-        - name: NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: INJECTION
-          value: "enabled"
-        - name: CLUSTER
-          value: aws-east
+        - name: obs-tester
+          image: gcr.io/abz-perm/obs-tester-server:v1.0
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 16Mi
+            requests:
+              cpu: 10m
+              memory: 4Mi
+          args:
+            - '--log-output-level=all:debug'
+            - '--http-listen-address=:8000' # address the http server in the container listens on
+            - '--tcp-listen-address=:3000' # address the tcp server in the container listens on
+            - '--ep-duration=0' # the default latency used for handling requests to / (echo handler)
+            - '--ep-errors=0' # the default percentage of errors injected when handling echo requests
+            - '--ep-headers=0' # the default percentage of double headers injected when handling echo requests
+            - '--zipkin-reporter-endpoint=http://zipkin.istio-system.svc.cluster.local:9411/api/v2/spans'
+            - '--zipkin-sample-rate=1.0' # When we originate client request, this is the sample rate we use.
+            - '--zipkin-singlehost-spans' # Envoy does not work well with Zipkin's default shared spans
+          env:
+            - name: SVCNAME
+              value: frontend
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: SIDECAR_STATUS
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.annotations['sidecar.istio.io/status']
+          ports:
+            - name: http
+              containerPort: 8000
+            - name: tcp
+              containerPort: 3000
