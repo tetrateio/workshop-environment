@@ -14,7 +14,7 @@ spec:
     name: {{ .Values.cluster }}
   project: tsb-1.5
   syncPolicy:
-    automated: {}
+    # automated: {} # Don't create MP immediately as we need to get other dependencies online first
     syncOptions: 
     - CreateNamespace=true
     - Validate=false
