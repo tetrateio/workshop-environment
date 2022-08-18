@@ -99,7 +99,7 @@ spec:
         rules:
           - route:
               host: "demo-app/frontend.demo-app.svc.cluster.local"
-              port: 8888
+              port: 80
     - name: frontend-internal
       port: 443
       tls:
@@ -110,7 +110,7 @@ spec:
         rules:
           - route:
               host: "demo-app/frontend.demo-app.svc.cluster.local"
-              port: 8888
+              port: 80
     - name: backend-internal
       port: 80
       hostname: backend.demo.mesh
@@ -147,7 +147,7 @@ spec:
         rules:
           - route:
               host: "demo-app/frontend.demo-app.svc.cluster.local"
-              port: 8888
+              port: 80
     - name: frontend-internal
       port: 443
       tls:
@@ -158,7 +158,7 @@ spec:
         rules:
           - route:
               host: "demo-app/frontend.demo-app.svc.cluster.local"
-              port: 8888
+              port: 80
     - name: backend-internal
       port: 80
       hostname: backend.demo.mesh
