@@ -51,21 +51,21 @@ spec:
         resources:
           requests:
             storage: 100Gi
----
-apiVersion: kibana.k8s.elastic.co/v1
-kind: Kibana
-metadata:
-  name: tsb
-  namespace: elastic-system
-spec:
-  version: 7.13.2
-  http:
-    # tls:
-    #   certificate: 
-    #      secretName: es-certs
-    service:
-      spec:
-        type: LoadBalancer
-  count: 1
-  elasticsearchRef:
-    name: tsb
+# ---
+# apiVersion: kibana.k8s.elastic.co/v1
+# kind: Kibana
+# metadata:
+#   name: tsb
+#   namespace: elastic-system
+# spec:
+#   version: 7.13.2
+#   http:
+#     # tls:
+#     #   certificate: 
+#     #      secretName: es-certs
+#     service:
+#       spec:
+#         type: LoadBalancer
+#   count: 1
+#   elasticsearchRef:
+#     name: tsb
