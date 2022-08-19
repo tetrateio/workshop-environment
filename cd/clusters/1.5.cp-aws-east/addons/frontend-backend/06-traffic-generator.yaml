@@ -26,7 +26,7 @@ spec:
       - args:
         - /bin/sh
         - -c
-        - "while true; do curl -v -k https://frontend.aws-east.tetrate.cloud.zwickey.net/proxy/\\?url\\=backend.demo.mesh\\&auth\\=\\&cachebuster\\=123456; sleep 10; done"
+        - "while true; do curl -v -k https://frontend.aws-east.tetrate.cloud.zwickey.net/p/http/backend.demo.mesh; sleep 10; done"
         image: appropriate/curl
         imagePullPolicy: Always
         name: trafficgenerator
