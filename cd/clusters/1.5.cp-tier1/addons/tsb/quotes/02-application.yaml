@@ -11,112 +11,112 @@ spec:
   displayName: Market Data application
   description: Market Data application
   workspace: organizations/tetrate/tenants/demo-apps/workspaces/marketdata
-# ---
-# apiVersion: application.tsb.tetrate.io/v2
-# kind: API
-# metadata:
-#   name: quotes
-#   namespace: default
-#   annotations:
-#     tsb.tetrate.io/organization: tetrate
-#     tsb.tetrate.io/tenant: demo-apps
-#     tsb.tetrate.io/application: marketdata
-# spec:
-#   displayName: Quotes API
-#   description: Quotes API
-#   workloadSelector:
-#     namespace: demo-quotes
-#     labels:
-#       app: demo-quotes-gateway
-#   openapi: |
-#     openapi: 3.0.1
-#     info:
-#       title: Quotes OpenAPI definition
-#       version: v1
-#       x-tsb-service: quotes-service.demo-quotes
-#     servers:
-#     - url: https://quotes.tetrate.cloud.zwickey.net
-#       description: External Server url
-#       x-tsb-tls:
-#         mode: SIMPLE
-#         secretName: quotes-cert
-#       x-tsb-ratelimiting:
-#         failClosed: false
-#         rules: 
-#         - limit:
-#             requestsPerUnit: 3
-#             unit: MINUTE
-#           dimensions:
-#             - header:
-#                 name: x-user
-#     - url: http://quotes.demo.mesh
-#       description: Internal Server url
-#     paths:
-#       /quotes/{symbols}:
-#         get:
-#           tags:
-#           - quote-v-1-controller
-#           operationId: getQuotes
-#           parameters:
-#           - name: symbols
-#             in: path
-#             required: true
-#             schema:
-#               type: array
-#               items:
-#                 type: string
-#           responses:
-#             "200":
-#               description: OK
-#               content:
-#                 '*/*':
-#                   schema:
-#                     type: array
-#                     items:
-#                       \$ref: '#/components/schemas/Quote'
-#       /company/{name}:
-#         get:
-#           tags:
-#           - quote-v-1-controller
-#           operationId: getCompany
-#           parameters:
-#           - name: name
-#             in: path
-#             required: true
-#             schema:
-#               type: string
-#           responses:
-#             "200":
-#               description: OK
-#               content:
-#                 '*/*':
-#                   schema:
-#                     \$ref: '#/components/schemas/CompanyInfo'
-#     components:
-#       schemas:
-#         Quote:
-#           type: object
-#           properties:
-#             symbol:
-#               type: string
-#             companyName:
-#               type: string
-#             currency:
-#               type: string
-#             latestPrice:
-#               type: number
-#             high:
-#               type: number
-#             low:
-#               type: number
-#             change:
-#               type: number
-#         CompanyInfo:
-#           type: object
-#           properties:
-#             symbol:
-#               type: string
-#             companyName:
-#               type: string
-#             exchange:
-#               type: string
+---
+apiVersion: application.tsb.tetrate.io/v2
+kind: API
+metadata:
+  name: quotes
+  namespace: default
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: demo-apps
+    tsb.tetrate.io/application: marketdata
+spec:
+  displayName: Quotes API
+  description: Quotes API
+  workloadSelector:
+    namespace: demo-quotes
+    labels:
+      app: demo-quotes-gateway
+  openapi: |
+    openapi: 3.0.1
+    info:
+      title: Quotes OpenAPI definition
+      version: v1
+      x-tsb-service: quotes-service.demo-quotes
+    servers:
+    - url: https://quotes.tetrate.cloud.zwickey.net
+      description: External Server url
+      x-tsb-tls:
+        mode: SIMPLE
+        secretName: quotes-cert
+      x-tsb-ratelimiting:
+        failClosed: false
+        rules: 
+        - limit:
+            requestsPerUnit: 3
+            unit: MINUTE
+          dimensions:
+            - header:
+                name: x-user
+    - url: http://quotes.demo.mesh
+      description: Internal Server url
+    paths:
+      /quotes/{symbols}:
+        get:
+          tags:
+          - quote-v-1-controller
+          operationId: getQuotes
+          parameters:
+          - name: symbols
+            in: path
+            required: true
+            schema:
+              type: array
+              items:
+                type: string
+          responses:
+            "200":
+              description: OK
+              content:
+                '*/*':
+                  schema:
+                    type: array
+                    items:
+                      \$ref: '#/components/schemas/Quote'
+      /company/{name}:
+        get:
+          tags:
+          - quote-v-1-controller
+          operationId: getCompany
+          parameters:
+          - name: name
+            in: path
+            required: true
+            schema:
+              type: string
+          responses:
+            "200":
+              description: OK
+              content:
+                '*/*':
+                  schema:
+                    \$ref: '#/components/schemas/CompanyInfo'
+    components:
+      schemas:
+        Quote:
+          type: object
+          properties:
+            symbol:
+              type: string
+            companyName:
+              type: string
+            currency:
+              type: string
+            latestPrice:
+              type: number
+            high:
+              type: number
+            low:
+              type: number
+            change:
+              type: number
+        CompanyInfo:
+          type: object
+          properties:
+            symbol:
+              type: string
+            companyName:
+              type: string
+            exchange:
+              type: string
