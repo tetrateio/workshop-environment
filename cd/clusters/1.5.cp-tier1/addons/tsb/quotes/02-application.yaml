@@ -48,7 +48,7 @@ spec:
             unit: MINUTE
           dimensions:
             - header:
-                name: x-user
+                name: x-session
     - url: http://quotes.demo.mesh
       description: Internal Server url
     paths:
