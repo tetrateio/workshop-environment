@@ -16,4 +16,7 @@ spec:
     displayName: default-setting
     # egress:
     #   host: demo-security/demo-cluster-egress.demo-security.svc.cluster.local
+  regionalFailover:
+    - from: us-east2
+      to: us-east4
   displayName: default-setting
