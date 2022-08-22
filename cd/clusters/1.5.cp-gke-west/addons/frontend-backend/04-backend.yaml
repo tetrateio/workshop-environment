@@ -44,6 +44,9 @@ subjects:
 - kind: ServiceAccount
   name: backend
   apiGroup: ""
+- kind: ServiceAccount
+  name: frontend
+  apiGroup: ""
 roleRef:
   kind: Role
   name: pod-reader
