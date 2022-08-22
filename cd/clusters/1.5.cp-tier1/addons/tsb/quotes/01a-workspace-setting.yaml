@@ -11,4 +11,9 @@ metadata:
 spec:
   defaultSecuritySetting:
     displayName: authn-demo
+    propagationStrategy: STRICTER
+    authenticationSettings:
+      trafficMode: REQUIRED
+    authorization:
+      mode: WORKSPACE
   displayName: default-setting
