@@ -9,5 +9,6 @@ metadata:
 spec:
   displayName: tetrate-settings
   defaultSecuritySetting:
+    propagationStrategy: STRICTER
     authenticationSettings:
       trafficMode: REQUIRED
