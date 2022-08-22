@@ -6,16 +6,48 @@ metadata:
   namespace: demo-app
   labels:
     app: backend
-    version: v1
 spec:
   ports:
-  - port: 8080
-    name: http-main
-  - port: 80
-    targetPort: 8888
-    name: http-cats
+    - port: 80
+      targetPort: 8000
+      name: http
+    - port: 3000
+      targetPort: 3000
+      name: tcp
   selector:
     app: backend
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend
+  namespace: demo-app
+  labels:
+    app: backend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: demo-app
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: demo-app
+subjects:
+- kind: ServiceAccount
+  name: backend
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,7 +58,6 @@ metadata:
     app: backend
     version: v1
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -37,32 +68,48 @@ spec:
         app: backend
         version: v1
     spec:
+      serviceAccountName: backend
       containers:
-      - name: backend
-        image: gcr.io/abz-perm/backend-demo:latest
-        imagePullPolicy: Always
-        resources:
-          limits:
-            cpu: 50m
-            memory: 16Mi
-          requests:
-            cpu: 10m
-            memory: 4Mi
-        ports:
-        - containerPort: 8080
-        - containerPort: 8888
-        env:
-        - name: PORT
-          value: "8080"
-        - name: GOPACKAGENAME
-          value: "example-apps/cats-and-dogs-with-service-discovery/backend"
-        - name: CATS_PORTS
-          value: "8888"
-        - name: UDP_PORTS
-          value: "9001,9002,9003"
-        - name: CLUSTER
-          value: aws-east
-        - name: IMG
-          value: "https://i.imgur.com/1uYroRF.gif"
-        # - name: LATENCY
-        #   value: "2"
+        - name: obs-tester
+          image: gcr.io/abz-perm/obs-tester-server:v1.0
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 50m
+              memory: 16Mi
+            requests:
+              cpu: 10m
+              memory: 4Mi
+          args:
+            - '--log-output-level=all:debug'
+            - '--http-listen-address=:8000' # address the http server in the container listens on
+            - '--tcp-listen-address=:3000' # address the tcp server in the container listens on
+            - '--ep-duration=0' # the default latency used for handling requests to / (echo handler)
+            - '--ep-errors=0' # the default percentage of errors injected when handling echo requests
+            - '--ep-headers=0' # the default percentage of double headers injected when handling echo requests
+            - '--zipkin-reporter-endpoint=http://zipkin.istio-system.svc.cluster.local:9411/api/v2/spans'
+            - '--zipkin-sample-rate=1.0' # When we originate client request, this is the sample rate we use.
+            - '--zipkin-singlehost-spans' # Envoy does not work well with Zipkin's default shared spans
+          env:
+            - name: SVCNAME
+              value: backend
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: SIDECAR_STATUS
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.annotations['sidecar.istio.io/status']
+          ports:
+            - name: http
+              containerPort: 8000
+            - name: tcp
+              containerPort: 3000
