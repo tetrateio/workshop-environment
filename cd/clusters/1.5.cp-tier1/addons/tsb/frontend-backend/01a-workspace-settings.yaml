@@ -14,8 +14,8 @@ spec:
     displayName: default-setting
   defaultTrafficSetting:
     displayName: default-setting
-    # egress:
-    #   host: demo-security/demo-cluster-egress.demo-security.svc.cluster.local
+    egress:
+      host: demo-security/demo-cluster-egress.demo-security.svc.cluster.local
   regionalFailover:
     - from: us-east4
       to: us-west4
