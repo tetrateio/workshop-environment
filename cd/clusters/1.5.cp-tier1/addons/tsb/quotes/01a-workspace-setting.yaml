@@ -14,6 +14,6 @@ spec:
     propagationStrategy: STRICTER
     authenticationSettings:
       trafficMode: REQUIRED
-    authorization:
-      mode: WORKSPACE
+#     authorization:
+#       mode: WORKSPACE
   displayName: default-setting
