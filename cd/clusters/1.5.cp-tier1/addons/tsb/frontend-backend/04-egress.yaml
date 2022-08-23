@@ -15,4 +15,8 @@ spec:
     labels:
       app: demo-cluster-egress
     namespace: demo-security
-  authorization: []
+  authorization: 
+  - to:
+    - www.google.com
+  # - to:
+  #   - www.httpbin.org
