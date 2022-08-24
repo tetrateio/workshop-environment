@@ -1,0 +1,139 @@
+image:
+  registry: gcr.io/abz-perm
+  tag: 1.5.1
+# operator:
+#   deployment:
+#     env:
+#     - name: CONTROL_PLANE_REVISION
+#       value: tsb-1-5-1-stable
+spec:
+  components:
+    gitops:
+      enabled: true
+      reconcileInterval: 60s
+    internalCertProvider:
+      certManager:
+        managed: EXTERNAL
+    xcp:
+      # revision: tsb-1-5-1-stable
+      centralAuthMode: JWT
+    rateLimitServer:
+      backend:
+        redis:
+          uri: ratelimit-redis.default.svc.cluster.local:6379
+    oap:
+      kubeSpec:
+        overlays:
+        - apiVersion: apps/v1
+          kind: Deployment
+          name: oap-deployment
+          patches:
+          - path: spec.template.spec.containers.[name:oap].env[-1]
+            value:
+              name: SW_STREAMING_LOG_ENABLED
+              value: "true"  
+    istio:
+      kubeSpec:
+        overlays:
+          - apiVersion: install.istio.io/v1alpha1
+            kind: IstioOperator
+            name: tsb-istiocontrolplane
+            patches:
+            - path: spec.meshConfig.outboundTrafficPolicy.mode
+              value: "REGISTRY_ONLY"
+              # value: "ALLOW_ANY"
+  hub: gcr.io/abz-perm
+  managementPlane:
+    clusterName: aws-west
+    host: tsb.tetrate.cloud.zwickey.net
+    port: 443
+    selfSigned: false
+  # meshExpansion:
+  #   onboarding:
+  #     endpoint:
+  #       hosts:
+  #       - onboarding-1-5.tetrate.cloud.zwickey.net
+  #       secretName: onboarding-cert
+  #     localRepository: {} 
+  telemetryStore:
+    elastic:
+      host: elastic.tetrate.cloud.zwickey.net
+      port: 9200
+      protocol: https
+      selfSigned: false
+      version: 7
+secrets:
+  keep: false
+  clusterServiceAccount:
+    JWK: '{"alg":"RS256","d":"VsS9CLAQE97WmNY5BqTigARaCvHRZz9EGsg0Q3QErr3ga1xUl0J5SU3zbHyhhJfvbaJMu0DAdiUnoRthbPmxCzP268j7ao7ABK6FqxmaPhqMWH4lMKOnoLyhAqrTmUkBrgN_rgJjolE4XYYNNqJBY9xYfbGWMe7CB7hZcTnto3pXef_XoOtD43Ccra-ipY8fnMNwIhiUurHMPmg4HSkYlady9Hg8iZKBQksRDs0VLbB1IFiYwraUxDzJaNxnjWpvP941Ln-ub_ngoy46BWxnwVA7EBSID-B5DkZVYtZ2yz3nE-bOaPIFpfMz8C05WEtz-xR4t-4Ju-9RfTM5wS5QuQ","dp":"ZtSIdQBDJ5UIb3CVk6ai7Iet1uljLlDO5KL3j3urMFbVlXjMCop5rvTLN7VZu4LcNxzjcOGxsKHpv3o3qqK9nAqtPpWe7pmmojo1PYzEWVSgQe8bjemL3TlGsURNx-DmXfBAIsHTo23446Wr6oIOs6QPrJLFHf7Iuh0cYjn2g5k","dq":"J9sHKlPc5zpfXU1bRQBqhtcpJ-0Zbe70c043b5_ZNfM4SHlJxS4rYudo-Y_XXPmMugw0WxPj7GfmH1yKm_e-RJBu-Z6rCaPu-zUkb783trX-Qi80MS8QWUqdabbDpUswos0t9Irwbho4iY-PcdXQz2QxDKLqBNJMQWQPuFOJvHU","e":"AQAB","kid":"dudYMMxvhHouDubIwOQDKOh6kFKQky0CLoslrHbGFfU","kty":"RSA","n":"xecx2fL_zaurLjYByiIvsM3JpZ9tHOPSsAz2pGWjeYcljgnxPhbrauMWPdTBF-hfajJOIXDg3G494ulEqIVD_GjdF1LeBAvawQipuAq9H8cS02L2NO3GIO5beXfQkV6gG_xYLg_NS2XttPgztzlbuzMyLXS6jnxx4gzgGdTVTSS8lDWlSvui7L06Ohm5X7Ee0R_ZJCJgUn8yfg4PxmuEkK-J8OlErBG-2uRY-bZa4ilmUbxmHIqF7yI_-sID2BKFbRJOgEfnwZz9pxNacKKDl5H1aU3cCdtm6bk8MrXLNeb_Rl7c0e0SIytUGfWwY8BX7iqZFlHbOMDBoOZQwj-LsQ","p":"-cjO3TP15xqbH2XNaNTBv1ncFQTqeiyIFDWOFdD2XBh_pHCCl_Qyy8x6ol9uHON-cZGnZOSB-gmWRfLviToIt8aznEiyRbBsDdLA9L8nkWlC-afYzZuDug_ACJslpvKCeZd00CiYeSohy2HNrLWo1e9oV3gj_NlQDbgGXre0X1c","q":"ytPjo9KAepkyw59SEStJavErmJhg6PzoEi665d1taMUpx37pWO_UcmYYbjmCEFGd3rOX-sHCYaQ1vNzGKaIi_i9hzhjSZ23c6qcODVoKYBauYYPYF0iCQN0vrRGjw2LWGF4pTYFuRNVkdqOVUWi8E_pxU3Nj046h4yRmgMzfcDc","qi":"9eg9AlokoZ-zmNLW_uCroLz42I5rSp_GRke8ytaUYsSeBcVjnsSDJ9idvqKXs7Q_xPIMo949VKOi5vp6CkWdZpoiiNCCp2HWlndnZO4EHLCwle3lUvW0s_f8-FeZ-vLpIAauQz6g-VHSo3S_zYXmcl3PNeGiLGpMogqbt4Hodhw"}'
+    clusterFQN: organizations/tetrate/clusters/aws-west
+  elasticsearch:
+    username: elastic
+  tsb:
+    cacert: |
+      -----BEGIN CERTIFICATE-----
+      MIIEMzCCAxugAwIBAgIRAPI0BvDeIuvWvYHwyXFqFgMwDQYJKoZIhvcNAQELBQAw
+      ITEMMAoGA1UECxMDdHNiMREwDwYDVQQDEwh0c2ItaHR0cDAeFw0yMjA3MjExNTA1
+      MDRaFw0yMzA3MjExNTE1MDRaMDwxDDAKBgNVBAsTA3RzYjEsMCoGA1UEAxMjdHNi
+      LWVzLWh0dHAuZWxhc3RpYy1zeXN0ZW0uZXMubG9jYWwwggEiMA0GCSqGSIb3DQEB
+      AQUAA4IBDwAwggEKAoIBAQDRtF4m4sDQMFuL8jBhQ5SVT1O63TcNiEFn5Md7LfUV
+      YWdR8MR3Rq34NJaBk7DUZwYNfY856kI1zbrRgMZDJtXcIiEq9/GdHMvNfT59lVGJ
+      z1cstQaabVNqr1hJJYpcpbwu2fdDIYH7bVWzltr2f9c5RS4EvkipLKqa8VdSo9HA
+      1Fz+OE1/7Km2554c04ofkRFN3i8RYpEWlEjOP+XUhN1TawBk2SRnVyynXRXTstjT
+      lUKIhf1Lzpja2wuKJeC7AaHjyf3nfXjyXQTp5mnz9yC3OVoA3aCTSHAx7/dhQqbe
+      tvMjkZqc++CDuii9bOnoNA3tIiO/gUGnXcQ6ieZ4nDJbAgMBAAGjggFJMIIBRTAO
+      BgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8G
+      A1UdIwQYMBaAFLr/IB3mC71TM/WO/nVRDPHuBvb7MIHyBgNVHREEgeowgeeCI3Rz
+      Yi1lcy1odHRwLmVsYXN0aWMtc3lzdGVtLmVzLmxvY2Fsggt0c2ItZXMtaHR0cIIe
+      dHNiLWVzLWh0dHAuZWxhc3RpYy1zeXN0ZW0uc3Zjghp0c2ItZXMtaHR0cC5lbGFz
+      dGljLXN5c3RlbYIndHNiLWVzLWludGVybmFsLWh0dHAuZWxhc3RpYy1zeXN0ZW0u
+      c3ZjgiN0c2ItZXMtaW50ZXJuYWwtaHR0cC5lbGFzdGljLXN5c3RlbYIjKi50c2It
+      ZXMtZGVmYXVsdC5lbGFzdGljLXN5c3RlbS5zdmOHBCJV01IwDQYJKoZIhvcNAQEL
+      BQADggEBAAxT/g0+he8kVLHa8aUv+CoINV5+GaP3olq7RyXk5DJ06wyBT8sg0/uF
+      boBEuELHOI8dH31YkFHoznQq/AG4r+xAKUWkh7TRZmIvrIX4Orma2yRl+2pu3yGv
+      x+qimQOYeiKhlb48iHeLMdON8ehkOaY/xMANCPIBPP1Qok+CP6ChMtVOnmWVjiam
+      +NplBuhkVj4ydutNNbtk8apVoLoh9eeEErOk227Ciy5eHE6hDtw0gHxUKbm7tZ1A
+      UU6nnp2x17ETmhHJ7vPFQtna119IOk9s1QDty1kIPZV8ozj7nzkGACctYpySGqah
+      sRAuIswndwWlpzabyzbs3J9g7hj70yg=
+      -----END CERTIFICATE-----
+      -----BEGIN CERTIFICATE-----
+      MIIDLTCCAhWgAwIBAgIQbsD5pJ6DySNrEO0tL0G7qTANBgkqhkiG9w0BAQsFADAh
+      MQwwCgYDVQQLEwN0c2IxETAPBgNVBAMTCHRzYi1odHRwMB4XDTIyMDcyMTE1MDQz
+      MVoXDTIzMDcyMTE1MTQzMVowITEMMAoGA1UECxMDdHNiMREwDwYDVQQDEwh0c2It
+      aHR0cDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANAuUtb8V55NORzw
+      WW0nLmyTh6VH/sHAvrup66r1b8X97DXkI7xEhI8UrsBUrbbas8rm+5ECbrjZNysY
+      jubqh6AtXfb0QM2E+K5+m4egJh267cN7I0xQ+cdYx3zag38KNPSV2MSCSTIYE/QB
+      +e69Dg1tou9Lyp7fjqSpb2EubwIMzfhbMaBz9iurgluaGWgjmlhnTaMUBP8GC7Yl
+      /bdEupWSP/IKzHTk0/0kiIxYtIQCEVw5rqdk/vby4U4JmpNlP9Ryge/0Y4Np4AVZ
+      tXrQc1gqiNKCoz7XYDuax0PgQQptxEuvqgpdQeOYT9xBNYE/HsGcxMfNc95PfGyy
+      LuAB/C0CAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKEMB0GA1UdJQQWMBQGCCsGAQUF
+      BwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBS6/yAd5gu9
+      UzP1jv51UQzx7gb2+zANBgkqhkiG9w0BAQsFAAOCAQEAWqw07+1SXd9dh6g1oaaI
+      YghCrZ6RK5Wb4+Wok7By3nUGU/a8e1NCXnscmruY4CIqtetgrCcM0cc2w416PxZ0
+      DUS9YWGFN3leSJ/n0nbMxYPvepln3gfRJ3k3XnxFUj03ogfmlcLbZO3Doy0+xygW
+      SjNRR4qsAtN8uC9R+cOicIpHY+UVrMmfquWSqNTrJ3aNFcWCiUVFzfAWIgqE9Wrw
+      GSmzvlMl69aXaJIvF/ECtcEqsPu+TsWFEwBFHSIWACfIe0pipA6y7eKHCweEG3Rl
+      SQraheACPlCIXeUvt+TSj/5w/p3QnvLM5mAgMoF5X5JnKhN4HFjIMGEs72inZg5D
+      xg==
+      -----END CERTIFICATE-----
+  xcp:
+    rootca: |
+      -----BEGIN CERTIFICATE-----
+      MIIDKjCCAhKgAwIBAgIQP7a07wBIPpXK/cmmSmUxkTANBgkqhkiG9w0BAQsFADAv
+      MRUwEwYDVQQKEwxjZXJ0LW1hbmFnZXIxFjAUBgNVBAMTDXNlbGZzaWduZWQtY2Ew
+      HhcNMjIwNTMxMDAwMjQzWhcNMjQxMTE2MDAwMjQzWjAvMRUwEwYDVQQKEwxjZXJ0
+      LW1hbmFnZXIxFjAUBgNVBAMTDXNlbGZzaWduZWQtY2EwggEiMA0GCSqGSIb3DQEB
+      AQUAA4IBDwAwggEKAoIBAQC9uZZC/U9WetgSCt+HbDE6VmcyDVbpXxrJI/ZFUqD7
+      ZTpicSnYAYofB4bVH5Ba+Y95ZPijs96RjpNmEPqs5kFT+6NxyhAjJTc5qrVBdASp
+      x9C/xMOc1VwRBegx/7a9xJoBqRizRtUJrDo297wWgUhTsjVp5OVDUsRt9dgUlrvG
+      2pq0kxdwamkdT5BEq9TPoOMVmEWwXGmQV6g95mBw8/VnfcO1pv7yz3kQxNzny3Bd
+      ZhdVFhW5El54SiEKI1FzDM1prJFD4yeBPZ4bUqNfChjbujHniyfj4myxfMZFvb2o
+      WWl5Qb983BA/khBBkxgzoNgtvBIY+9Zpq2Zhxtpa7EXRAgMBAAGjQjBAMA4GA1Ud
+      DwEB/wQEAwICpDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBQuHUUghfaF+bG9
+      39hWJF1de7klnzANBgkqhkiG9w0BAQsFAAOCAQEADn0jZrPAbJqdA4O8cKryITRd
+      PKy+8+8E1x1765Jw+HqRHb0K+x54GnIMKDlDcexpZkrcRR7pkkeQ4Sx9MPIFSnd3
+      BezfTjOcBfIzB3gj0pMbfL2kViHhEv5qM576ScJrgNHqFhHe8wCpoxP+vNDzI7jt
+      wUy5zaH5h9JBXPwo6j/TSPSiUjt00d083+ACzRlWNJXYVngwOtb/t23MZ6prV/8h
+      4BFF0GlpwM+1EGlOERjKgBTc+Ir9v1HZZCVtgal0aAGczFTxvOBghu7Nwfz5e5IG
+      TLKxAFhox3XbRep+1d/tn6yHqU5Yp6VUEzyLZ48CZ6gDEqM7wrCLBoKJ+SchvQ==
+      -----END CERTIFICATE-----
