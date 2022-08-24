@@ -18,7 +18,7 @@ spec:
     syncOptions: 
     - CreateNamespace=true
   source:
-    path: cd/clusters/1.5.cp-west-east/addons
+    path: cd/clusters/1.5.cp-aws-west/addons
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     directory:
