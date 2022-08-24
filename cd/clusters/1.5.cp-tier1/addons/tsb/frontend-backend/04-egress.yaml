@@ -18,5 +18,5 @@ spec:
   authorization: 
   - to:
     - www.google.com
-  # - to:
-  #   - www.httpbin.org
+#   - to:
+#     - www.httpbin.org
