@@ -19,10 +19,12 @@ spec:
     - CreateNamespace=true
   source:
     repoURL: 'https://charts.jetstack.io'
-    targetRevision: '1.6.1'
+    targetRevision: '1.9.1'
     chart: cert-manager
     helm:
       releaseName: cert-manager
       parameters:
       - name: "installCRDs"
         value: "true"
+      - name: "featureGates"
+        value: "ExperimentalCertificateSigningRequestControllers=true"
